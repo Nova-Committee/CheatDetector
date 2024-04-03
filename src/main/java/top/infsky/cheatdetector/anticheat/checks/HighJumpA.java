@@ -16,7 +16,7 @@ public class HighJumpA extends Check {
 
     @Override
     public void _onTick() {
-        if (player.fabricPlayer.getInventory().getArmor(1).getItem() instanceof ElytraItem) return;
+        if (ElytraItem.isFlyEnabled(player.fabricPlayer.getInventory().getArmor(2))) return;
 
         if (player.isJumping() && player.lastOnGroundPos != player.lastOnLiquidGroundPos && !(player.fabricPlayer.hurtTime > 0) && !player.fabricPlayer.isPassenger()) {
             if (player.currentPos.y() > highestY) highestY = player.currentPos.y();

@@ -24,7 +24,7 @@ public class FlightA extends Check {
     public void _onTick() {
         if (player.fabricPlayer.getUseItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;
-        if (player.fabricPlayer.getInventory().getArmor(1).getItem() instanceof ElytraItem) return;
+        if (ElytraItem.isFlyEnabled(player.fabricPlayer.getInventory().getArmor(2))) return;
 
         if (disableTick > 0) {
             disableTick--;
