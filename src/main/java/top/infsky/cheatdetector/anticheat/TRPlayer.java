@@ -72,7 +72,6 @@ public class TRPlayer {
     private void updatePoses() {
         if (posHistory.size() >= 20) {
             posHistory.remove(posHistory.size() - 1);
-            updatePoses();
         }
         posHistory.add(0, currentPos);
     }

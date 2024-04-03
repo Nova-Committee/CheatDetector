@@ -14,6 +14,6 @@ public class ModConfig implements ConfigData {
     boolean disableSelfCheck = false;
     boolean allowAlertPlayers = true;
     boolean disableBuffer = false;
-    long alertBuffer = 5;
+    long alertBuffer = 10;
     double threshold = 0.001;
 }
