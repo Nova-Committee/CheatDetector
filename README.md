@@ -3,11 +3,11 @@
 
 # CheatDetector
 <p align="center">
-    <a href="https://github.com/Nova-Committee/TimeRecorder/issues">
-      <img src="https://img.shields.io/github/issues/Nova-Committee/TimeRecorder?style=flat" alt="issues" />
+    <a href="https://github.com/Nova-Committee/CheatDetector/issues">
+      <img src="https://img.shields.io/github/issues/Nova-Committee/CheatDetector?style=flat" alt="issues" />
     </a>
-    <a href="https://www.curseforge.com/minecraft/mc-mods/TimeRecorder">
-      <img src="http://cf.way2muchnoise.eu/timerecorder.svg" alt="CurseForge Download">
+    <a href="https://www.curseforge.com/minecraft/mc-mods/CheatDetector">
+      <img src="http://cf.way2muchnoise.eu/cheatdetector.svg" alt="CurseForge Download">
     </a>
     <img src="https://img.shields.io/badge/license-GPLV3-green" alt="License">
     <a href="https://github.com/Nova-Committee/CheatDetector/actions/workflows/gradle.yml">
