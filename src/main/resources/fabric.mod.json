@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "cheatdetector",
+  "version": "${version}",
+  "name": "CheatDetector",
+  "description": "一个纯客户端的作弊检测器",
+  "authors": [
+    "xia__mc"
+  ],
+  "contact": {
+    "website": "https://github.com/Nova-Committee/CheatDetecter",
+    "repo": "https://github.com/Nova-Committee/CheatDetecter"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/cheatdetector/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "top.infsky.cheatdetector.CheatDetector"
+    ],
+    "modmenu": [
+      "top.infsky.cheatdetector.config.ModMenu"
+    ]
+  },
+  "mixins": [
+    "cheatdetector.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "~${minecraft_version}",
+    "modmenu": "*",
+    "cloth-config2": "*"
+  }
+}

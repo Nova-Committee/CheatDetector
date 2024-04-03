@@ -1,0 +1,10 @@
+{
+  "text.autoconfig.cheatdetector.title": "作弊检测器设定",
+  "text.autoconfig.cheatdetector.option.alertBuffer": "警报缓冲区大小",
+  "text.autoconfig.cheatdetector.option.allowAlertPlayers": "启用警报",
+  "text.autoconfig.cheatdetector.option.disableBuffer": "禁用警报缓冲区",
+  "text.autoconfig.cheatdetector.option.disableSelfCheck": "禁用自我检查",
+  "text.autoconfig.cheatdetector.option.enabled": "启用反作弊",
+  "text.autoconfig.cheatdetector.option.threshold": "最大偏移量",
+  "text.cheatdetector.alert.fail": "触发了"
+}

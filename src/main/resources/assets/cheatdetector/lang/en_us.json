@@ -1,0 +1,10 @@
+{
+  "text.autoconfig.cheatdetector.title": "CheatDetector Option",
+  "text.autoconfig.cheatdetector.option.enabled": "Enable AntiCheat",
+  "text.autoconfig.cheatdetector.option.disableSelfCheck": "Disable SelfCheck",
+  "text.autoconfig.cheatdetector.option.allowAlertPlayers": "Enable Alerts",
+  "text.autoconfig.cheatdetector.option.disableBuffer": "Disable Alert Buffer",
+  "text.autoconfig.cheatdetector.option.alertBuffer": "Alert Buffer Size",
+  "text.autoconfig.cheatdetector.option.threshold": "Maximum threshold",
+  "text.cheatdetector.alert.fail": "failed"
+}
