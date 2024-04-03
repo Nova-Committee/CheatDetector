@@ -1,5 +1,6 @@
 package top.infsky.cheatdetector.anticheat.checks;
 
+import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.phys.Vec3;
 import top.infsky.cheatdetector.anticheat.Check;
@@ -23,6 +24,7 @@ public class FlightA extends Check {
     public void _onTick() {
         if (player.fabricPlayer.getUseItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;
+        if (player.fabricPlayer.getInventory().getArmor(1).getItem() instanceof ElytraItem) return;
 
         if (disableTick > 0) {
             disableTick--;
