@@ -22,6 +22,7 @@ public class FlightA extends Check {
     @Override
     public void _onTick() {
         if (player.fabricPlayer.getUseItem().getItem() instanceof TridentItem) return;
+        if (player.fabricPlayer.isVehicle()) return;
 
         if (disableTick > 0) {
             disableTick--;
@@ -47,7 +48,7 @@ public class FlightA extends Check {
 
 
         if (!player.fabricPlayer.onGround() && jumpTick > 0
-//                && player.currentPos.y() - player.lastOnGroundPos.y() < 1.25219 * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getThreshold()
+                && player.currentPos.y() - player.lastOnGroundPos.y() < 1.25219 * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getThreshold()
 //                && player.currentPos.distanceTo(player.lastPos) < 5.612 * (1 + player.fabricPlayer.getSpeed()) + CONFIG().getThreshold()  // 警惕跳跃弱检测
         ) {
             jumpTick--;
@@ -74,6 +75,6 @@ public class FlightA extends Check {
     @Override
     public void _onJump() {
         // fix jump
-        jumpTick = 8;
+        jumpTick = 14;
     }
 }
