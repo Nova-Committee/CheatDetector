@@ -22,7 +22,7 @@ public class FlightA extends Check {
     @Override
     public void _onTick() {
         if (player.fabricPlayer.getUseItem().getItem() instanceof TridentItem) return;
-        if (player.fabricPlayer.isVehicle()) return;
+        if (player.fabricPlayer.isPassenger()) return;
 
         if (disableTick > 0) {
             disableTick--;
