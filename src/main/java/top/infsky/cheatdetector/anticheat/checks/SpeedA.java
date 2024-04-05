@@ -38,7 +38,7 @@ public class SpeedA extends Check {
             maxSecSpeed = 4.317;
 
         final double speed = PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos);
-        if (speed > (maxSecSpeed * (1 + player.fabricPlayer.getSpeed()) + CONFIG().getThreshold())) {
+        if (speed > (maxSecSpeed * player.speedMul + CONFIG().getThreshold())) {
             flag(String.valueOf(speed));
         }
     }

@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.anticheat;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
@@ -31,6 +32,7 @@ public class TRPlayer {
     public boolean hasSetback = false;
     public boolean jumping = false;
     public boolean lastUsingItem = false;
+    public double speedMul = 1;
 
     public TimeTaskManager timeTask = new TimeTaskManager();
 
@@ -50,6 +52,9 @@ public class TRPlayer {
         if (fabricPlayer == null) return;
 
         currentPos = fabricPlayer.position();
+        speedMul = fabricPlayer.getActiveEffectsMap().containsKey(MobEffects.MOVEMENT_SPEED)
+                ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
+                : 1;
         updatePoses();
         if (fabricPlayer.onGround()) {
             lastOnGroundPos = currentPos;
