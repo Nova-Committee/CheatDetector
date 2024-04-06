@@ -55,6 +55,7 @@ public class TRPlayer {
         speedMul = fabricPlayer.getActiveEffectsMap().containsKey(MobEffects.MOVEMENT_SPEED)
                 ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
                 : 1;
+        speedMul *= fabricPlayer.getSpeed() * 10;  // IDK why, but it just works!
         updatePoses();
         if (fabricPlayer.onGround()) {
             lastOnGroundPos = currentPos;
