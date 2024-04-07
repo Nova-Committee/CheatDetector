@@ -25,7 +25,8 @@ public class CheckManager {
                 new SpeedA(player),
                 new SpeedB(player),
                 new HighJumpA(player),
-                new NoSlowA(player)
+                new NoSlowA(player),
+                new CreativeModeA(player)
         ), player);
         checkManager.onTeleport();
         return checkManager;
@@ -35,6 +36,9 @@ public class CheckManager {
         if (disableTick > 0) {
             disableTick--;
             return;
+        }
+        if (player.currentGameType != player.lastGameType) {
+            for (Check check : checks) check._onGameTypeChange();
         }
 
         if (player.fabricPlayer.isSpectator() || player.fabricPlayer.isCreative()) return;

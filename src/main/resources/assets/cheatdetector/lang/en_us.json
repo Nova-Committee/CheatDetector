@@ -1,10 +1,13 @@
 {
   "text.autoconfig.cheatdetector.title": "CheatDetector Option",
-  "text.autoconfig.cheatdetector.option.enabled": "Enable AntiCheat",
-  "text.autoconfig.cheatdetector.option.disableSelfCheck": "Disable SelfCheck",
-  "text.autoconfig.cheatdetector.option.allowAlertPlayers": "Enable Alerts",
-  "text.autoconfig.cheatdetector.option.disableBuffer": "Disable Alert Buffer",
-  "text.autoconfig.cheatdetector.option.alertBuffer": "Alert Buffer Size",
+  "text.autoconfig.cheatdetector.option.antiCheatEnabled": "Enable AntiCheat",
+  "text.autoconfig.cheatdetector.option.disableSelfCheck": "Disable Self-Check",
   "text.autoconfig.cheatdetector.option.threshold": "Maximum threshold",
+  "text.autoconfig.cheatdetector.option.packetFixEnabled": "Enable PacketFix",
+  "text.autoconfig.cheatdetector.option.packetFixMode": "PacketFix Mode",
+  "text.autoconfig.cheatdetector.option.allowAlert": "Enable Alerts",
+  "text.autoconfig.cheatdetector.option.allowAlertPacketFix": "Enable PacketFix Alert",
+  "text.autoconfig.cheatdetector.option.alertBuffer": "Alert Buffer Size",
+  "text.autoconfig.cheatdetector.option.disableBuffer": "Disable Alert Buffer",
   "text.cheatdetector.alert.fail": "failed"
 }

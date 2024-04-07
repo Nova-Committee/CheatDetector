@@ -30,8 +30,10 @@ public class PlayerManager {
         for (AbstractClientPlayer player : client.level.players()) {
             final UUID uuid = player.getUUID();
             if (!activeMap.containsKey(uuid)) {
+                final TRPlayer trPlayer = new TRPlayer(player);
                 activeMap.put(uuid, true);
-                dataMap.put(uuid, new TRPlayer(player));
+                dataMap.put(uuid, trPlayer);
+                if (client.player.getUUID() == uuid) TRPlayer.SELF = trPlayer;
             }
 
             // 更新

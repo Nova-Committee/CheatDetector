@@ -10,10 +10,15 @@ import top.infsky.cheatdetector.CheatDetector;
 @Setter
 @Config(name = CheatDetector.MOD_ID)
 public class ModConfig implements ConfigData {
-    boolean enabled = true;
+    boolean antiCheatEnabled = true;
     boolean disableSelfCheck = false;
-    boolean allowAlertPlayers = true;
-    boolean disableBuffer = false;
+    double threshold = 0.1;
+
+    boolean packetFixEnabled = true;
+    PacketFixer packetFixMode = PacketFixer.NORMAL;
+
+    boolean allowAlert = true;
+    boolean allowAlertPacketFix = false;
     long alertBuffer = 10;
-    double threshold = 0.001;
+    boolean disableBuffer = false;
 }

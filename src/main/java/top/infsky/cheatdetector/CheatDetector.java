@@ -49,6 +49,6 @@ public class CheatDetector implements ClientModInitializer {
     }
 
     private void onTick(ClientLevel clientLevel) {
-        if (inWorld && CONFIG().isEnabled()) manager.update(CLIENT);
+        if (inWorld && CONFIG().isAntiCheatEnabled()) manager.update(CLIENT);
     }
 }

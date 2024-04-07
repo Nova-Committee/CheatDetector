@@ -27,7 +27,7 @@ public class HighJumpA extends Check {
             final double jumpDistance = airPrefixPos.distanceTo(groundPrefixPos);
             final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + CONFIG().getThreshold();
             if (jumpDistance > 1.25219 * possibleDistance) {
-                flag(String.format("Current: %.2f Max: %.2f", jumpDistance, possibleDistance));
+                flag(String.format("Current: %.2f  Max: %.2f", jumpDistance, possibleDistance));
             }
         } else highestY = Double.MIN_VALUE;
     }

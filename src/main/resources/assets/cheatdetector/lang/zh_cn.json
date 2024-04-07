@@ -1,10 +1,13 @@
 {
-  "text.autoconfig.cheatdetector.title": "作弊检测器设定",
   "text.autoconfig.cheatdetector.option.alertBuffer": "警报缓冲区大小",
-  "text.autoconfig.cheatdetector.option.allowAlertPlayers": "启用警报",
+  "text.autoconfig.cheatdetector.option.allowAlert": "启用警报",
+  "text.autoconfig.cheatdetector.option.allowAlertPacketFix": "启用发包修复警报",
+  "text.autoconfig.cheatdetector.option.antiCheatEnabled": "启用反作弊",
   "text.autoconfig.cheatdetector.option.disableBuffer": "禁用警报缓冲区",
   "text.autoconfig.cheatdetector.option.disableSelfCheck": "禁用自我检查",
-  "text.autoconfig.cheatdetector.option.enabled": "启用反作弊",
+  "text.autoconfig.cheatdetector.option.packetFixEnabled": "启用发包修复",
+  "text.autoconfig.cheatdetector.option.packetFixMode": "发包修复模式",
   "text.autoconfig.cheatdetector.option.threshold": "最大偏移量",
+  "text.autoconfig.cheatdetector.title": "作弊检测器设定",
   "text.cheatdetector.alert.fail": "触发了"
 }
