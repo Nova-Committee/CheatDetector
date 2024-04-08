@@ -16,7 +16,7 @@ public class BlinkA extends Check {
     public void _onTick() {
         if (player.lastPos == null || player.hasSetback) return;
 
-        if (player.lastPos.distanceTo(player.currentPos) > (player.fabricPlayer.getSpeed() * 10 * player.speedMul + player.fabricPlayer.fallDistance + CONFIG().getThreshold())) {
+        if (player.lastPos.distanceTo(player.currentPos) > (player.fabricPlayer.getSpeed() * 10 * player.speedMul + player.fabricPlayer.fallDistance + CONFIG().getAntiCheat().getThreshold())) {
             flag();
         }
     }

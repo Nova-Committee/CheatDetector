@@ -2,6 +2,7 @@ package top.infsky.cheatdetector;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -23,7 +24,7 @@ public class CheatDetector implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         // config
-        AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        AutoConfig.register(ModConfig.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
 
         ClientLifecycleEvents.CLIENT_STARTED.register(this::onClientStarted);
         ClientPlayConnectionEvents.JOIN.register(this::onJoinWorld);
@@ -49,6 +50,6 @@ public class CheatDetector implements ClientModInitializer {
     }
 
     private void onTick(ClientLevel clientLevel) {
-        if (inWorld && CONFIG().isAntiCheatEnabled()) manager.update(CLIENT);
+        if (inWorld) manager.update(CLIENT);
     }
 }

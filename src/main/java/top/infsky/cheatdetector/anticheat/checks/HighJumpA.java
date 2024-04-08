@@ -25,7 +25,7 @@ public class HighJumpA extends Check {
             val airPrefixPos = new Vec3(0, highestY, 0);
 
             final double jumpDistance = airPrefixPos.distanceTo(groundPrefixPos);
-            final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + CONFIG().getThreshold();
+            final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + CONFIG().getAntiCheat().getThreshold();
             if (jumpDistance > 1.25219 * possibleDistance) {
                 flag(String.format("Current: %.2f  Max: %.2f", jumpDistance, possibleDistance));
             }

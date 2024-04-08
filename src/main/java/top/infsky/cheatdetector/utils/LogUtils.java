@@ -11,11 +11,19 @@ public class LogUtils {
     public static final Logger LOGGER = LoggerFactory.getLogger("CheatDetector");
 
     public static void alert(String player, String module, String extraMsg) {
-        if (!CONFIG().isAllowAlert()) return;
-        LOGGER.info(String.format("TR> %s %s %s | %s", player, Component.translatable("text.cheatdetector.alert.fail").getString(), module, extraMsg));
+        if (!CONFIG().getAlert().isAllowAlert()) return;
         if (CheatDetector.CLIENT.player != null) {
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
                     String.format("§b§lTR§r§l> §r%s§r %s§r %s§r | %s§r", player, Component.translatable("text.cheatdetector.alert.fail").getString(), module, extraMsg)
+            ));
+        }
+    }
+
+    public static void custom(String prefix, String msg) {
+        if (!CONFIG().getAlert().isAllowAlert()) return;
+        if (CheatDetector.CLIENT.player != null) {
+            CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
+                    String.format("§b§lTR§r§l> §r%s§r | %s§r", prefix, msg)
             ));
         }
     }

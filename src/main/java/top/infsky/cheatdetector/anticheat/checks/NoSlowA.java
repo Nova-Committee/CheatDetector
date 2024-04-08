@@ -33,7 +33,7 @@ public class NoSlowA extends Check {
         }
 
         final double secSpeed = PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos);
-        final double possibleSpeed = SLOW_SPEED.get(itemUseTick) * player.speedMul + CONFIG().getThreshold();
+        final double possibleSpeed = SLOW_SPEED.get(itemUseTick) * player.speedMul + CONFIG().getAntiCheat().getThreshold();
         if (secSpeed > possibleSpeed) {
             flag(String.format("Current: %.2f  Max: %.2f", secSpeed, possibleSpeed));
         }

@@ -2,23 +2,24 @@ package top.infsky.cheatdetector.config;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import top.infsky.cheatdetector.CheatDetector;
 
 @Getter
 @Setter
 @Config(name = CheatDetector.MOD_ID)
-public class ModConfig implements ConfigData {
-    boolean antiCheatEnabled = true;
-    boolean disableSelfCheck = false;
-    double threshold = 0.1;
+public class ModConfig extends PartitioningSerializer.GlobalData {
+    @ConfigEntry.Category("AntiCheat")
+    @ConfigEntry.Gui.TransitiveObject
+    AntiCheatConfig antiCheat = new AntiCheatConfig();
 
-    boolean packetFixEnabled = true;
-    PacketFixer packetFixMode = PacketFixer.NORMAL;
+    @ConfigEntry.Category("PacketFix")
+    @ConfigEntry.Gui.TransitiveObject
+    PacketFixConfig packetFix = new PacketFixConfig();
 
-    boolean allowAlert = true;
-    boolean allowAlertPacketFix = false;
-    long alertBuffer = 10;
-    boolean disableBuffer = false;
+    @ConfigEntry.Category("Alert")
+    @ConfigEntry.Gui.TransitiveObject
+    AlertConfig alert = new AlertConfig();
 }

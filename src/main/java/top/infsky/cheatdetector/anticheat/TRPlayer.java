@@ -39,9 +39,12 @@ public class TRPlayer {
     public TimeTaskManager timeTask = new TimeTaskManager();
 
     public static TRPlayer SELF;
-    public TRPlayer(@NotNull AbstractClientPlayer player) {
+    public TRPlayer(@NotNull AbstractClientPlayer player, boolean self) {
         this.fabricPlayer = player;
-        this.manager = CheckManager.create(this);
+        if (self)
+            this.manager = CheckManager.createSelf(this);
+        else
+            this.manager = CheckManager.create(this);
         currentPos = fabricPlayer.position();
         lastOnGround = fabricPlayer.onGround();
         currentGameType = lastGameType =
