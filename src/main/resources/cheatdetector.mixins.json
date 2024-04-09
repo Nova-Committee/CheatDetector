@@ -3,10 +3,12 @@
   "minVersion": "0.8",
   "package": "top.infsky.cheatdetector.mixins",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "MixinPacket"
-  ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "MixinConnection",
+    "MixinMultiPlayerGameMode",
+    "MixinPacket"
+  ]
 }

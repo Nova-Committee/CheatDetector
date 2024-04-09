@@ -2,6 +2,8 @@ package top.infsky.cheatdetector.anticheat;
 
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -47,8 +49,12 @@ public abstract class Check {
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s", violations, extraMsg));
     }
 
+    public final void moduleMsg(String msg) {
+        LogUtils.prefix(checkName, msg);
+    }
+
     public final void customMsg(String msg) {
-        LogUtils.custom(checkName, msg);
+        LogUtils.custom(msg);
     }
 
     public void _onTick() {}
@@ -57,4 +63,5 @@ public abstract class Check {
     public void _onGameTypeChange() {}
     public <T> boolean _onAction(CallbackInfoReturnable<T> cir, T fallbackReturn) {return false;}
     public boolean _onAction(CallbackInfo ci) {return false;}
+    public boolean _onAction(InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfo ci) {return false;}
 }

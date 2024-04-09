@@ -3,6 +3,8 @@ package top.infsky.cheatdetector.anticheat;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.checks.*;
+import top.infsky.cheatdetector.anticheat.fixs.FlagDetector;
+import top.infsky.cheatdetector.anticheat.fixs.themis.FastPlace;
 import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket1;
 import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket2;
 import top.infsky.cheatdetector.anticheat.fixs.vulcan.MovementDisabler;
@@ -22,32 +24,38 @@ public class CheckManager {
 
     @Contract("_ -> new")
     public static @NotNull CheckManager create(TRPlayer player) {
-        final CheckManager checkManager = new CheckManager(Map.of(
-                FlightA.class, new FlightA(player),
-                BlinkA.class, new BlinkA(player),
-                SpeedA.class, new SpeedA(player),
-                SpeedB.class, new SpeedB(player),
-                HighJumpA.class, new HighJumpA(player),
-                NoSlowA.class, new NoSlowA(player),
-                CreativeModeA.class, new CreativeModeA(player)
-        ), player);
+        final Map<Class<? extends Check>, Check> checks = new HashMap<>();
+        checks.put(FlightA.class, new FlightA(player));
+        checks.put(BlinkA.class, new BlinkA(player));
+        checks.put(SpeedA.class, new SpeedA(player));
+        checks.put(SpeedB.class, new SpeedB(player));
+        checks.put(HighJumpA.class, new HighJumpA(player));
+        checks.put(NoSlowA.class, new NoSlowA(player));
+        checks.put(CreativeModeA.class, new CreativeModeA(player));
+        checks.put(FlightB.class, new FlightB(player));
+
+        final CheckManager checkManager = new CheckManager(checks, player);
         checkManager.onTeleport();
         return checkManager;
     }
 
     public static @NotNull CheckManager createSelf(TRPlayer player) {
-        final CheckManager checkManager = new CheckManager(Map.of(
-                FlightA.class, new FlightA(player),
-                BlinkA.class, new BlinkA(player),
-                SpeedA.class, new SpeedA(player),
-                SpeedB.class, new SpeedB(player),
-                HighJumpA.class, new HighJumpA(player),
-                NoSlowA.class, new NoSlowA(player),
-                CreativeModeA.class, new CreativeModeA(player),
-                BadPacket1.class, new BadPacket1(player),
-                BadPacket2.class, new BadPacket2(player),
-                MovementDisabler.class, new MovementDisabler(player)
-        ), player);
+        final Map<Class<? extends Check>, Check> checks = new HashMap<>();
+        checks.put(FlightA.class, new FlightA(player));
+        checks.put(BlinkA.class, new BlinkA(player));
+        checks.put(SpeedA.class, new SpeedA(player));
+        checks.put(SpeedB.class, new SpeedB(player));
+        checks.put(HighJumpA.class, new HighJumpA(player));
+        checks.put(NoSlowA.class, new NoSlowA(player));
+        checks.put(CreativeModeA.class, new CreativeModeA(player));
+        checks.put(FlightB.class, new FlightB(player));
+        checks.put(BadPacket1.class, new BadPacket1(player));
+        checks.put(BadPacket2.class, new BadPacket2(player));
+        checks.put(MovementDisabler.class, new MovementDisabler(player));
+        checks.put(FlagDetector.class, new FlagDetector(player));
+        checks.put(FastPlace.class, new FastPlace(player));
+
+        final CheckManager checkManager = new CheckManager(checks, player);
         checkManager.onTeleport();
         return checkManager;
     }

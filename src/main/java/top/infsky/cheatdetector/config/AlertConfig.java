@@ -17,6 +17,9 @@ public class AlertConfig implements ConfigData {
     boolean allowAlertPacketFix = false;
 
     @ConfigEntry.Gui.Tooltip
+    boolean allowAlertVLClear = false;
+
+    @ConfigEntry.Gui.Tooltip
     long alertBuffer = 20;
 
     @ConfigEntry.Gui.Tooltip

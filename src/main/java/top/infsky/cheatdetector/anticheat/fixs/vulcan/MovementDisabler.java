@@ -23,15 +23,15 @@ public class MovementDisabler extends Check {
 
     public MovementDisabler(@NotNull TRPlayer player) {
         super("MovementDisabler", player);
-        lastEnabled = CONFIG().getPacketFix().isVulcanDisablerEnabled();
+        lastEnabled = CONFIG().getFixes().isVulcanDisablerEnabled();
     }
 
     @Override
     public void _onTick() {
         // tick before
-        if (!CONFIG().getPacketFix().isVulcanDisablerEnabled()) {
+        if (!CONFIG().getFixes().isVulcanDisablerEnabled()) {
             if (lastEnabled)
-                customMsg(ChatFormatting.DARK_RED + "已禁用");
+                moduleMsg(ChatFormatting.DARK_RED + "已禁用");
             lastEnabled = false;
             return;
         }
@@ -40,7 +40,7 @@ public class MovementDisabler extends Check {
         // on tick
         // copy from liquid-bounce nextgen :D
         if (checkItem()) {
-            if (!lastEnabled) customMsg(ChatFormatting.AQUA + "已启用，一秒后生效。");
+            if (!lastEnabled) moduleMsg(ChatFormatting.AQUA + "已启用，一秒后生效。");
 
             if (waitTicks == 0) {
                 final Entity entity = TRPlayer.CLIENT.player;
@@ -54,13 +54,13 @@ public class MovementDisabler extends Check {
             }
             waitTicks = 20;
         } else if (!lastEnabled) {  // 玩家刚刚启用这个选项
-            CONFIG().getPacketFix().setVulcanDisablerEnabled(false);
-            customMsg(ChatFormatting.RED + "模块不可用，请检查是否满足要求。");
+            CONFIG().getFixes().setVulcanDisablerEnabled(false);
+            moduleMsg(ChatFormatting.RED + "模块不可用，请检查是否满足要求。");
         }
 
         // after tick
         if (waitTicks >= 0) waitTicks--;
-        lastEnabled = CONFIG().getPacketFix().isVulcanDisablerEnabled();
+        lastEnabled = CONFIG().getFixes().isVulcanDisablerEnabled();
     }
 
     private boolean checkItem() {

@@ -22,7 +22,7 @@ public class BadPacket1 extends Check {
      */
     @Override
     public <T> boolean _onAction(CallbackInfoReturnable<T> cir, T fallbackReturn) {
-        if (!CONFIG().getPacketFix().isPacketFixEnabled()) return false;
+        if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
 
         if (!hasSend) {
             hasSend = true;

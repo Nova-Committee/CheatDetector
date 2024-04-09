@@ -9,7 +9,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Getter
 @Setter
 @Config(name = "PacketFix")
-public class PacketFixConfig implements ConfigData {
+public class fixesConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     boolean packetFixEnabled = false;
 
@@ -18,4 +18,7 @@ public class PacketFixConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip
     boolean vulcanDisablerEnabled = false;
+
+    @ConfigEntry.Gui.Tooltip
+    boolean flagDetectorEnabled = false;
 }

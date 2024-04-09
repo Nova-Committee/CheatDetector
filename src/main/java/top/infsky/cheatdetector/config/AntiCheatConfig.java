@@ -18,4 +18,7 @@ public class AntiCheatConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip
     double threshold = 1.0;
+
+    @ConfigEntry.Gui.Tooltip
+    long VLClearTime = 6000;
 }

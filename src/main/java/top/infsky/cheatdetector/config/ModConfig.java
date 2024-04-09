@@ -17,7 +17,7 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
 
     @ConfigEntry.Category("PacketFix")
     @ConfigEntry.Gui.TransitiveObject
-    PacketFixConfig packetFix = new PacketFixConfig();
+    fixesConfig fixes = new fixesConfig();
 
     @ConfigEntry.Category("Alert")
     @ConfigEntry.Gui.TransitiveObject
