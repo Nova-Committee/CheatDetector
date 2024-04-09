@@ -50,6 +50,7 @@ public class FlagDetector extends Check {
         if (!CONFIG().getFixes().isFlagDetectorEnabled()) return;
 
         violations++;
+        disableTick++;
         CheatDetector.CLIENT.player.refreshDimensions();
         customMsg(Component.translatable("chat.cheatdetector.alert.flagDetected").getString() + ChatFormatting.DARK_GRAY + violations);
     }

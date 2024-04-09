@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
-import top.infsky.cheatdetector.utils.LogUtils;
 
 @Mixin(ClientPacketListener.class)
 public class MixinPacket {
@@ -16,7 +15,6 @@ public class MixinPacket {
     public void handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) {
         if (TRPlayer.SELF == null) return;
 
-        LogUtils.custom("teleport!");  // debug
         TRPlayer.SELF.manager.onTeleport();
     }
 }

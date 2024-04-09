@@ -1,7 +1,7 @@
 {
   "text.autoconfig.cheatdetector.category.Alert": "Alert",
   "text.autoconfig.cheatdetector.category.AntiCheat": "AntiCheat",
-  "text.autoconfig.cheatdetector.category.fixes": "Fixes",
+  "text.autoconfig.cheatdetector.category.Fixes": "Fixes",
   "text.autoconfig.cheatdetector.option.alert.alertBuffer": "Alert Buffer Size",
   "text.autoconfig.cheatdetector.option.alert.alertBuffer.@Tooltip": "How many VLs should we space out before sending an alert?",
   "text.autoconfig.cheatdetector.option.alert.allowAlert": "Enable Alerts",

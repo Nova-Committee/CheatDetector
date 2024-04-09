@@ -1,7 +1,7 @@
 {
   "text.autoconfig.cheatdetector.category.Alert": "警报",
   "text.autoconfig.cheatdetector.category.AntiCheat": "反作弊",
-  "text.autoconfig.cheatdetector.category.fixes": "修复",
+  "text.autoconfig.cheatdetector.category.Fixes": "修复",
   "text.autoconfig.cheatdetector.option.alert.alertBuffer": "警报缓冲区大小",
   "text.autoconfig.cheatdetector.option.alert.alertBuffer.@Tooltip": "在发送警报前，我们应间隔几个VL？",
   "text.autoconfig.cheatdetector.option.alert.allowAlert": "启用警报",

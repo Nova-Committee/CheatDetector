@@ -15,7 +15,7 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Gui.TransitiveObject
     AntiCheatConfig antiCheat = new AntiCheatConfig();
 
-    @ConfigEntry.Category("PacketFix")
+    @ConfigEntry.Category("Fixes")
     @ConfigEntry.Gui.TransitiveObject
     fixesConfig fixes = new fixesConfig();
 
