@@ -2,7 +2,6 @@ package top.infsky.cheatdetector.anticheat.checks;
 
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.phys.Vec3;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 
@@ -13,16 +12,14 @@ public class FlightA extends Check {
     public short liquidTick = 0;
     public short disableTick = 0;
 
-    public Vec3 setbackPos;
-
     public FlightA(TRPlayer player) {
         super("FlightA", player);
-        setbackPos = player.currentPos;
     }
 
     @Override
     public void _onTick() {
-        if (player.fabricPlayer.getUseItem().getItem() instanceof TridentItem) return;
+        if (player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
+                || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;
         if (ElytraItem.isFlyEnabled(player.fabricPlayer.getInventory().getArmor(2))) return;
 
@@ -32,30 +29,29 @@ public class FlightA extends Check {
         }
 
         if (player.fabricPlayer.onGround()) {
-            jumpTick = 1;  // MC原版OnGround不可靠。方块边缘会误判。
-            setbackPos = player.lastOnGroundPos;
+            jumpTick = CONFIG().getAdvanced().getFlightAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
         }
 
         // fix liquid
         if (player.fabricPlayer.isInWater() || player.fabricPlayer.isInLava()) {
-            liquidTick = 8;
-            setbackPos = player.lastInLiquidPos;
+            liquidTick = CONFIG().getAdvanced().getFlightAInLiquidLiquidTick();
         }
 
         // fix hurt
         if (player.fabricPlayer.hurtTime > 0) {
-            jumpTick = 6;
-            setbackPos = player.currentPos;
+            jumpTick = CONFIG().getAdvanced().getFlightAInHurtJumpTick();
         }
 
 
         if (!player.fabricPlayer.onGround() && jumpTick > 0
-                && player.currentPos.y() - player.lastOnGroundPos.y() < 1.25219 * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getAntiCheat().getThreshold()
+                && player.currentPos.y() - player.lastOnGroundPos.y()
+                < CONFIG().getAdvanced().getFlightAJumpDistance() * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getAntiCheat().getThreshold()
 //                && player.currentPos.distanceTo(player.lastPos) < 5.612 * (1 + player.fabricPlayer.getSpeed()) + CONFIG().getThreshold()  // 警惕跳跃弱检测
         ) {
             jumpTick--;
         } else if ((!player.fabricPlayer.isInWater() || !player.fabricPlayer.isInLava()) && liquidTick > 0
-                && player.currentPos.y() - player.lastInLiquidPos.y() < 0.5 + CONFIG().getAntiCheat().getThreshold()  // 瞎写的0.5
+                && player.currentPos.y() - player.lastInLiquidPos.y()
+                < CONFIG().getAdvanced().getFlightAFromWaterYDistance() + CONFIG().getAntiCheat().getThreshold()  // 瞎写的0.5 (getFlightAFromWaterYDistance)
 //                && (lastPos.y() - lastPos2.y() + CONFIG().getThreshold()) > (player.position().y() - lastPos.y())  // 警惕出水弱检测
         ) {
             liquidTick--;
@@ -71,12 +67,22 @@ public class FlightA extends Check {
 
     @Override
     public void _onTeleport() {
-        disableTick = 2;
+        disableTick = CONFIG().getAdvanced().getFlightAOnTeleportDisableTick();
     }
 
     @Override
     public void _onJump() {
         // fix jump
-        jumpTick = 14;
+        jumpTick = CONFIG().getAdvanced().getFlightAOnJumpJumpTick();
+    }
+
+    @Override
+    protected long getAlertBuffer() {
+        return CONFIG().getAdvanced().getFlightAAlertBuffer();
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        return !CONFIG().getAdvanced().isFlightACheck();
     }
 }

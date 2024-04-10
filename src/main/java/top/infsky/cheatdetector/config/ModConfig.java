@@ -22,4 +22,8 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Category("Alert")
     @ConfigEntry.Gui.TransitiveObject
     AlertConfig alert = new AlertConfig();
+
+    @ConfigEntry.Category("Advanced")
+    @ConfigEntry.Gui.TransitiveObject
+    AdvancedConfig advanced = new AdvancedConfig();
 }

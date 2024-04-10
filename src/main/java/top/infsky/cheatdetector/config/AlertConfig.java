@@ -24,4 +24,7 @@ public class AlertConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip
     boolean disableBuffer = false;
+
+    @ConfigEntry.Gui.Tooltip
+    String prefix = "§b§lTR§r§l>";
 }

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket1;
 import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket2;
-import top.infsky.cheatdetector.config.PacketFixer;
+import top.infsky.cheatdetector.config.Fixes;
 
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
@@ -30,7 +30,7 @@ public abstract class MixinMultiPlayerGameMode {
     @Inject(method = "continueDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void continueDestroyBlock(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         if (TRPlayer.SELF == null) return;
-        if (CONFIG().getFixes().getPacketFixMode() != PacketFixer.STRICT) return;
+        if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
 
         if (TRPlayer.SELF.manager.checks.get(BadPacket1.class)._onAction(cir, true)) {
             this.stopDestroyBlock();
@@ -40,7 +40,7 @@ public abstract class MixinMultiPlayerGameMode {
     @Inject(method = "stopDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void stopDestroyBlock(CallbackInfo ci) {
         if (TRPlayer.SELF == null) return;
-        if (CONFIG().getFixes().getPacketFixMode() != PacketFixer.STRICT) return;
+        if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
 
         TRPlayer.SELF.manager.checks.get(BadPacket2.class)._onAction(ci);
     }

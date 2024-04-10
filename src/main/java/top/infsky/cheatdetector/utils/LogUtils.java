@@ -14,7 +14,7 @@ public class LogUtils {
         if (check()) {
             assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("§b§lTR§r§l> §r%s§r %s§r %s§r | %s§r", player, Component.translatable("chat.cheatdetector.alert.fail").getString(), module, extraMsg)
+                    String.format("%s§r §r%s§r %s§r %s§r | %s§r", CONFIG().getAlert().getPrefix(), player, Component.translatable("chat.cheatdetector.alert.fail").getString(), module, extraMsg)
             ));
         }
     }
@@ -23,7 +23,7 @@ public class LogUtils {
         if (check()) {
             assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("§b§lTR§r§l> §r%s§r | %s§r", prefix, msg)
+                    String.format("%s§r §r%s§r | %s§r", CONFIG().getAlert().getPrefix(), prefix, msg)
             ));
         }
     }
@@ -32,7 +32,7 @@ public class LogUtils {
         if (check()) {
             assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("§b§lTR§r§l> §r%s§r", msg)
+                    String.format("%s§r §r%s§r", CONFIG().getAlert().getPrefix(), msg)
             ));
         }
 

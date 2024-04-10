@@ -16,8 +16,19 @@ public class BlinkA extends Check {
     public void _onTick() {
         if (player.lastPos == null || player.hasSetback) return;
 
-        if (player.lastPos.distanceTo(player.currentPos) > (player.fabricPlayer.getSpeed() * 10 * player.speedMul + player.fabricPlayer.fallDistance + CONFIG().getAntiCheat().getThreshold())) {
+        if (player.lastPos.distanceTo(player.currentPos) > (
+                CONFIG().getAdvanced().getBlinkMaxDistance() * player.speedMul + player.fabricPlayer.fallDistance + CONFIG().getAntiCheat().getThreshold())) {
             flag();
         }
+    }
+
+    @Override
+    protected long getAlertBuffer() {
+        return CONFIG().getAdvanced().getBlinkAlertBuffer();
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        return !CONFIG().getAdvanced().isBlinkCheck();
     }
 }

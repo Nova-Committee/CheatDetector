@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.anticheat;
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
@@ -17,6 +18,7 @@ import top.infsky.cheatdetector.utils.LogUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
@@ -44,6 +46,7 @@ public class TRPlayer {
     public GameType currentGameType;
     public GameType lastGameType;
     public long upTime = 0;
+    public int latency = 0;
 
     public TimeTaskManager timeTask = new TimeTaskManager();
 
@@ -73,14 +76,17 @@ public class TRPlayer {
 
         currentPos = fabricPlayer.position();
         currentRot = fabricPlayer.getRotationVector();
-        currentGameType = fabricPlayer.isCreative() ? GameType.CREATIVE :
-                fabricPlayer.isSpectator() ? GameType.SPECTATOR :
-                        GameType.SURVIVAL;
         speedMul = (fabricPlayer.getActiveEffectsMap().containsKey(MobEffects.MOVEMENT_SPEED)
                 ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
                 : 1)
                 * fabricPlayer.getSpeed() * 10;  // IDK why, but it just works!
         updatePoses();
+        try {
+            final PlayerInfo playerInfo = Objects.requireNonNull(Objects.requireNonNull(CheatDetector.CLIENT.getConnection()).getPlayerInfo(fabricPlayer.getUUID()));
+            currentGameType = playerInfo.getGameMode();
+            latency = playerInfo.getLatency();
+        } catch (NullPointerException ignored) {
+        }
         if (fabricPlayer.onGround()) {
             lastOnGroundPos = currentPos;
             jumping = false;

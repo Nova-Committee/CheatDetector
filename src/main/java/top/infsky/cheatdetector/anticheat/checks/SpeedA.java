@@ -18,7 +18,7 @@ public class SpeedA extends Check {
     public void _onTick() {
         if (hasJumped && !player.jumping) {
             hasJumped = false;
-            jumpTick = 10;
+            jumpTick = CONFIG().getAdvanced().getSpeedAAfterJumpJumpTick();
             return;
         }
 
@@ -29,13 +29,13 @@ public class SpeedA extends Check {
 
         double maxSecSpeed;
         if (jumpTick > 0)
-            maxSecSpeed = 7.4;
+            maxSecSpeed = CONFIG().getAdvanced().getSpeedAAfterJumpSpeed();
         else if (player.fabricPlayer.isSprinting())
-            maxSecSpeed = 5.612;
+            maxSecSpeed = CONFIG().getAdvanced().getSpeedASprintingSpeed();
         else if (player.fabricPlayer.isSilent())
-            maxSecSpeed = 1.295;
+            maxSecSpeed = CONFIG().getAdvanced().getSpeedASilentSpeed();
         else  // walking
-            maxSecSpeed = 4.317;
+            maxSecSpeed = CONFIG().getAdvanced().getSpeedAWalkSpeed();
 
         final double speed = PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos);
         final double possibleSpeed = maxSecSpeed * player.speedMul + CONFIG().getAntiCheat().getThreshold();
@@ -47,5 +47,15 @@ public class SpeedA extends Check {
     @Override
     public void _onJump() {
         hasJumped = true;
+    }
+
+    @Override
+    protected long getAlertBuffer() {
+        return CONFIG().getAdvanced().getSpeedAAlertBuffer();
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        return !CONFIG().getAdvanced().isSpeedACheck();
     }
 }

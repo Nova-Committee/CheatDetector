@@ -11,7 +11,7 @@ import top.infsky.cheatdetector.anticheat.TRPlayer;
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 public class FlagDetector extends Check {
-    public int disableTick = 10;
+    public int disableTick = 60;
     public Level lastWorld;
 
     public FlagDetector(@NotNull TRPlayer player) {

@@ -1,5 +1,6 @@
 package top.infsky.cheatdetector.anticheat;
 
+import net.minecraft.world.level.GameType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.checks.*;
@@ -31,8 +32,9 @@ public class CheckManager {
         checks.put(SpeedB.class, new SpeedB(player));
         checks.put(HighJumpA.class, new HighJumpA(player));
         checks.put(NoSlowA.class, new NoSlowA(player));
-        checks.put(CreativeModeA.class, new CreativeModeA(player));
+        checks.put(GameModeA.class, new GameModeA(player));
         checks.put(FlightB.class, new FlightB(player));
+        checks.put(VelocityA.class, new VelocityA(player));
 
         final CheckManager checkManager = new CheckManager(checks, player);
         checkManager.onTeleport();
@@ -47,8 +49,9 @@ public class CheckManager {
         checks.put(SpeedB.class, new SpeedB(player));
         checks.put(HighJumpA.class, new HighJumpA(player));
         checks.put(NoSlowA.class, new NoSlowA(player));
-        checks.put(CreativeModeA.class, new CreativeModeA(player));
+        checks.put(GameModeA.class, new GameModeA(player));
         checks.put(FlightB.class, new FlightB(player));
+        checks.put(VelocityA.class, new VelocityA(player));
         checks.put(BadPacket1.class, new BadPacket1(player));
         checks.put(BadPacket2.class, new BadPacket2(player));
         checks.put(MovementDisabler.class, new MovementDisabler(player));
@@ -69,7 +72,7 @@ public class CheckManager {
             for (Check check : checks.values()) check._onGameTypeChange();
         }
 
-        if (player.fabricPlayer.isSpectator() || player.fabricPlayer.isCreative()) return;
+        if (player.currentGameType == GameType.CREATIVE || player.currentGameType == GameType.SPECTATOR) return;
         if (player.lastOnGround && !player.fabricPlayer.onGround()) onJump();
 
         for (Check check : checks.values()) {

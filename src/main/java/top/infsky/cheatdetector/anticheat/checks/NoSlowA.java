@@ -10,7 +10,16 @@ import java.util.List;
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 public class NoSlowA extends Check {
-    public static final List<Double> SLOW_SPEED = List.of(2.56, 1.92, 1.6, 1.4, 1.36, 1.26, 1.18, 1.16);
+    public static final List<Double> SLOW_SPEED = List.of(
+            CONFIG().getAdvanced().getNoSlowASpeedTick1(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick2(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick3(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick4(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick5(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick6(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick7(),
+            CONFIG().getAdvanced().getNoSlowASpeedTick8()
+    );
     public short itemUseTick = 0;
     public short disableTick = 0;  // 跳跃弱检测
     public NoSlowA(@NotNull TRPlayer player) {
@@ -24,7 +33,7 @@ public class NoSlowA extends Check {
             return;  // 当连续两个tick使用物品才检查
         }
         if (player.jumping) {
-            disableTick = 4;
+            disableTick = CONFIG().getAdvanced().getNoSlowAInJumpDisableTick();
             return;
         }
         if (disableTick > 0) {
@@ -38,5 +47,15 @@ public class NoSlowA extends Check {
             flag(String.format("Current: %.2f  Max: %.2f", secSpeed, possibleSpeed));
         }
         if (itemUseTick < SLOW_SPEED.size() - 1) itemUseTick++;
+    }
+
+    @Override
+    protected long getAlertBuffer() {
+        return CONFIG().getAdvanced().getNoSlowAAlertBuffer();
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        return !CONFIG().getAdvanced().isNoSlowACheck();
     }
 }

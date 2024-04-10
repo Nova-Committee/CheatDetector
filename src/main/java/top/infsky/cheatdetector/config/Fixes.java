@@ -1,6 +1,6 @@
 package top.infsky.cheatdetector.config;
 
-public enum PacketFixer {
+public enum Fixes {
     NORMAL,
     STRICT
 }

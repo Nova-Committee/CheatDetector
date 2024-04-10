@@ -22,31 +22,29 @@ public abstract class Check {
         this.player = player;
     }
 
+    protected long getAlertBuffer() {
+        return CONFIG().getAlert().getAlertBuffer();
+    }
+    protected boolean isDisabled() {
+        return !CONFIG().getAntiCheat().isAntiCheatEnabled();
+    }
+
     public final void flag() {
-        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
+        if (isDisabled()) return;
         if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
         violations++;
         if (!CONFIG().getAlert().isDisableBuffer())
-            if (violations % CONFIG().getAlert().getAlertBuffer() != 0) return;
+            if (violations % getAlertBuffer() != 0) return;
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s)", violations));
     }
 
-    public final void flag(boolean bypassBuffer) {
-        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
-        if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
-        if (bypassBuffer) {
-            violations++;
-            LogUtils.alert(player.fabricPlayer.getName().getString(), ChatFormatting.DARK_RED + checkName, String.format("(VL:%s)", violations));
-        }
-    }
-
     public final void flag(String extraMsg) {
-        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
+        if (isDisabled()) return;
         if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
         violations++;
         if (!CONFIG().getAlert().isDisableBuffer())
-            if (violations % CONFIG().getAlert().getAlertBuffer() != 0) return;
-        LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s", violations, extraMsg));
+            if (violations % getAlertBuffer() != 0) return;
+        LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s%s", violations, ChatFormatting.GRAY, extraMsg));
     }
 
     public final void moduleMsg(String msg) {

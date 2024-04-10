@@ -14,7 +14,7 @@ public class fixesConfig implements ConfigData {
     boolean packetFixEnabled = false;
 
     @ConfigEntry.Gui.Tooltip
-    PacketFixer packetFixMode = PacketFixer.NORMAL;
+    Fixes packetFixMode = Fixes.NORMAL;
 
     @ConfigEntry.Gui.Tooltip
     boolean vulcanDisablerEnabled = false;
