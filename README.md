@@ -59,6 +59,7 @@ Mod包含69+项自定义选项，对于不同服务器，你可能需要根据�
 
 ## 贡献
 欢迎提issue或提交pull request。
+如果你想和我共同开发这个项目，请联系我。
 
 ## 相关项目
 - [TimeRecorder](https://github.com/Nova-Committee/TimeRecorder) （反作弊 模块在此mod基础上开发）
