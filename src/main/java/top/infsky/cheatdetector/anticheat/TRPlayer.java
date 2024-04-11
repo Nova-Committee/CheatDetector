@@ -47,6 +47,7 @@ public class TRPlayer {
     public GameType lastGameType;
     public long upTime = 0;
     public int latency = 0;
+    public float lastFallDistance = 0;
 
     public TimeTaskManager timeTask = new TimeTaskManager();
 
@@ -105,6 +106,7 @@ public class TRPlayer {
         lastOnGround = fabricPlayer.onGround();
         lastUsingItem = fabricPlayer.isUsingItem();
         lastGameType = currentGameType;
+        lastFallDistance = fabricPlayer.fallDistance;
         upTime++;
         tryToClearVL();
     }

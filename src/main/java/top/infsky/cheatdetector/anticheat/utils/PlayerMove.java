@@ -17,4 +17,9 @@ public class PlayerMove {
     public static @NotNull Vec3 getXZOnlyPos(@NotNull Vec3 position) {
         return new Vec3(position.x(), 0, position.z());
     }
+
+    @Contract("_ -> new")
+    public static @NotNull Vec3 getYOnlyPos(@NotNull Vec3 position) {
+        return new Vec3(0, position.y(), 0);
+    }
 }
