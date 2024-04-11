@@ -20,33 +20,38 @@
 ### ***“误判是不可避免的，反作弊判定结果仅供参考。”***
 </div>
 
-## 检查
-CheatDetector Mod使用了
-[```TimeRecorder Mod```](https://github.com/Nova-Committee/TimeRecorder)
-的部分时间性作弊检查，并额外添加了部分特色检查。。
+## 反作弊
+反作弊 模块旨在不被发现的情况下揭示其他玩家的作弊行为。
 - **Flight** 飞行检查
 - **HighJump** 高跳检查
 - **Blink** 闪现检查
 - **NoSlow** 无减速检查
 - **Speed** 速度检查
-- **CreativeMode** 开创造检查
+- **GameMode** 游戏模式检查
+- **Velocity** 反击退检查
+
+## 修复
+修复 模块旨在避免被生电服务器反作弊错误标记，不要使用它们获取**不平等的优势**。
+- 针对Themis反作弊
+    - tweakeroo右键连点器修复
+- 针对Vulcan反作弊
+    - BadPacket (Type 1)
+    - BadPacket (Type 2)
+    - Movement Disabler (适用于Vulcan 2.7.5)
+- Flag Detector (标记检测器)
+  基于拉回帮助你确认自己是否被反作弊标记。
 
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
-- 启用反作弊
-- 禁用自我检查
-- 最大移动偏移量
-- 启用发包修复
-- 发包修复模式
-- 启用警报
-- 启用发包修复警报
-- 禁用警报缓冲区
-- 警报缓冲区大小
+
+Mod包含69+项自定义选项，对于不同服务器，你可能需要根据延迟、丢包等情况修改配置。
+
+默认设置为<80ms的服务器设计。
 
 ## 兼容性
-在服务器使用是安全的，**发包修复**可以帮助你避开一些误判。
+在服务器使用是安全的，服务器无法通过你的发包了解到此Mod的安装情况。
 
-对于玩法类模组的兼容性较弱，因此~~可能~~很可能出现大量误判。
+对于玩法类模组的兼容性较弱。如果在模组服使用，~~可能~~很可能出现大量误判。
 
 ## 如何使用
 - 安装mod到客户端。 **（Fabric）**
@@ -56,5 +61,5 @@ CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
 欢迎提issue或提交pull request。
 
 ## 相关项目
-- [TimeRecorder](https://github.com/Nova-Committee/TimeRecorder)
-- [Cloth Config](https://github.com/shedaniel/cloth-config)
+- [TimeRecorder](https://github.com/Nova-Committee/TimeRecorder) （反作弊 模块在此mod基础上开发）
+- [Cloth Config](https://github.com/shedaniel/cloth-config) （感谢这么好用的自动配置！）
