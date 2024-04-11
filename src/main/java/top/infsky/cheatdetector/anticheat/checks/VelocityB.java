@@ -36,7 +36,7 @@ public class VelocityB extends Check {
             isHurt = false;
         }
 
-        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player)) {
+        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player, VelocityUtils.VelocityDirection.VERTICAL)) {
             if (player.currentPos.y() <= hurtPos.y() && hurtOnGround && player.fabricPlayer.onGround()) {  // <=0% y-port
                 if (hasDelayed > player.latency + CONFIG().getAdvanced().getVelocityAExtraDelayedMs()) {
                     hasCheck = true;

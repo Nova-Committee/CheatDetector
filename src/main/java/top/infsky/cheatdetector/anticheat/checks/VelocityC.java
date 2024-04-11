@@ -37,9 +37,9 @@ public class VelocityC extends Check {
             isHurt = false;
         }
 
-        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player)) {
+        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player, VelocityUtils.VelocityDirection.HORIZON)) {
             if (PlayerMove.getXZOnlyPos(player.currentPos).distanceTo(PlayerMove.getXZOnlyPos(hurtPos)) == 0
-                    && hurtOnGround && !player.fabricPlayer.onGround()) {  // 0% Xz-port
+                    && hurtOnGround) {  // 0% Xz-port
                 if (hasDelayed > player.latency + CONFIG().getAdvanced().getVelocityAExtraDelayedMs()) {
                     hasCheck = true;
                     flag("latency: %d  hasDelayed: %d".formatted(player.latency, hasDelayed));

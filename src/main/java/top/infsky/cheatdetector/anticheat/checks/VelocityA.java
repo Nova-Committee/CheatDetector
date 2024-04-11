@@ -34,7 +34,7 @@ public class VelocityA extends Check {
             isHurt = false;
         }
 
-        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player)) {
+        if (isHurt && !hasCheck && VelocityUtils.shouldCheck(player, VelocityUtils.VelocityDirection.ALL)) {
             if (player.currentPos == hurtPos) {
                 if (hasDelayed > player.latency + CONFIG().getAdvanced().getVelocityAExtraDelayedMs()) {
                     hasCheck = true;
