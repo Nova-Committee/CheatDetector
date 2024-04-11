@@ -36,6 +36,7 @@ public class TRPlayer {
     public Vec2 lastRot;
     @Range(from = 0, to = 19) public List<Vec3> posHistory;
     public Vec3 lastOnGroundPos;
+    public Vec3 lastOnGroundPos2;
     public Vec3 lastInLiquidPos;
     public Vec3 lastOnLiquidGroundPos;
     public boolean lastOnGround;
@@ -89,6 +90,7 @@ public class TRPlayer {
         } catch (NullPointerException ignored) {
         }
         if (fabricPlayer.onGround()) {
+            lastOnGroundPos2 = lastOnGroundPos;
             lastOnGroundPos = currentPos;
             jumping = false;
             if (fabricPlayer.isInWater())

@@ -35,8 +35,6 @@ public class CheckManager {
         checks.put(GameModeA.class, new GameModeA(player));
         checks.put(FlightB.class, new FlightB(player));
         checks.put(VelocityA.class, new VelocityA(player));
-        checks.put(VelocityB.class, new VelocityB(player));
-        checks.put(VelocityC.class, new VelocityC(player));
 
         final CheckManager checkManager = new CheckManager(checks, player);
         checkManager.onTeleport();
@@ -54,8 +52,6 @@ public class CheckManager {
         checks.put(GameModeA.class, new GameModeA(player));
         checks.put(FlightB.class, new FlightB(player));
         checks.put(VelocityA.class, new VelocityA(player));
-        checks.put(VelocityB.class, new VelocityB(player));
-        checks.put(VelocityC.class, new VelocityC(player));
         checks.put(BadPacket1.class, new BadPacket1(player));
         checks.put(BadPacket2.class, new BadPacket2(player));
         checks.put(MovementDisabler.class, new MovementDisabler(player));

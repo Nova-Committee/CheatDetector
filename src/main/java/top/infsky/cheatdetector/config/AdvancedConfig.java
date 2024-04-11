@@ -77,16 +77,7 @@ public class AdvancedConfig implements ConfigData {
     boolean velocityACheck = true;
     long velocityAAlertBuffer = 2;
     int velocityAExtraDelayedMs = 20;
-
-    @ConfigEntry.Gui.PrefixText
-    boolean velocityBCheck = true;
-    long velocityBAlertBuffer = 2;
-    int velocityBExtraDelayedMs = 20;
-
-    @ConfigEntry.Gui.PrefixText
-    boolean velocityCCheck = true;
-    long velocityCAlertBuffer = 2;
-    int velocityCExtraDelayedMs = 20;
+    int velocityAAfterFallExtraDisableTick = 2;
 
     public short getFlightAOnGroundJumpTick() {
         return (short) flightAOnGroundJumpTick;

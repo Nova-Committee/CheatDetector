@@ -29,10 +29,6 @@ public class VelocityUtils {
     public static boolean shouldCheck(@NotNull TRPlayer player, @NotNull VelocityDirection velocityDirection) {
         final Set<MobEffect> hasEffects = player.fabricPlayer.getActiveEffectsMap().keySet();
 
-        // fall
-        if (player.lastFallDistance > 3 && !hasEffects.contains(MobEffects.SLOW_FALLING))
-            return false;
-
         // fire
         if ((player.fabricPlayer.isOnFire() || player.fabricPlayer.isInLava()) && !hasEffects.contains(MobEffects.FIRE_RESISTANCE))
             return false;
@@ -88,5 +84,11 @@ public class VelocityUtils {
 
         // as default
         return true;
+    }
+
+    public static boolean shouldBypassNextHurt(@NotNull TRPlayer player) {
+        final Set<MobEffect> hasEffects = player.fabricPlayer.getActiveEffectsMap().keySet();
+
+        return player.lastFallDistance > 3 && !hasEffects.contains(MobEffects.SLOW_FALLING);
     }
 }
