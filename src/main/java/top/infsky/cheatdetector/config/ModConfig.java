@@ -26,4 +26,8 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Category("Advanced")
     @ConfigEntry.Gui.TransitiveObject
     AdvancedConfig advanced = new AdvancedConfig();
+
+    @ConfigEntry.Category("Advanced2")
+    @ConfigEntry.Gui.TransitiveObject
+    Advanced2Config advanced2 = new Advanced2Config();
 }

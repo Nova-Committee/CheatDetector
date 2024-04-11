@@ -23,13 +23,14 @@ public abstract class Check {
     }
 
     protected long getAlertBuffer() {
-        return CONFIG().getAlert().getAlertBuffer();
+        return 1;
     }
     protected boolean isDisabled() {
-        return !CONFIG().getAntiCheat().isAntiCheatEnabled();
+        return false;
     }
 
-    public final void flag() {
+    public void flag() {
+        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
         if (isDisabled()) return;
         if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
         violations++;
@@ -38,7 +39,8 @@ public abstract class Check {
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s)", violations));
     }
 
-    public final void flag(String extraMsg) {
+    public void flag(String extraMsg) {
+        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
         if (isDisabled()) return;
         if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
         violations++;
@@ -47,11 +49,11 @@ public abstract class Check {
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s%s", violations, ChatFormatting.GRAY, extraMsg));
     }
 
-    public final void moduleMsg(String msg) {
+    public void moduleMsg(String msg) {
         LogUtils.prefix(checkName, msg);
     }
 
-    public final void customMsg(String msg) {
+    public void customMsg(String msg) {
         LogUtils.custom(msg);
     }
 

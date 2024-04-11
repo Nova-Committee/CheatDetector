@@ -51,6 +51,9 @@ public class MovementDisabler extends Check {
                         new ServerboundPlayerActionPacket(
                                 ServerboundPlayerActionPacket.Action.RELEASE_USE_ITEM, new BlockPos(0, 0, 0), Direction.DOWN)
                 );
+
+                if (CONFIG().getAdvanced2().isMovementDisablerShowPacketSend())
+                    moduleMsg(ChatFormatting.GRAY + "send packet.");
             }
             waitTicks = 20;
         } else if (!lastEnabled) {  // 玩家刚刚启用这个选项

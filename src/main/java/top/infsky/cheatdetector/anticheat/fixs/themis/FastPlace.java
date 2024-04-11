@@ -14,12 +14,17 @@ import top.infsky.cheatdetector.anticheat.utils.UseItemOn;
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 public class FastPlace extends Check {
-    public final short minDelay = 1;
+    public short minDelay = 1;
     public long lastPlaceTick = 0;
     public UseItemOn lastAction = null;
 
     public FastPlace(@NotNull TRPlayer player) {
         super("FastPlace", player);
+    }
+
+    @Override
+    public void _onTick() {
+        minDelay = CONFIG().getAdvanced2().getFastPlaceSamePlaceMinDelay();
     }
 
     @Override
@@ -32,8 +37,9 @@ public class FastPlace extends Check {
         final UseItemOn currentAction = new UseItemOn(itemStack.getItem(), blockHitResult.getBlockPos(), blockHitResult.getDirection(), blockHitResult.getType());
         if (player.upTime - lastPlaceTick < minDelay) {  // 在受制约的tick里
             if (currentAction.equals(lastAction)) {  // 是spam
-                if (CONFIG().getAlert().isAllowAlertPacketFix()) flag();
-                ci.cancel();
+                if (CONFIG().getAlert().isAllowAlertFixes()) flag();
+                if (CONFIG().getAdvanced2().isFastPlaceEnabled())
+                    ci.cancel();
                 lastAction = currentAction;
                 return true;
             }
@@ -51,5 +57,15 @@ public class FastPlace extends Check {
             case OFF_HAND -> result = player.getOffhandItem();
         }
         return result;
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return !CONFIG().getAdvanced2().isFastPlaceEnabled();
+    }
+
+    @Override
+    public long getAlertBuffer() {
+        return CONFIG().getAdvanced2().getFastPlaceAlertBuffer();
     }
 }

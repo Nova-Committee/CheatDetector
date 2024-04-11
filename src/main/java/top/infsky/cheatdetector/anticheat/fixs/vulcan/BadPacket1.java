@@ -2,7 +2,7 @@ package top.infsky.cheatdetector.anticheat.fixs.vulcan;
 
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.infsky.cheatdetector.anticheat.Check;
+import top.infsky.cheatdetector.anticheat.Fix;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
@@ -10,7 +10,7 @@ import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 /**
  * Fix BadPacket1 Check.
  */
-public class BadPacket1 extends Check {
+public class BadPacket1 extends Fix {
     public boolean hasSend = false;
 
     public BadPacket1(@NotNull TRPlayer player) {
@@ -29,15 +29,27 @@ public class BadPacket1 extends Check {
             return false;
         }
 
-        if (CONFIG().getAlert().isAllowAlertPacketFix()) flag("Too many start dig Packet.");
+        flag("Too many start dig Packet.");
         hasSend = false;
-        cir.setReturnValue(fallbackReturn);
-        cir.cancel();
+        if (!isDisabled()) {
+            cir.setReturnValue(fallbackReturn);
+            cir.cancel();
+        }
         return true;
     }
 
     @Override
     public void _onTick() {
         hasSend = false;
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return !CONFIG().getAdvanced2().isBadPacket1Enabled();
+    }
+
+    @Override
+    public long getAlertBuffer() {
+        return CONFIG().getAdvanced2().getBadPacket1AlertBuffer();
     }
 }

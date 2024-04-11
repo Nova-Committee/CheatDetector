@@ -12,13 +12,13 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class AdvancedConfig implements ConfigData {
     @ConfigEntry.Gui.PrefixText
     boolean blinkCheck = true;
-    int blinkAlertBuffer = 20;
+    long blinkAlertBuffer = 20;
     double blinkMaxDistance = 1;
 
     
     @ConfigEntry.Gui.PrefixText
     boolean flightACheck = true;
-    int flightAAlertBuffer = 20;
+    long flightAAlertBuffer = 20;
     int flightAOnGroundJumpTick = 1;
     int flightAInLiquidLiquidTick = 8;
     int flightAInHurtJumpTick = 6;
@@ -30,23 +30,23 @@ public class AdvancedConfig implements ConfigData {
     
     @ConfigEntry.Gui.PrefixText
     boolean flightBCheck = true;
-    int flightBAlertBuffer = 1;
+    long flightBAlertBuffer = 1;
 
     
     @ConfigEntry.Gui.PrefixText
     boolean gameModeACheck = true;
-    int gameModeAAlertBuffer = 1;
+    long gameModeAAlertBuffer = 1;
 
     
     @ConfigEntry.Gui.PrefixText
     boolean highJumpACheck = true;
-    int highJumpAAlertBuffer = 10;
+    long highJumpAAlertBuffer = 10;
     double highJumpAJumpDistance = 1.25219;
 
     
     @ConfigEntry.Gui.PrefixText
     boolean noSlowACheck = true;
-    int noSlowAAlertBuffer = 20;
+    long noSlowAAlertBuffer = 20;
     double noSlowASpeedTick1 = 2.56;
     double noSlowASpeedTick2 = 1.92;
     double noSlowASpeedTick3 = 1.6;
@@ -60,7 +60,7 @@ public class AdvancedConfig implements ConfigData {
     
     @ConfigEntry.Gui.PrefixText
     boolean speedACheck = true;
-    int speedAAlertBuffer = 30;
+    long speedAAlertBuffer = 30;
     int speedAAfterJumpJumpTick = 10;
     double speedAAfterJumpSpeed = 7.4;
     double speedASprintingSpeed = 5.612;
@@ -70,13 +70,23 @@ public class AdvancedConfig implements ConfigData {
     
     @ConfigEntry.Gui.PrefixText
     boolean speedBCheck = true;
-    int speedBAlertBuffer = 10;
+    long speedBAlertBuffer = 10;
 
     
     @ConfigEntry.Gui.PrefixText
     boolean velocityACheck = true;
-    int velocityAAlertBuffer = 2;
-    int velocityAExtraDelayedMs = 50;
+    long velocityAAlertBuffer = 2;
+    int velocityAExtraDelayedMs = 20;
+
+    @ConfigEntry.Gui.PrefixText
+    boolean velocityBCheck = true;
+    long velocityBAlertBuffer = 2;
+    int velocityBExtraDelayedMs = 20;
+
+    @ConfigEntry.Gui.PrefixText
+    boolean velocityCCheck = true;
+    long velocityCAlertBuffer = 2;
+    int velocityCExtraDelayedMs = 20;
 
     public short getFlightAOnGroundJumpTick() {
         return (short) flightAOnGroundJumpTick;
