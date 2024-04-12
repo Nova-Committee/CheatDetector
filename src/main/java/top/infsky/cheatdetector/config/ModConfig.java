@@ -17,7 +17,7 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
 
     @ConfigEntry.Category("Fixes")
     @ConfigEntry.Gui.TransitiveObject
-    fixesConfig fixes = new fixesConfig();
+    FixesConfig fixes = new FixesConfig();
 
     @ConfigEntry.Category("Alert")
     @ConfigEntry.Gui.TransitiveObject

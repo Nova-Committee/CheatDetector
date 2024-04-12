@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 
 @Mixin(ClientPacketListener.class)
-public class MixinPacket {
+public abstract class MixinPacket {
     @Inject(method = "handleMovePlayer", at = @At(value = "HEAD"))
     public void handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) {
         if (TRPlayer.SELF == null) return;

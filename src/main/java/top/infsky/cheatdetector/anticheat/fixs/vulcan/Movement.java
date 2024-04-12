@@ -17,19 +17,19 @@ import top.infsky.cheatdetector.anticheat.TRPlayer;
 
 import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
-public class MovementDisabler extends Check {
+public class Movement extends Check {
     public short waitTicks = -1;
     public boolean lastEnabled;  // 上个tick启用状态
 
-    public MovementDisabler(@NotNull TRPlayer player) {
-        super("MovementDisabler", player);
+    public Movement(@NotNull TRPlayer player) {
+        super("Movement", player);
         lastEnabled = CONFIG().getFixes().isVulcanDisablerEnabled();
     }
 
     @Override
     public void _onTick() {
         // tick before
-        if (!CONFIG().getFixes().isVulcanDisablerEnabled()) {
+        if (isDisabled()) {
             if (lastEnabled)
                 moduleMsg(ChatFormatting.DARK_RED + "已禁用");
             lastEnabled = false;
@@ -49,10 +49,11 @@ public class MovementDisabler extends Check {
                 );
                 TRPlayer.CLIENT.getConnection().send(
                         new ServerboundPlayerActionPacket(
-                                ServerboundPlayerActionPacket.Action.RELEASE_USE_ITEM, new BlockPos(0, 0, 0), Direction.DOWN)
+                                ServerboundPlayerActionPacket.Action.RELEASE_USE_ITEM, new BlockPos(0, 0, 0), Direction.DOWN
+                        )
                 );
 
-                if (CONFIG().getAdvanced2().isMovementDisablerShowPacketSend())
+                if (CONFIG().getAdvanced2().isMovementShowPacketSend())
                     moduleMsg(ChatFormatting.GRAY + "send packet.");
             }
             waitTicks = 20;
@@ -70,5 +71,10 @@ public class MovementDisabler extends Check {
         final ItemStack offhand = player.fabricPlayer.getOffhandItem();
         return offhand.getItem() == Items.TRIDENT && offhand.isEnchanted()
                 && EnchantmentHelper.getEnchantments(offhand).containsKey(Enchantments.RIPTIDE);
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return !CONFIG().getFixes().isVulcanDisablerEnabled();
     }
 }

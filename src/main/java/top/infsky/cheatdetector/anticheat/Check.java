@@ -2,8 +2,10 @@ package top.infsky.cheatdetector.anticheat;
 
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.Connection;
+import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -61,7 +63,8 @@ public abstract class Check {
     public void _onTeleport() {}
     public void _onJump() {}
     public void _onGameTypeChange() {}
-    public <T> boolean _onAction(CallbackInfoReturnable<T> cir, T fallbackReturn) {return false;}
-    public boolean _onAction(CallbackInfo ci) {return false;}
-    public boolean _onAction(InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfo ci) {return false;}
+    public <T> boolean _handleStartDestroyBlock(CallbackInfoReturnable<T> cir, T fallbackReturn) { return false; }
+    public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
+    public boolean _handleUseItemOn(ServerboundUseItemOnPacket packet, CallbackInfo ci) { return false; }
+    public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
 }

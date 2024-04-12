@@ -28,7 +28,7 @@ public class FlightA extends Check {
             return;
         }
 
-        if (player.fabricPlayer.onGround()) {
+        if (player.currentOnGround) {
             jumpTick = CONFIG().getAdvanced().getFlightAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
         }
 
@@ -43,7 +43,7 @@ public class FlightA extends Check {
         }
 
 
-        if (!player.fabricPlayer.onGround() && jumpTick > 0
+        if (!player.currentOnGround && jumpTick > 0
                 && player.currentPos.y() - player.lastOnGroundPos.y()
                 < CONFIG().getAdvanced().getFlightAJumpDistance() * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getAntiCheat().getThreshold()
 //                && player.currentPos.distanceTo(player.lastPos) < 5.612 * (1 + player.fabricPlayer.getSpeed()) + CONFIG().getThreshold()  // 警惕跳跃弱检测
@@ -55,7 +55,7 @@ public class FlightA extends Check {
 //                && (lastPos.y() - lastPos2.y() + CONFIG().getThreshold()) > (player.position().y() - lastPos.y())  // 警惕出水弱检测
         ) {
             liquidTick--;
-        } else if (player.posHistory.get(1) != null && !player.fabricPlayer.onGround() && (!player.fabricPlayer.isInWater() && !player.fabricPlayer.isInLava())) {
+        } else if (player.posHistory.get(1) != null && !player.currentOnGround && (!player.fabricPlayer.isInWater() && !player.fabricPlayer.isInLava())) {
             jumpTick = 0;
             liquidTick = 0;
             if (player.lastPos.y() - player.currentPos.y() < CONFIG().getAntiCheat().getThreshold() &&
