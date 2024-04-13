@@ -41,6 +41,8 @@
     - Movement Disabler (适用于Vulcan 2.7.5)
 - Flag Detector (标记检测器)
   基于拉回帮助你确认自己是否被反作弊标记。
+- Spin (自旋)
+  使你像大陀螺一样旋转。
 
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
