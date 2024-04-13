@@ -116,7 +116,7 @@
   "text.autoconfig.cheatdetector.option.fixes.vulcanOmniSprintEnabled": "启用 Vulcan 全方向疾跑禁用器",
   "text.autoconfig.cheatdetector.option.fixes.vulcanOmniSprintEnabled.@Tooltip": "[旧版 Vulcan] 禁用全方向疾跑检查\n感谢 @§nAlan34§r 。",
   "text.autoconfig.cheatdetector.option.fixes.spinEnabled": "启用自旋",
-  "text.autoconfig.cheatdetector.option.fixes.spinEnabled.@Tooltip": "如果启用，您将像黑客一样旋转",
+  "text.autoconfig.cheatdetector.option.fixes.spinEnabled.@Tooltip": "如果启用，您将像大陀螺一样旋转",
   "text.autoconfig.cheatdetector.option.fixes.vulcanDisablerEnabled": "启用 Vulcan 禁用器",
   "text.autoconfig.cheatdetector.option.fixes.vulcanDisablerEnabled.@Tooltip": "你需要在副手持有一个包含激流附魔的三叉戟以禁用移动检测。\n这个模块为Vulcan 2.7.5设计，更新的Vulcan似乎无法使用。\n感谢 @§nCCBlueX§r 。",
   "text.autoconfig.cheatdetector.title": "作弊检测器设定"
