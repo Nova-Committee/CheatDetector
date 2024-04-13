@@ -50,11 +50,11 @@ public class Spin extends Fix {
 
     public void updateRot() {
         check();
-        if (CONFIG().getAdvanced2().isSpinDoSpinPitch())
+        if (CONFIG().getAdvanced2().isSpinDoSpinYaw())
             yaw += CONFIG().getAdvanced2().getSpinYawStep();
         else
             yaw = CONFIG().getAdvanced2().getSpinDefaultYaw();
-        if (CONFIG().getAdvanced2().isSpinDoSpinYaw())
+        if (CONFIG().getAdvanced2().isSpinDoSpinPitch())
             pitch += CONFIG().getAdvanced2().getSpinPitchStep() * (pitchReserve ? -1 : 1);
         else
             pitch = CONFIG().getAdvanced2().getSpinDefaultPitch();
@@ -81,12 +81,6 @@ public class Spin extends Fix {
                 pitchReserve = false;
             }
         }
-        // yaw
-        if (yaw >= 180) {  // 向右转了一圈
-            yaw = -180;
-        } else if (yaw <= -180) {  // 向左转了一圈
-            yaw = 180;
-        }
     }
 
     public void packetRot() {
@@ -99,13 +93,14 @@ public class Spin extends Fix {
 
     @Override
     public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+        if (isDisabled()) return false;
         if (!CONFIG().getAdvanced2().isSpinOnlyPacket()) return false;
 
         if (packet.hasRotation()) {
             ci.cancel();
             if (packet.hasPosition()) {
                 connection.send(
-                        new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()),
+                        new ServerboundMovePlayerPacket.PosRot(packet.getX(0), packet.getY(0), packet.getZ(0), yaw, pitch, packet.isOnGround()),
                         listener
                 );
             }

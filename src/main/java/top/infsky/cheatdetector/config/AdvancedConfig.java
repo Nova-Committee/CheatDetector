@@ -79,6 +79,10 @@ public class AdvancedConfig implements ConfigData {
     int velocityAExtraDelayedMs = 20;
     int velocityAAfterFallExtraDisableTick = 2;
 
+    @ConfigEntry.Gui.PrefixText
+    boolean groundSpoofACheck = true;
+    long groundSpoofAAlertBuffer = 2;
+
     public short getFlightAOnGroundJumpTick() {
         return (short) flightAOnGroundJumpTick;
     }
