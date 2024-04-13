@@ -39,8 +39,8 @@ public class GroundSpoofA extends Check {
     }
 
     public static boolean check(@NotNull Level level, BlockPos groundPos) {
-        if (level.getBlockState(groundPos).isAir())
-            return true;
+        if (!level.getBlockState(groundPos).isAir())
+            return false;
 
         short count = 0;
         final List<BlockPos> blocks = List.of(
@@ -49,9 +49,9 @@ public class GroundSpoofA extends Check {
                 groundPos.west(),
                 groundPos.west().south(),
                 groundPos.north(),
-                groundPos.north().east(),
+                groundPos.north().west(),
                 groundPos.south(),
-                groundPos.south().west()
+                groundPos.south().east()
         );
         for (BlockPos blockPos : blocks) {
             if (level.getBlockState(blockPos).isAir()) {

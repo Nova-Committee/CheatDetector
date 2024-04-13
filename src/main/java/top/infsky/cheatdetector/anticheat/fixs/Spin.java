@@ -28,6 +28,7 @@ public class Spin extends Fix {
         // 😅这若智代码写了一天还没写出来
         // xRot竟然是pitch我难绷了
         // TODO 静默转头明天再说
+        // TODO move-fix
         if (isDisabled()) return;
 
         final MixinEntity camera = (MixinEntity) player.fabricPlayer;
@@ -96,7 +97,7 @@ public class Spin extends Fix {
         if (isDisabled()) return false;
         if (!CONFIG().getAdvanced2().isSpinOnlyPacket()) return false;
 
-        if (packet.hasRotation()) {
+        if (packet.getXRot(pitch) != pitch || packet.getYRot(yaw) != yaw) {
             ci.cancel();
             if (packet.hasPosition()) {
                 connection.send(
@@ -106,5 +107,11 @@ public class Spin extends Fix {
             }
         }
         return false;
+    }
+
+    @Override
+    public void _onTeleport() {
+        pitch = player.fabricPlayer.getXRot();
+        yaw = player.fabricPlayer.getYRot();
     }
 }
