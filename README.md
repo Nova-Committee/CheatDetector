@@ -39,6 +39,7 @@
     - BadPacket (Type 1)
     - BadPacket (Type 2)
     - Movement Disabler (适用于Vulcan 2.7.5)
+    - OmniSprint Disabler (适用于Old Vulcan)
 - Flag Detector (标记检测器)
     - 基于拉回帮助你确认自己是否被反作弊标记。
 - Spin (自旋)
