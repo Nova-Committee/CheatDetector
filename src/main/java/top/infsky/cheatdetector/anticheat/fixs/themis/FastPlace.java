@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.anticheat.fixs.themis;
 
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -28,8 +29,10 @@ public class FastPlace extends Check {
     }
 
     @Override
-    public boolean _onAction(InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfo ci) {
+    public boolean _handleUseItemOn(ServerboundUseItemOnPacket packet, CallbackInfo ci) {
         if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
+        final InteractionHand interactionHand = packet.getHand();
+        final BlockHitResult blockHitResult = packet.getHitResult();
 
         final ItemStack itemStack = getItemStack(player.fabricPlayer, interactionHand);
         if (!(itemStack.getItem() instanceof BlockItem)) return false;

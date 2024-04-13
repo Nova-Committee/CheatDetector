@@ -21,7 +21,7 @@ public class BadPacket2 extends Fix {
      * @return 是否取消
      */
     @Override
-    public boolean _onAction(CallbackInfo ci) {
+    public boolean _handleStopDestroyBlock(CallbackInfo ci) {
         if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
 
         if (!hasSend) {

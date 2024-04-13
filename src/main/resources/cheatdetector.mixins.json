@@ -9,6 +9,7 @@
   "client": [
     "MixinConnection",
     "MixinMultiPlayerGameMode",
-    "MixinPacket"
+    "MixinPacket",
+    "MixinEntity"
   ]
 }

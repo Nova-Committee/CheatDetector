@@ -24,12 +24,25 @@ public class Advanced2Config implements ConfigData {
     long badPacket2AlertBuffer = 20;
 
     @ConfigEntry.Gui.PrefixText
-    boolean movementDisablerShowPacketSend = false;
+    boolean movementShowPacketSend = false;
 
     @ConfigEntry.Gui.PrefixText
     boolean fastPlaceEnabled = true;
     long fastPlaceAlertBuffer = 100;
     int fastPlaceSamePlaceMinDelay = 1;
+
+    @ConfigEntry.Gui.PrefixText
+    boolean omniSprintShowPacketSend = false;
+
+    @ConfigEntry.Gui.PrefixText
+    boolean spinDoSpinYaw = true;
+    boolean spinDoSpinPitch = false;
+    boolean spinAllowBadPitch = false;
+    float spinDefaultYaw = 90;
+    float spinDefaultPitch = 0;
+    float spinYawStep = 25;
+    float spinPitchStep = 15;
+    boolean spinOnlyPacket = false;
 
     public short getFastPlaceSamePlaceMinDelay() {
         return (short) fastPlaceSamePlaceMinDelay;

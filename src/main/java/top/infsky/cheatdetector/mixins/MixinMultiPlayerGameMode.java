@@ -24,7 +24,7 @@ public abstract class MixinMultiPlayerGameMode {
     @Inject(method = "startDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void startDestroyBlock(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         if (TRPlayer.SELF == null) return;
-        TRPlayer.SELF.manager.checks.get(BadPacket1.class)._onAction(cir, false);
+        TRPlayer.SELF.manager.checks.get(BadPacket1.class)._handleStartDestroyBlock(cir, false);
     }
 
     @Inject(method = "continueDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
@@ -32,7 +32,7 @@ public abstract class MixinMultiPlayerGameMode {
         if (TRPlayer.SELF == null) return;
         if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
 
-        if (TRPlayer.SELF.manager.checks.get(BadPacket1.class)._onAction(cir, true)) {
+        if (TRPlayer.SELF.manager.checks.get(BadPacket1.class)._handleStartDestroyBlock(cir, true)) {
             this.stopDestroyBlock();
         }
     }
@@ -42,6 +42,6 @@ public abstract class MixinMultiPlayerGameMode {
         if (TRPlayer.SELF == null) return;
         if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
 
-        TRPlayer.SELF.manager.checks.get(BadPacket2.class)._onAction(ci);
+        TRPlayer.SELF.manager.checks.get(BadPacket2.class)._handleStopDestroyBlock(ci);
     }
 }

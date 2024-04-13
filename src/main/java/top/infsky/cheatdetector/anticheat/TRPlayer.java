@@ -39,7 +39,9 @@ public class TRPlayer {
     public Vec3 lastOnGroundPos2;
     public Vec3 lastInLiquidPos;
     public Vec3 lastOnLiquidGroundPos;
+    public boolean currentOnGround;
     public boolean lastOnGround;
+    public boolean lastOnGround2;
     public boolean hasSetback = false;
     public boolean jumping = false;
     public boolean lastUsingItem = false;
@@ -61,7 +63,7 @@ public class TRPlayer {
             this.manager = CheckManager.create(this);
         currentPos = fabricPlayer.position();
         currentRot = fabricPlayer.getRotationVector();
-        lastOnGround = fabricPlayer.onGround();
+        currentOnGround = lastOnGround = lastOnGround2 = fabricPlayer.onGround();
         currentGameType = lastGameType =
                 fabricPlayer.isCreative() ? GameType.CREATIVE :
                         fabricPlayer.isSpectator() ? GameType.SPECTATOR :
@@ -78,6 +80,7 @@ public class TRPlayer {
 
         currentPos = fabricPlayer.position();
         currentRot = fabricPlayer.getRotationVector();
+        currentOnGround = fabricPlayer.onGround();
         speedMul = (fabricPlayer.getActiveEffectsMap().containsKey(MobEffects.MOVEMENT_SPEED)
                 ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
                 : 1)
@@ -105,7 +108,8 @@ public class TRPlayer {
 
         lastPos = currentPos;
         lastRot = currentRot;
-        lastOnGround = fabricPlayer.onGround();
+        lastOnGround2 = lastOnGround;
+        lastOnGround = currentOnGround;
         lastUsingItem = fabricPlayer.isUsingItem();
         lastGameType = currentGameType;
         lastFallDistance = fabricPlayer.fallDistance;

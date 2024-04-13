@@ -21,7 +21,7 @@ public class BadPacket1 extends Fix {
      * @return 是否取消
      */
     @Override
-    public <T> boolean _onAction(CallbackInfoReturnable<T> cir, T fallbackReturn) {
+    public <T> boolean _handleStartDestroyBlock(CallbackInfoReturnable<T> cir, T fallbackReturn) {
         if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
 
         if (!hasSend) {
@@ -33,7 +33,6 @@ public class BadPacket1 extends Fix {
         hasSend = false;
         if (!isDisabled()) {
             cir.setReturnValue(fallbackReturn);
-            cir.cancel();
         }
         return true;
     }
