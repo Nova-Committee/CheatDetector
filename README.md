@@ -6,14 +6,15 @@
     <a href="https://github.com/Nova-Committee/CheatDetector/issues">
       <img src="https://img.shields.io/github/issues/Nova-Committee/CheatDetector?style=flat" alt="issues" />
     </a>
-    <a href="https://www.curseforge.com/minecraft/mc-mods/CheatDetector">
-      <img src="http://cf.way2muchnoise.eu/cheatdetector.svg" alt="CurseForge Download">
-    </a>
     <img src="https://img.shields.io/badge/license-GPLV3-green" alt="License">
     <a href="https://github.com/Nova-Committee/CheatDetector/actions/workflows/gradle.yml">
       <img src="https://github.com/Nova-Committee/CheatDetector/actions/workflows/gradle.yml/badge.svg" alt="Action">
     </a>  
 </p>
+
+[![Github Release Downloads](https://img.shields.io/github/downloads/Nova-Committee/CheatDetector/total?label=Github%20Release%20Downloads&style=flat-square)](https://github.com/Nova-Committee/CheatDetector/releases)
+[![CurseForge Downloads](http://cf.way2muchnoise.eu/997222.svg?badge_style=flat)](https://www.curseforge.com/minecraft/mc-mods/cheatdetector)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/QNVaUzHT?label=Modrinth%20Downloads&logo=Modrinth%20Downloads&style=flat-square)](https://modrinth.com/mod/cheatdetector)
 
 一个纯客户端模组，检测一些常见的作弊行为。
 
@@ -39,8 +40,11 @@
     - BadPacket (Type 1)
     - BadPacket (Type 2)
     - Movement Disabler (适用于Vulcan 2.7.5)
+    - OmniSprint Disabler (适用于Old Vulcan)
 - Flag Detector (标记检测器)
-  基于拉回帮助你确认自己是否被反作弊标记。
+    - 基于拉回帮助你确认自己是否被反作弊标记。
+- Spin (自旋)
+    - 使你像大陀螺一样旋转。
 
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
