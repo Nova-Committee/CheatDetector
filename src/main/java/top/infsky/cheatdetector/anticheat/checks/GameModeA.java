@@ -3,8 +3,7 @@ package top.infsky.cheatdetector.anticheat.checks;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
 
 public class GameModeA extends Check {
     public GameModeA(@NotNull TRPlayer player) {
@@ -17,13 +16,13 @@ public class GameModeA extends Check {
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getGameModeAAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.gameModeAAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isGameModeACheck();
+        return !AdvancedConfig.gameModeACheck;
     }
 }
 

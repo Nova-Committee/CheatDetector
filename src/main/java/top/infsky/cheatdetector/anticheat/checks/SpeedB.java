@@ -1,12 +1,12 @@
 package top.infsky.cheatdetector.anticheat.checks;
 
+import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
 
 public class SpeedB extends Check {
-    public SpeedB(TRPlayer player) {
+    public SpeedB(@NotNull TRPlayer player) {
         super("SpeedB", player);
     }
 
@@ -19,12 +19,12 @@ public class SpeedB extends Check {
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getSpeedBAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.speedBAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isSpeedBCheck();
+        return !AdvancedConfig.speedBCheck;
     }
 }

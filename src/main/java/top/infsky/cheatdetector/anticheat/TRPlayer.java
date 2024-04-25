@@ -10,17 +10,18 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.utils.TimeTaskManager;
+import top.infsky.cheatdetector.config.AlertConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.utils.LogUtils;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 /**
  * 管理玩家信息的类。每个玩家都应有一个TRPlayer实例。
@@ -52,15 +53,16 @@ public class TRPlayer {
     public int latency = 0;
     public float lastFallDistance = 0;
 
-    public TimeTaskManager timeTask = new TimeTaskManager();
+    public @NotNull TimeTaskManager timeTask = new TimeTaskManager();
+    @Contract("_ -> new")
+    public static @NotNull TRPlayer create(@NotNull AbstractClientPlayer player) {
+        return new TRPlayer(player, false);
+    }
 
-    public static TRPlayer SELF;
-    public TRPlayer(@NotNull AbstractClientPlayer player, boolean self) {
+    public TRPlayer(AbstractClientPlayer player, boolean self) {
         this.fabricPlayer = player;
-        if (self)
-            this.manager = CheckManager.createSelf(this);
-        else
-            this.manager = CheckManager.create(this);
+        this.manager = self ? CheckManager.createSelf((TRSelf) this) : CheckManager.create(this);
+
         currentPos = fabricPlayer.position();
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = lastOnGround = lastOnGround2 = fabricPlayer.onGround();
@@ -87,7 +89,7 @@ public class TRPlayer {
                 * fabricPlayer.getSpeed() * 10;  // IDK why, but it just works!
         updatePoses();
         try {
-            final PlayerInfo playerInfo = Objects.requireNonNull(Objects.requireNonNull(CheatDetector.CLIENT.getConnection()).getPlayerInfo(fabricPlayer.getUUID()));
+            final PlayerInfo playerInfo = Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(CheatDetector.CLIENT).getConnection()).getPlayerInfo(fabricPlayer.getUUID()));
             currentGameType = playerInfo.getGameMode();
             latency = playerInfo.getLatency();
         } catch (NullPointerException ignored) {
@@ -125,13 +127,13 @@ public class TRPlayer {
     }
 
     public void tryToClearVL() {
-        if (upTime % CONFIG().getAntiCheat().getVLClearTime() == 0) {
-            for (Check check : manager.checks.values()) {
+        if (upTime % AntiCheatConfig.VLClearTime == 0) {
+            for (Check check : manager.getChecks().values()) {
                 check.violations = 0;
             }
-            if (CONFIG().getAlert().isAllowAlertVLClear())
+            if (AlertConfig.allowAlertVLClear)
                 LogUtils.prefix(fabricPlayer.getName().getString(),
-                        Component.translatable("chat.cheatdetector.alert.vlclear").withStyle(ChatFormatting.DARK_GRAY).getString());
+                        Component.translatable("cheatdetector.chat.alert.vlclear").withStyle(ChatFormatting.DARK_GRAY).getString());
         }
     }
 }

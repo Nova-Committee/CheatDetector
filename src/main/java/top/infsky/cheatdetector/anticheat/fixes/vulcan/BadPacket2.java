@@ -1,11 +1,11 @@
-package top.infsky.cheatdetector.anticheat.fixs.vulcan;
+package top.infsky.cheatdetector.anticheat.fixes.vulcan;
 
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.anticheat.Fix;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.config.Advanced2Config;
+import top.infsky.cheatdetector.config.FixesConfig;
 
 /**
  * Fix BadPacket2 Check.
@@ -13,7 +13,7 @@ import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 public class BadPacket2 extends Fix {
     public boolean hasSend = false;
 
-    public BadPacket2(@NotNull TRPlayer player) {
+    public BadPacket2(@NotNull TRSelf player) {
         super("BadPacket (Type 2)", player);
     }
 
@@ -21,8 +21,8 @@ public class BadPacket2 extends Fix {
      * @return 是否取消
      */
     @Override
-    public boolean _handleStopDestroyBlock(CallbackInfo ci) {
-        if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
+    public boolean _handleStopDestroyBlock(@NotNull CallbackInfo ci) {
+        if (!FixesConfig.packetFixEnabled) return false;
 
         if (!hasSend) {
             hasSend = true;
@@ -43,11 +43,11 @@ public class BadPacket2 extends Fix {
 
     @Override
     public boolean isDisabled() {
-        return !CONFIG().getAdvanced2().isBadPacket2Enabled();
+        return !Advanced2Config.badPacket2Enabled;
     }
 
     @Override
-    public long getAlertBuffer() {
-        return CONFIG().getAdvanced2().getBadPacket2AlertBuffer();
+    public int getAlertBuffer() {
+        return Advanced2Config.badPacket2AlertBuffer;
     }
 }

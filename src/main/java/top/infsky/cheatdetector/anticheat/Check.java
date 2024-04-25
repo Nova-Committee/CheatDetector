@@ -4,27 +4,26 @@ import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
-import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.network.protocol.game.*;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.infsky.cheatdetector.config.AlertConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.utils.LogUtils;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 @Getter
 public abstract class Check {
-    protected final TRPlayer player;
+    protected final @NotNull TRPlayer player;
     public String checkName;
-    public long violations;
+    public int violations;
 
     public Check(String checkName, @NotNull TRPlayer player) {
         this.checkName = checkName;
         this.player = player;
     }
 
-    protected long getAlertBuffer() {
+    protected int getAlertBuffer() {
         return 1;
     }
     protected boolean isDisabled() {
@@ -32,21 +31,21 @@ public abstract class Check {
     }
 
     public void flag() {
-        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
+        if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
-        if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
+        if (AntiCheatConfig.disableSelfCheck && player.equals(TRSelf.getInstance())) return;
         violations++;
-        if (!CONFIG().getAlert().isDisableBuffer())
+        if (!AlertConfig.disableBuffer)
             if (violations % getAlertBuffer() != 0) return;
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s)", violations));
     }
 
     public void flag(String extraMsg) {
-        if (!CONFIG().getAntiCheat().isAntiCheatEnabled()) return;
+        if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
-        if (CONFIG().getAntiCheat().isDisableSelfCheck() && player.equals(TRPlayer.SELF)) return;
+        if (AntiCheatConfig.disableSelfCheck && player.equals(TRSelf.getInstance())) return;
         violations++;
-        if (!CONFIG().getAlert().isDisableBuffer())
+        if (!AlertConfig.disableBuffer)
             if (violations % getAlertBuffer() != 0) return;
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s%s", violations, ChatFormatting.GRAY, extraMsg));
     }
@@ -67,4 +66,6 @@ public abstract class Check {
     public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
     public boolean _handleUseItemOn(ServerboundUseItemOnPacket packet, CallbackInfo ci) { return false; }
     public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
+    public boolean _handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) { return false; }
+    public boolean _handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket packet, CallbackInfo ci) { return false; }
 }

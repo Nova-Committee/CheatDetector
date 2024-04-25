@@ -3,14 +3,16 @@ package top.infsky.cheatdetector.anticheat.checks;
 import lombok.val;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 
 public class HighJumpA extends Check {
-    public double highestY = Double.MIN_VALUE;
-    public HighJumpA(TRPlayer player) {
+    public double highestY = 0;
+    public boolean hasFlag = false;
+    public HighJumpA(@NotNull TRPlayer player) {
         super("HighJumpA", player);
     }
 
@@ -25,20 +27,24 @@ public class HighJumpA extends Check {
             val airPrefixPos = new Vec3(0, highestY, 0);
 
             final double jumpDistance = airPrefixPos.distanceTo(groundPrefixPos);
-            final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + CONFIG().getAntiCheat().getThreshold();
-            if (jumpDistance > CONFIG().getAdvanced().getHighJumpAJumpDistance() * possibleDistance) {
+            final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + AntiCheatConfig.threshold;
+            if (!hasFlag && jumpDistance > AdvancedConfig.highJumpAJumpDistance * possibleDistance) {
                 flag(String.format("Current: %.2f  Max: %.2f", jumpDistance, possibleDistance));
+                hasFlag = AdvancedConfig.highJumpAFlagOne;
             }
-        } else highestY = Double.MIN_VALUE;
+        } else {
+            hasFlag = false;
+            highestY = 0;
+        }
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getHighJumpAAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.highJumpAAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isHighJumpACheck();
+        return !AdvancedConfig.highJumpACheck;
     }
 }

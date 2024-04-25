@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.anticheat.fixs.vulcan;
+package top.infsky.cheatdetector.anticheat.fixes.vulcan;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -14,16 +14,18 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.anticheat.modules.ClickGUI;
+import top.infsky.cheatdetector.config.Advanced2Config;
+import top.infsky.cheatdetector.config.FixesConfig;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
-
-public class Movement extends Check {
+public class MovementDisabler extends Check {
     public short waitTicks = -1;
     public boolean lastEnabled;  // 上个tick启用状态
 
-    public Movement(@NotNull TRPlayer player) {
-        super("Movement", player);
-        lastEnabled = CONFIG().getFixes().isVulcanDisablerEnabled();
+    public MovementDisabler(@NotNull TRSelf player) {
+        super("MovementDisabler", player);
+        lastEnabled = FixesConfig.vulcanDisablerEnabled;
     }
 
     @Override
@@ -53,18 +55,19 @@ public class Movement extends Check {
                         )
                 );
 
-                if (CONFIG().getAdvanced2().isMovementShowPacketSend())
+                if (Advanced2Config.movementShowPacketSend)
                     moduleMsg(ChatFormatting.GRAY + "send packet.");
             }
             waitTicks = 20;
         } else if (!lastEnabled) {  // 玩家刚刚启用这个选项
-            CONFIG().getFixes().setVulcanDisablerEnabled(false);
+            FixesConfig.vulcanDisablerEnabled = false;
+            ClickGUI.update();
             moduleMsg(ChatFormatting.RED + "模块不可用，请检查是否满足要求。");
         }
 
         // after tick
         if (waitTicks >= 0) waitTicks--;
-        lastEnabled = CONFIG().getFixes().isVulcanDisablerEnabled();
+        lastEnabled = FixesConfig.vulcanDisablerEnabled;
     }
 
     private boolean checkItem() {
@@ -75,6 +78,6 @@ public class Movement extends Check {
 
     @Override
     public boolean isDisabled() {
-        return !CONFIG().getFixes().isVulcanDisablerEnabled();
+        return !FixesConfig.vulcanDisablerEnabled;
     }
 }

@@ -10,23 +10,20 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.infsky.cheatdetector.anticheat.Check;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
-import top.infsky.cheatdetector.anticheat.fixs.Spin;
-import top.infsky.cheatdetector.anticheat.fixs.themis.FastPlace;
-
-import java.util.Map;
+import top.infsky.cheatdetector.CheatDetector;
+import top.infsky.cheatdetector.anticheat.CheckManager;
+import top.infsky.cheatdetector.anticheat.TRSelf;
 
 @Mixin(Connection.class)
 public abstract class MixinConnection {
     @Inject(method = "send(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;)V", at = @At(value = "HEAD"), cancellable = true)
     public void send(Packet<?> basePacket, PacketSendListener listener, CallbackInfo ci) {
-        if (TRPlayer.SELF == null) return;
-        final Map<Class<? extends Check>, Check> checks = TRPlayer.SELF.manager.checks;
+        if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
+        final CheckManager manager = TRSelf.getInstance().manager;
 
         if (basePacket instanceof ServerboundUseItemOnPacket packet)
-            checks.get(FastPlace.class)._handleUseItemOn(packet, ci);
+            manager.onCustomAction((check) -> check._handleUseItemOn(packet, ci));
         if (basePacket instanceof ServerboundMovePlayerPacket packet)
-            checks.get(Spin.class)._handleMovePlayer(packet, (Connection)(Object) this, listener, ci);
+            manager.onCustomAction((check) -> check._handleMovePlayer(packet, (Connection)(Object) this, listener, ci));
     }
 }

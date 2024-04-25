@@ -2,17 +2,18 @@ package top.infsky.cheatdetector.anticheat.checks;
 
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.TridentItem;
+import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 
 public class FlightA extends Check {
     public short jumpTick = 0;
     public short liquidTick = 0;
     public short disableTick = 0;
 
-    public FlightA(TRPlayer player) {
+    public FlightA(@NotNull TRPlayer player) {
         super("FlightA", player);
     }
 
@@ -29,37 +30,38 @@ public class FlightA extends Check {
         }
 
         if (player.currentOnGround) {
-            jumpTick = CONFIG().getAdvanced().getFlightAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
+            jumpTick = AdvancedConfig.getFlightAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
         }
 
         // fix liquid
         if (player.fabricPlayer.isInWater() || player.fabricPlayer.isInLava()) {
-            liquidTick = CONFIG().getAdvanced().getFlightAInLiquidLiquidTick();
+            liquidTick = AdvancedConfig.getFlightAInLiquidLiquidTick();
         }
 
         // fix hurt
         if (player.fabricPlayer.hurtTime > 0) {
-            jumpTick = CONFIG().getAdvanced().getFlightAInHurtJumpTick();
+            jumpTick = AdvancedConfig.getFlightAInHurtJumpTick();
         }
 
 
         if (!player.currentOnGround && jumpTick > 0
                 && player.currentPos.y() - player.lastOnGroundPos.y()
-                < CONFIG().getAdvanced().getFlightAJumpDistance() * (1 + player.fabricPlayer.getJumpBoostPower()) + CONFIG().getAntiCheat().getThreshold()
-//                && player.currentPos.distanceTo(player.lastPos) < 5.612 * (1 + player.fabricPlayer.getSpeed()) + CONFIG().getThreshold()  // 警惕跳跃弱检测
+                < AdvancedConfig.flightAJumpDistance * (1 + player.fabricPlayer.getJumpBoostPower()) + AntiCheatConfig.threshold
+//                && player.currentPos.distanceTo(player.lastPos) < 5.612 *
+//                (1 + player.fabricPlayer.getSpeed()) + ModConfig.getThreshold()  // 警惕跳跃弱检测
         ) {
             jumpTick--;
         } else if ((!player.fabricPlayer.isInWater() || !player.fabricPlayer.isInLava()) && liquidTick > 0
                 && player.currentPos.y() - player.lastInLiquidPos.y()
-                < CONFIG().getAdvanced().getFlightAFromWaterYDistance() + CONFIG().getAntiCheat().getThreshold()  // 瞎写的0.5 (getFlightAFromWaterYDistance)
-//                && (lastPos.y() - lastPos2.y() + CONFIG().getThreshold()) > (player.position().y() - lastPos.y())  // 警惕出水弱检测
+                < AdvancedConfig.flightAFromWaterYDistance + AntiCheatConfig.threshold  // 瞎写的0.5 (getFlightAFromWaterYDistance)
+//                && (lastPos.y() - lastPos2.y() + ModConfig.getThreshold()) > (player.position().y() - lastPos.y())  // 警惕出水弱检测
         ) {
             liquidTick--;
         } else if (player.posHistory.get(1) != null && !player.currentOnGround && (!player.fabricPlayer.isInWater() && !player.fabricPlayer.isInLava())) {
             jumpTick = 0;
             liquidTick = 0;
-            if (player.lastPos.y() - player.currentPos.y() < CONFIG().getAntiCheat().getThreshold() &&
-                    player.posHistory.get(1).y() - player.lastPos.y() <= CONFIG().getAntiCheat().getThreshold()) {
+            if (player.lastPos.y() - player.currentPos.y() < AntiCheatConfig.threshold &&
+                    player.posHistory.get(1).y() - player.lastPos.y() <= AntiCheatConfig.threshold) {
                 flag();
             }
         }
@@ -67,22 +69,22 @@ public class FlightA extends Check {
 
     @Override
     public void _onTeleport() {
-        disableTick = CONFIG().getAdvanced().getFlightAOnTeleportDisableTick();
+        disableTick = AdvancedConfig.getFlightAOnTeleportDisableTick();
     }
 
     @Override
     public void _onJump() {
         // fix jump
-        jumpTick = CONFIG().getAdvanced().getFlightAOnJumpJumpTick();
+        jumpTick = AdvancedConfig.getFlightAOnJumpJumpTick();
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getFlightAAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.flightAAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isFlightACheck();
+        return !AdvancedConfig.flightACheck;
     }
 }

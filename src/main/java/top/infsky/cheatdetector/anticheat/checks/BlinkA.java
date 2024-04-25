@@ -3,8 +3,9 @@ package top.infsky.cheatdetector.anticheat.checks;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.config.AdvancedConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 public class BlinkA extends Check {
     
@@ -17,18 +18,18 @@ public class BlinkA extends Check {
         if (player.lastPos == null || player.hasSetback) return;
 
         if (player.lastPos.distanceTo(player.currentPos) > (
-                CONFIG().getAdvanced().getBlinkMaxDistance() * player.speedMul + player.fabricPlayer.fallDistance + CONFIG().getAntiCheat().getThreshold())) {
+                AdvancedConfig.blinkMaxDistance * player.speedMul + player.fabricPlayer.fallDistance + AntiCheatConfig.threshold)) {
             flag();
         }
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getBlinkAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.blinkAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isBlinkCheck();
+        return !AdvancedConfig.blinkCheck;
     }
 }

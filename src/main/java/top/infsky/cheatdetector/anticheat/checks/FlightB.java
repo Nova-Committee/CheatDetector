@@ -3,8 +3,8 @@ package top.infsky.cheatdetector.anticheat.checks;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.config.AdvancedConfig;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 public class FlightB extends Check {
     public boolean hasFlag = false;
@@ -28,12 +28,12 @@ public class FlightB extends Check {
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getFlightBAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.flightBAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isFlightBCheck();
+        return !AdvancedConfig.flightBCheck;
     }
 }

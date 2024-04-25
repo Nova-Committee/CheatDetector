@@ -29,7 +29,6 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "~${minecraft_version}",
-    "modmenu": "*",
-    "cloth-config2": "*"
+    "magiclib-1_20_1": "*"
   }
 }

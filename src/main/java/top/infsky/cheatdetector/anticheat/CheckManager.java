@@ -1,42 +1,43 @@
 package top.infsky.cheatdetector.anticheat;
 
+import lombok.Getter;
 import net.minecraft.world.level.GameType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.checks.*;
-import top.infsky.cheatdetector.anticheat.fixs.FlagDetector;
-import top.infsky.cheatdetector.anticheat.fixs.Spin;
-import top.infsky.cheatdetector.anticheat.fixs.themis.FastPlace;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket1;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket2;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.Movement;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.OmniSprint;
+import top.infsky.cheatdetector.anticheat.modules.*;
+import top.infsky.cheatdetector.anticheat.fixes.vulcan.*;
+import top.infsky.cheatdetector.anticheat.fixes.themis.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
+@Getter
 public class CheckManager {
-    public final TRPlayer player;
-    public Map<Class<? extends Check>, Check> checks = new HashMap<>();
-    public Map<Class<? extends Check>, Check> preChecks = new HashMap<>();
-    public Map<Class<? extends Check>, Check> normalChecks = new HashMap<>();
-    public Map<Class<? extends Check>, Check> postChecks = new HashMap<>();
+    private final TRPlayer player;
+    private final @NotNull Map<Class<? extends Check>, Check> checks;
+    private final @NotNull Map<Class<? extends Check>, Check> preChecks;
+    private final @NotNull Map<Class<? extends Check>, Check> normalChecks;
+    private final @NotNull Map<Class<? extends Check>, Check> postChecks;
     public short disableTick;
-    public CheckManager(Map<Class<? extends Check>, Check> preChecks,
-                        Map<Class<? extends Check>, Check> normalChecks,
-                        Map<Class<? extends Check>, Check> postChecks, TRPlayer player) {
+    public CheckManager(@NotNull Map<Class<? extends Check>, Check> preChecks,
+                        @NotNull Map<Class<? extends Check>, Check> normalChecks,
+                        @NotNull Map<Class<? extends Check>, Check> postChecks, TRPlayer player) {
         this.player = player;
-        this.preChecks.putAll(preChecks);
-        this.normalChecks.putAll(normalChecks);
-        this.postChecks.putAll(postChecks);
-        this.checks.putAll(preChecks);
-        this.checks.putAll(normalChecks);
-        this.checks.putAll(postChecks);
+        this.preChecks = new HashMap<>(preChecks);
+        this.normalChecks = new HashMap<>(normalChecks);
+        this.postChecks = new HashMap<>(postChecks);
+        this.checks = new HashMap<>();
+        this.checks.putAll(this.preChecks);
+        this.checks.putAll(this.normalChecks);
+        this.checks.putAll(this.postChecks);
         this.disableTick = 10;
     }
 
     @Contract("_ -> new")
-    public static @NotNull CheckManager create(TRPlayer player) {
+    public static @NotNull CheckManager create(@NotNull TRPlayer player) {
         final Map<Class<? extends Check>, Check> pre = new HashMap<>();
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
@@ -51,12 +52,10 @@ public class CheckManager {
         normal.put(FlightB.class, new FlightB(player));
         normal.put(VelocityA.class, new VelocityA(player));
 
-        final CheckManager checkManager = new CheckManager(pre, normal, post, player);
-        checkManager.onTeleport();
-        return checkManager;
+        return new CheckManager(pre, normal, post, player);
     }
 
-    public static @NotNull CheckManager createSelf(TRPlayer player) {
+    public static @NotNull CheckManager createSelf(@NotNull TRSelf player) {
         final Map<Class<? extends Check>, Check> pre = new HashMap<>();
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
@@ -72,15 +71,16 @@ public class CheckManager {
         normal.put(VelocityA.class, new VelocityA(player));
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
-        pre.put(Movement.class, new Movement(player));
+        pre.put(MovementDisabler.class, new MovementDisabler(player));
         post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(FastPlace.class, new FastPlace(player));
-        pre.put(OmniSprint.class, new OmniSprint(player));
+        pre.put(OmniSprintDisabler.class, new OmniSprintDisabler(player));
         post.put(Spin.class, new Spin(player));
+        post.put(NoRotateSet.class, new NoRotateSet(player));
+        post.put(ClickGUI.class, new ClickGUI(player));
+        post.put(AntiVanish.class, new AntiVanish(player));
 
-        final CheckManager checkManager = new CheckManager(pre, normal, post, player);
-        checkManager.onTeleport();
-        return checkManager;
+        return new CheckManager(pre, normal, post, player);
     }
 
     public void update() {
@@ -101,15 +101,17 @@ public class CheckManager {
     }
 
     public void onTeleport() {
-        for (Check check : preChecks.values()) check._onTeleport();
-        for (Check check : normalChecks.values()) check._onTeleport();
-        for (Check check : postChecks.values()) check._onTeleport();
+        if (player == null || !CheatDetector.inWorld) return;
+        for (Check check : checks.values()) check._onTeleport();
     }
 
     public void onJump() {
         player.jumping = true;
-        for (Check check : preChecks.values()) check._onJump();
-        for (Check check : normalChecks.values()) check._onJump();
-        for (Check check : postChecks.values()) check._onJump();
+        for (Check check : checks.values()) check._onJump();
+    }
+
+    public void onCustomAction(Consumer<Check> action) {
+        if (player == null || !CheatDetector.inWorld) return;
+        for (Check check : checks.values()) action.accept(check);
     }
 }

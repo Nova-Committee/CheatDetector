@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.anticheat.fixs.themis;
+package top.infsky.cheatdetector.anticheat.fixes.themis;
 
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
@@ -7,41 +7,45 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.infsky.cheatdetector.anticheat.Check;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.Fix;
+import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.anticheat.utils.UseItemOn;
+import top.infsky.cheatdetector.config.Advanced2Config;
+import top.infsky.cheatdetector.config.AlertConfig;
+import top.infsky.cheatdetector.config.FixesConfig;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import java.util.Objects;
 
-public class FastPlace extends Check {
+public class FastPlace extends Fix {
     public short minDelay = 1;
     public long lastPlaceTick = 0;
-    public UseItemOn lastAction = null;
+    public @Nullable UseItemOn lastAction = null;
 
-    public FastPlace(@NotNull TRPlayer player) {
+    public FastPlace(@NotNull TRSelf player) {
         super("FastPlace", player);
     }
 
     @Override
     public void _onTick() {
-        minDelay = CONFIG().getAdvanced2().getFastPlaceSamePlaceMinDelay();
+        minDelay = Advanced2Config.getFastPlaceSamePlaceMinDelay();
     }
 
     @Override
-    public boolean _handleUseItemOn(ServerboundUseItemOnPacket packet, CallbackInfo ci) {
-        if (!CONFIG().getFixes().isPacketFixEnabled()) return false;
+    public boolean _handleUseItemOn(@NotNull ServerboundUseItemOnPacket packet, @NotNull CallbackInfo ci) {
+        if (!FixesConfig.packetFixEnabled) return false;
         final InteractionHand interactionHand = packet.getHand();
         final BlockHitResult blockHitResult = packet.getHitResult();
 
         final ItemStack itemStack = getItemStack(player.fabricPlayer, interactionHand);
-        if (!(itemStack.getItem() instanceof BlockItem)) return false;
+        if (!(Objects.requireNonNull(itemStack).getItem() instanceof BlockItem)) return false;
 
         final UseItemOn currentAction = new UseItemOn(itemStack.getItem(), blockHitResult.getBlockPos(), blockHitResult.getDirection(), blockHitResult.getType());
         if (player.upTime - lastPlaceTick < minDelay) {  // 在受制约的tick里
             if (currentAction.equals(lastAction)) {  // 是spam
-                if (CONFIG().getAlert().isAllowAlertFixes()) flag();
-                if (CONFIG().getAdvanced2().isFastPlaceEnabled())
+                if (AlertConfig.allowAlertFixes) flag();
+                if (Advanced2Config.fastPlaceEnabled)
                     ci.cancel();
                 lastAction = currentAction;
                 return true;
@@ -53,7 +57,7 @@ public class FastPlace extends Check {
         return false;
     }
 
-    public static ItemStack getItemStack(AbstractClientPlayer player, @NotNull InteractionHand interactionHand) {
+    public static @Nullable ItemStack getItemStack(@NotNull AbstractClientPlayer player, @NotNull InteractionHand interactionHand) {
         ItemStack result = null;
         switch (interactionHand) {
             case MAIN_HAND -> result = player.getMainHandItem();
@@ -64,11 +68,11 @@ public class FastPlace extends Check {
 
     @Override
     public boolean isDisabled() {
-        return !CONFIG().getAdvanced2().isFastPlaceEnabled();
+        return !Advanced2Config.fastPlaceEnabled;
     }
 
     @Override
-    public long getAlertBuffer() {
-        return CONFIG().getAdvanced2().getFastPlaceAlertBuffer();
+    public int getAlertBuffer() {
+        return Advanced2Config.fastPlaceAlertBuffer;
     }
 }

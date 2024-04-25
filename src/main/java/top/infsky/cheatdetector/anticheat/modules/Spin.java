@@ -1,25 +1,31 @@
-package top.infsky.cheatdetector.anticheat.fixs;
+package top.infsky.cheatdetector.anticheat.modules;
 
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.infsky.cheatdetector.anticheat.Fix;
+import top.infsky.cheatdetector.CheatDetector;
+import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.config.*;
 import top.infsky.cheatdetector.mixins.MixinEntity;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
-
-public class Spin extends Fix {
+public class Spin extends Module {
     @Range(from = -180, to = 180)
     public float yaw;
     @Range(from = -90, to = 90)
     public float pitch;
     public boolean pitchReserve = false;
+    @Nullable
+    public ServerboundMovePlayerPacket tickUnSend = null;
 
-    public Spin(@NotNull TRPlayer player) {
+    private boolean sending = false;
+
+    public Spin(@NotNull TRSelf player) {
         super("Spin", player);
     }
 
@@ -36,7 +42,7 @@ public class Spin extends Fix {
 
         updateRot();
 
-        if (CONFIG().getAdvanced2().isSpinOnlyPacket()) {
+        if (Advanced3Config.spinOnlyPacket) {
             packetRot();
         } else {
             camera.doSetXRot(pitch);
@@ -46,25 +52,25 @@ public class Spin extends Fix {
 
     @Override
     public boolean isDisabled() {
-        return !CONFIG().getFixes().isSpinEnabled();
+        return !ModuleConfig.spinEnabled;
     }
 
     public void updateRot() {
         check();
-        if (CONFIG().getAdvanced2().isSpinDoSpinYaw())
-            yaw += CONFIG().getAdvanced2().getSpinYawStep();
+        if (Advanced3Config.spinDoSpinYaw)
+            yaw += (float) Advanced3Config.spinYawStep;
         else
-            yaw = CONFIG().getAdvanced2().getSpinDefaultYaw();
-        if (CONFIG().getAdvanced2().isSpinDoSpinPitch())
-            pitch += CONFIG().getAdvanced2().getSpinPitchStep() * (pitchReserve ? -1 : 1);
+            yaw = (float) Advanced3Config.spinDefaultYaw;
+        if (Advanced3Config.spinDoSpinPitch)
+            pitch += (float) (Advanced3Config.spinPitchStep * (pitchReserve ? -1 : 1));
         else
-            pitch = CONFIG().getAdvanced2().getSpinDefaultPitch();
+            pitch = (float) Advanced3Config.spinDefaultPitch;
         check();
     }
 
     public void check() {
         // pitch
-        if (CONFIG().getAdvanced2().isSpinAllowBadPitch()) {
+        if (Advanced3Config.spinAllowBadPitch) {
             pitchReserve = false;
             // blatant转头
             if (pitch >= 180) {  // 向下转了一圈
@@ -86,24 +92,33 @@ public class Spin extends Fix {
 
     public void packetRot() {
         if (TRPlayer.CLIENT.getConnection() == null) return;
+        if (!CheatDetector.inWorld) return;
 
-        TRPlayer.CLIENT.getConnection().send(
-                new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround())
-        );
+        if (tickUnSend != null && (FixesConfig.packetFixEnabled && FixesConfig.getPacketFixMode() == Fixes.STRICT)) {
+            // 防止丢失包，即使有被检测的风险
+            sending = true;
+            TRPlayer.CLIENT.getConnection().send(tickUnSend);
+            sending = false;
+            tickUnSend = null;
+        }
+        tickUnSend = new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround());
     }
 
     @Override
-    public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
+        if (ci.isCancelled()) return false;
+        if (!CheatDetector.inWorld) { ci.cancel(); return true; }
         if (isDisabled()) return false;
-        if (!CONFIG().getAdvanced2().isSpinOnlyPacket()) return false;
+        if (!Advanced3Config.spinOnlyPacket) return false;
 
-        if (packet.getXRot(pitch) != pitch || packet.getYRot(yaw) != yaw) {
+        if (!sending && packet.hasRotation()) {
             ci.cancel();
-            if (packet.hasPosition()) {
+            if (packet.hasPosition()) {  // PosRot
                 connection.send(
-                        new ServerboundMovePlayerPacket.PosRot(packet.getX(0), packet.getY(0), packet.getZ(0), yaw, pitch, packet.isOnGround()),
-                        listener
+                        new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround())
+                        , listener
                 );
+                tickUnSend = null;
             }
         }
         return false;

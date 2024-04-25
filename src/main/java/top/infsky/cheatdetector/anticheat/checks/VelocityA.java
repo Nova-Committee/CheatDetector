@@ -6,8 +6,7 @@ import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.utils.PlayerMove;
 import top.infsky.cheatdetector.anticheat.utils.VelocityUtils;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
 
 /**
  * Velocity Cancel Check
@@ -27,7 +26,7 @@ public class VelocityA extends Check {
     @Override
     public void _onTick() {
         if (VelocityUtils.shouldBypassNextHurt(player)) {
-            disableTick = (int) (Math.ceil((double) player.latency / 50) + CONFIG().getAdvanced().getVelocityAAfterFallExtraDisableTick());
+            disableTick = (int) (Math.ceil((double) player.latency / 50) + AdvancedConfig.velocityAAfterFallExtraDisableTick);
 //            customMsg("bypass. disableTick:%s".formatted(disableTick));
             return;
         }
@@ -78,7 +77,7 @@ public class VelocityA extends Check {
     }
 
     private void latencyFlag(String msg) {
-        if (hasDelayed > player.latency + CONFIG().getAdvanced().getVelocityAExtraDelayedMs()) {
+        if (hasDelayed > player.latency + AdvancedConfig.velocityAExtraDelayedMs) {
             flag("latency: %d  hasDelayed: %d  %s".formatted(player.latency, hasDelayed, msg));
             reset();
         } else {  // wait for internet latency
@@ -93,12 +92,12 @@ public class VelocityA extends Check {
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getVelocityAAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.velocityAAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isVelocityACheck();
+        return !AdvancedConfig.velocityACheck;
     }
 }

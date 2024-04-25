@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.utils.PlayerMove;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AdvancedConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 
 public class SpeedA extends Check {
     public boolean hasJumped = false;
@@ -18,7 +18,7 @@ public class SpeedA extends Check {
     public void _onTick() {
         if (hasJumped && !player.jumping) {
             hasJumped = false;
-            jumpTick = CONFIG().getAdvanced().getSpeedAAfterJumpJumpTick();
+            jumpTick = AdvancedConfig.getSpeedAAfterJumpJumpTick();
             return;
         }
 
@@ -29,16 +29,16 @@ public class SpeedA extends Check {
 
         double maxSecSpeed;
         if (jumpTick > 0)
-            maxSecSpeed = CONFIG().getAdvanced().getSpeedAAfterJumpSpeed();
+            maxSecSpeed = AdvancedConfig.speedAAfterJumpSpeed;
         else if (player.fabricPlayer.isSprinting())
-            maxSecSpeed = CONFIG().getAdvanced().getSpeedASprintingSpeed();
+            maxSecSpeed = AdvancedConfig.speedASprintingSpeed;
         else if (player.fabricPlayer.isSilent())
-            maxSecSpeed = CONFIG().getAdvanced().getSpeedASilentSpeed();
+            maxSecSpeed = AdvancedConfig.speedASilentSpeed;
         else  // walking
-            maxSecSpeed = CONFIG().getAdvanced().getSpeedAWalkSpeed();
+            maxSecSpeed = AdvancedConfig.speedAWalkSpeed;
 
         final double speed = PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos);
-        final double possibleSpeed = maxSecSpeed * player.speedMul + CONFIG().getAntiCheat().getThreshold();
+        final double possibleSpeed = maxSecSpeed * player.speedMul + AntiCheatConfig.threshold;
         if (speed > possibleSpeed) {
             flag(String.format("Current: %.2f  Max: %.2f", speed, possibleSpeed));
         }
@@ -50,12 +50,12 @@ public class SpeedA extends Check {
     }
 
     @Override
-    protected long getAlertBuffer() {
-        return CONFIG().getAdvanced().getSpeedAAlertBuffer();
+    protected int getAlertBuffer() {
+        return AdvancedConfig.speedAAlertBuffer;
     }
 
     @Override
     protected boolean isDisabled() {
-        return !CONFIG().getAdvanced().isSpeedACheck();
+        return !AdvancedConfig.speedACheck;
     }
 }

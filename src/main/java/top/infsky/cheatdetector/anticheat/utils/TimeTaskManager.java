@@ -1,5 +1,6 @@
 package top.infsky.cheatdetector.anticheat.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
 import java.util.LinkedList;
@@ -8,7 +9,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class TimeTaskManager {
-    private final List<Queue<Runnable>> tasks;
+    private final @NotNull List<Queue<Runnable>> tasks;
 
     public TimeTaskManager() {
         this.tasks = new LinkedList<>();

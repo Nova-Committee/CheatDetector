@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.TRSelf;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -29,11 +30,10 @@ public class PlayerManager {
             final UUID uuid = player.getUUID();
             if (!activeMap.containsKey(uuid)) {
                 final TRPlayer trPlayer;
-                if (client.player.getUUID() == uuid) {
-                    trPlayer = new TRPlayer(player, true);
-                    TRPlayer.SELF = trPlayer;
+                if (client.player.equals(player)) {
+                    trPlayer = new TRSelf(client.player);
                 } else {
-                    trPlayer = new TRPlayer(player, false);
+                    trPlayer = TRPlayer.create(player);
                 }
                 activeMap.put(uuid, true);
                 dataMap.put(uuid, trPlayer);

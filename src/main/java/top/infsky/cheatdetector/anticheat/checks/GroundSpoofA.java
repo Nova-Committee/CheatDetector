@@ -6,10 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.config.AdvancedConfig;
 
 import java.util.List;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
 
 /**
  * 不稳定
@@ -38,8 +37,8 @@ public class GroundSpoofA extends Check {
         player.currentOnGround = false;
     }
 
-    public static boolean check(@NotNull Level level, BlockPos groundPos) {
-        if (!level.getBlockState(groundPos).isAir())
+    public static boolean check(@NotNull Level level, @NotNull BlockPos groundPos) {
+        if (!level.getBlockState(groundPos).isAir() || !level.getBlockState(groundPos.above()).isAir())
             return false;
 
         short count = 0;
@@ -63,11 +62,11 @@ public class GroundSpoofA extends Check {
 
     @Override
     public boolean isDisabled() {
-        return !CONFIG().getAdvanced().isGroundSpoofACheck();
+        return !AdvancedConfig.groundSpoofACheck;
     }
 
     @Override
-    public long getAlertBuffer() {
-        return CONFIG().getAdvanced().getGroundSpoofAAlertBuffer();
+    public int getAlertBuffer() {
+        return AdvancedConfig.groundSpoofAAlertBuffer;
     }
 }

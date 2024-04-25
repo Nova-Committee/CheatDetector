@@ -4,35 +4,31 @@ import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.infsky.cheatdetector.CheatDetector;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.config.AlertConfig;
 
 public class LogUtils {
     public static final Logger LOGGER = LoggerFactory.getLogger("CheatDetector");
 
     public static void alert(String player, String module, String extraMsg) {
         if (check()) {
-            assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("%s§r §r%s§r %s§r %s§r | %s§r", CONFIG().getAlert().getPrefix(), player, Component.translatable("chat.cheatdetector.alert.fail").getString(), module, extraMsg)
+                    String.format("%s§r §r%s§r %s§r %s§r | %s§r", AlertConfig.prefix, player, Component.translatable("cheatdetector.chat.alert.fail").getString(), module, extraMsg)
             ));
         }
     }
 
     public static void prefix(String prefix, String msg) {
         if (check()) {
-            assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("%s§r §r%s§r | %s§r", CONFIG().getAlert().getPrefix(), prefix, msg)
+                    String.format("%s§r §r%s§r | %s§r", AlertConfig.prefix, prefix, msg)
             ));
         }
     }
 
     public static void custom(String msg) {
         if (check()) {
-            assert CheatDetector.CLIENT.player != null;
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
-                    String.format("%s§r §r%s§r", CONFIG().getAlert().getPrefix(), msg)
+                    String.format("%s§r §r%s§r", AlertConfig.prefix, msg)
             ));
         }
 
@@ -40,6 +36,6 @@ public class LogUtils {
     }
 
     private static boolean check() {
-        return CONFIG().getAlert().isAllowAlert() && CheatDetector.CLIENT.player != null;
+        return AlertConfig.allowAlert && CheatDetector.CLIENT.player != null;
     }
 }

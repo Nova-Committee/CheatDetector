@@ -1,26 +1,28 @@
-package top.infsky.cheatdetector.anticheat.fixs.vulcan;
+package top.infsky.cheatdetector.anticheat.fixes.vulcan;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Fix;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.config.Advanced2Config;
+import top.infsky.cheatdetector.config.FixesConfig;
 
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+public class OmniSprintDisabler extends Fix {
 
-public class OmniSprint extends Fix {
-
-    public OmniSprint(@NotNull TRPlayer player) {
+    public OmniSprintDisabler(@NotNull TRSelf player) {
         super("Omni-Sprint", player);
     }
 
     @Override
     public void _onTick() {
         if (TRPlayer.CLIENT.getConnection() == null) return;
-        if (player.lastPos == player.currentPos) return;
+        if (!FixesConfig.vulcanOmniSprintEnabled) return;
+        if (player == null) return;
 
         // copy from rise client :D
-        if (CONFIG().getFixes().isVulcanOmniSprintEnabled()) {
+        if (player.lastPos != player.currentPos) {
             TRPlayer.CLIENT.getConnection().send(
                     new ServerboundPlayerCommandPacket(
                             player.fabricPlayer, ServerboundPlayerCommandPacket.Action.START_SPRINTING
@@ -32,7 +34,7 @@ public class OmniSprint extends Fix {
                     )
             );
 
-            if (CONFIG().getAdvanced2().isOmniSprintShowPacketSend())
+            if (Advanced2Config.omniSprintShowPacketSend)
                 moduleMsg(ChatFormatting.GRAY + "send packet.");
         }
     }
