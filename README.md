@@ -22,7 +22,7 @@
 </div>
 
 ## 反作弊
-反作弊 模块旨在不被发现的情况下揭示其他玩家的作弊行为。
+反作弊 旨在不被发现的情况下揭示其他玩家的作弊行为。
 - **Flight** 飞行检查
 - **HighJump** 高跳检查
 - **Blink** 闪现检查
@@ -33,7 +33,7 @@
 - **GroundSpoof** 假地面检查
 
 ## 修复
-修复 模块旨在避免被生电服务器反作弊错误标记，不要使用它们获取**不平等的优势**。
+修复 旨在避免被生电服务器反作弊错误标记。
 - 针对Themis反作弊
     - tweakeroo右键连点器修复
 - 针对Vulcan反作弊
@@ -41,13 +41,22 @@
     - BadPacket (Type 2)
     - Movement Disabler (适用于Vulcan 2.7.5)
     - OmniSprint Disabler (适用于Old Vulcan)
-- Flag Detector (标记检测器)
-    - 基于拉回帮助你确认自己是否被反作弊标记。
-- Spin (自旋)
-    - 使你像大陀螺一样旋转。
+
+## 模块
+模块 旨在在生存中提供一些消解无趣的办法。
+- **AntiVanish** 反隐身
+    - 揪出使用vanish插件隐身的人。
+- **FlagDetector** 标记检测器
+    - 基于拉回帮助你确认自己是否被服务器反作弊标记。
+- **NoRotateSet** 无旋转设定
+    - 阻止服务端旋转你的头。
+- **Spin** 自旋
+  - 使你像大陀螺一样旋转。
 
 ## 可调选项
-CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
+CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。<sup>[Release 1.1.5.1](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)及以前<sup>
+
+从[Release 2.0.0](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)开始，Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
 
 Mod包含69+项自定义选项，对于不同服务器，你可能需要根据延迟、丢包等情况修改配置。
 
@@ -69,4 +78,4 @@ Mod包含69+项自定义选项，对于不同服务器，你可能需要根据�
 
 ## 相关项目
 - [TimeRecorder](https://github.com/Nova-Committee/TimeRecorder) （反作弊 模块在此mod基础上开发）
-- [Cloth Config](https://github.com/shedaniel/cloth-config) （感谢这么好用的自动配置！）
+- [MagicLib](https://github.com/Hendrix-Shen/MagicLib) （ClickGUI）

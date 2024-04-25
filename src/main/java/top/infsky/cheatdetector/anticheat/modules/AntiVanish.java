@@ -14,6 +14,7 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import java.util.*;
 
 public class AntiVanish extends Module {
+    private String lastMsg;
     public AntiVanish(@NotNull TRSelf player) {
         super("AntiVanish", player);
     }
@@ -44,7 +45,11 @@ public class AntiVanish extends Module {
                     if (playerInfo != null) stringDifference.add(i, playerInfo.getProfile().getName());
                 }
 
-                customMsg(Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference));
+                val msg = Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference);
+                if (!msg.equals(lastMsg)) {
+                    customMsg(msg);
+                    lastMsg = msg;
+                }
             }
         }
         return false;
