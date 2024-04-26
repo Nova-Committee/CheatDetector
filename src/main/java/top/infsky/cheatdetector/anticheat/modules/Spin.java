@@ -90,7 +90,7 @@ public class Spin extends Module {
         if (TRPlayer.CLIENT.getConnection() == null) return;
         if (!CheatDetector.inWorld) return;
 
-        ((ConnectionInvoker) TRPlayer.CLIENT.getConnection()).sendPacket(new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround()), null);
+        ((ConnectionInvoker) TRPlayer.CLIENT.getConnection().getConnection()).sendPacket(new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround()), null);
     }
 
     @Override

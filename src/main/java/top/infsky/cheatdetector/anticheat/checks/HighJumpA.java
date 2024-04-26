@@ -6,6 +6,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.utils.PlayerMove;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
@@ -18,7 +19,7 @@ public class HighJumpA extends Check {
 
     @Override
     public void _onTick() {
-        if (ElytraItem.isFlyEnabled(player.fabricPlayer.getInventory().getArmor(2))) return;
+        if (player.fabricPlayer.isFallFlying()) return;
 
         if (player.isJumping() && player.lastOnGroundPos != player.lastOnLiquidGroundPos && !(player.fabricPlayer.hurtTime > 0) && !player.fabricPlayer.isPassenger()) {
             if (player.currentPos.y() > highestY) highestY = player.currentPos.y();
@@ -27,8 +28,8 @@ public class HighJumpA extends Check {
             val airPrefixPos = new Vec3(0, highestY, 0);
 
             final double jumpDistance = airPrefixPos.distanceTo(groundPrefixPos);
-            final double possibleDistance = 1 + player.fabricPlayer.getJumpBoostPower() + AntiCheatConfig.threshold;
-            if (!hasFlag && jumpDistance > AdvancedConfig.highJumpAJumpDistance * possibleDistance) {
+            final double possibleDistance = 1 + PlayerMove.getJumpDistance(player.fabricPlayer) + AntiCheatConfig.threshold;
+            if (!hasFlag && jumpDistance > possibleDistance) {
                 flag(String.format("Current: %.2f  Max: %.2f", jumpDistance, possibleDistance));
                 hasFlag = AdvancedConfig.highJumpAFlagOne;
             }

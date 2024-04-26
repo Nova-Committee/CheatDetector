@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
 public class AirWalk extends Module {
@@ -19,7 +20,7 @@ public class AirWalk extends Module {
 
     @Override
     public void _onTick() {
-        final ClientLevel level = TRPlayer.CLIENT.level;
+        ClientLevel level = TRPlayer.CLIENT.level;
         if (isDisabled()) {
             if (fakeBlockPos != null && level != null) {
                 if (level.getBlockState(fakeBlockPos).is(Blocks.BARRIER)) level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
@@ -29,7 +30,9 @@ public class AirWalk extends Module {
         }
         if (level == null) return;
 
-        final BlockPos current = player.fabricPlayer.blockPosition().below();
+        BlockPos current = player.fabricPlayer.blockPosition().below();
+        if (Advanced3Config.airWalkSameY && fakeBlockPos != null)
+            current = current.atY(fakeBlockPos.getY());
         if (current == fakeBlockPos) return;
 
         if (fakeBlockPos != null) {

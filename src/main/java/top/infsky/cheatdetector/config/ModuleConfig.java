@@ -33,5 +33,5 @@ public class ModuleConfig {
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
-    public static boolean fakeSneakEnabled = false;
+    public static boolean antiFallEnabled = false;
 }

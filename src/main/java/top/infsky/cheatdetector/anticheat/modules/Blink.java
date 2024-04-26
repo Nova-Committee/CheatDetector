@@ -5,6 +5,7 @@ import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.anticheat.utils.OutgoingPacket;
@@ -34,7 +35,7 @@ public class Blink extends Module {
             if (Advanced3Config.blinkAutoSendMs >= 0) {
                 while (!outgoingPackets.isEmpty()) {
                     final OutgoingPacket packet = outgoingPackets.getLast();
-                    if (player.getUpTime() < packet.sentTime() + Advanced3Config.blinkAutoSendMs) {
+                    if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.blinkAutoSendMs / 50.0)) {
                         break;
                     }
                     if (!Advanced3Config.blinkCancelPacket) {
@@ -68,7 +69,7 @@ public class Blink extends Module {
         if (isDisabled()) return;
 
         if (Advanced3Config.blinkAutoDisable) {
-            ModuleConfig.blinkEnabled = false;
+            CheatDetector.CONFIG_HANDLER.configManager.setValue("blinkEnabled", false);
             ClickGUI.update();
         }
     }

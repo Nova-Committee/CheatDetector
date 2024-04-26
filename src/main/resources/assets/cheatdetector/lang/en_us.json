@@ -1,6 +1,8 @@
 {
   "cheatdetector.chat.alert.fail": "failed",
   "cheatdetector.chat.alert.flagDetected": "Flag detected: ",
+  "cheatdetector.chat.alert.clutch": "Clutch!",
+  "cheatdetector.chat.alert.clutchDone": "Clutch done.",
   "cheatdetector.chat.alert.foundVanish": "Found Vanished Player: ",
   "cheatdetector.chat.alert.vlclear": "has been cleared VL.",
   "cheatdetector.config.alert.alertBuffer.comment": "How many VLs should we space out before sending an alert?",
@@ -60,6 +62,9 @@
   "cheatdetector.config.modules.airWalkEnabled.comment": "If enabled, you could walk in the air",
   "cheatdetector.config.modules.airWalkEnabled.name": "Enable AirWalk",
   "cheatdetector.config.modules.airWalkEnabled.pretty_name": "AirWalk",
+  "cheatdetector.config.modules.antiFallEnabled.comment": "If enabled, we will clutch you if you fall.",
+  "cheatdetector.config.modules.antiFallEnabled.name": "Enable AntiFall",
+  "cheatdetector.config.modules.antiFallEnabled.pretty_name": "AntiFall",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -67,5 +72,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.1.0"
+  "cheatdetector.gui.title": "CheatDetector 2.1.1"
 }

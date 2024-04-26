@@ -12,6 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
+import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
@@ -60,7 +61,7 @@ public class MovementDisabler extends Check {
             }
             waitTicks = 20;
         } else if (!lastEnabled) {  // 玩家刚刚启用这个选项
-            FixesConfig.vulcanDisablerEnabled = false;
+            CheatDetector.CONFIG_HANDLER.configManager.setValue("vulcanDisablerEnabled", false);
             ClickGUI.update();
             moduleMsg(ChatFormatting.RED + "模块不可用，请检查是否满足要求。");
         }

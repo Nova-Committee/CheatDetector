@@ -43,4 +43,16 @@ public class Advanced3Config {
     public static boolean blinkCancelPacket = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkShowCount = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean airWalkSameY = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiFallAutoDisabled = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int antiFallFallDistance = 10;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiFallOnlyOnVoid = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiFallClutchMsg = false;
 }

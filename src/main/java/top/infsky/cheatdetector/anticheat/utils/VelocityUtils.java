@@ -5,6 +5,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.MagmaBlock;
 import org.jetbrains.annotations.NotNull;
@@ -15,11 +18,16 @@ import java.util.List;
 import java.util.Set;
 
 public class VelocityUtils {
-    public static final List<Direction> HORIZON_DIRECTION = List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
-    public static final List<MobEffect> HURT_EFFECTS = List.of(
-            MobEffects.WITHER,
-            MobEffects.POISON
+    public static final List<Direction> HORIZON_DIRECTION = List.of(
+            Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH
     );
+    public static final List<MobEffect> HURT_EFFECTS = List.of(
+            MobEffects.WITHER, MobEffects.POISON
+    );
+    public static final List<Item> NETHERITE_KITS = List.of(
+            Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS
+    );
+
     public enum VelocityDirection {
         HORIZON,
         VERTICAL,
@@ -32,6 +40,12 @@ public class VelocityUtils {
         // passenger
         if (player.fabricPlayer.isPassenger())
             return false;
+
+        // 下界合金套
+        for (ItemStack itemStack : player.fabricPlayer.getInventory().armor) {
+            if (NETHERITE_KITS.contains(itemStack.getItem()))
+                return false;
+        }
 
         // fire
         if ((player.fabricPlayer.isOnFire() || player.fabricPlayer.isInLava()) && !hasEffects.contains(MobEffects.FIRE_RESISTANCE))

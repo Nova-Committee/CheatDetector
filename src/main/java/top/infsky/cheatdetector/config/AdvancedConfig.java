@@ -22,13 +22,11 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int flightAInHurtJumpTick = 6;
     @Config(category = ConfigCategory.ADVANCED)
-    public static double flightAJumpDistance = 1.25219;
-    @Config(category = ConfigCategory.ADVANCED)
     public static double flightAFromWaterYDistance = 0.5;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flightAOnTeleportDisableTick = 2;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAOnJumpJumpTick = 14;
+    public static int flightAOnJumpJumpTick = 16;
 
 
     @Config(category = ConfigCategory.ADVANCED)
@@ -46,9 +44,7 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean highJumpACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int highJumpAAlertBuffer = 10;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double highJumpAJumpDistance = 1.25219;
+    public static int highJumpAAlertBuffer = 5;
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean highJumpAFlagOne = true;
 

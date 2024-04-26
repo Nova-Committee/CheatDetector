@@ -5,6 +5,7 @@ import net.minecraft.world.item.TridentItem;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
+import top.infsky.cheatdetector.anticheat.utils.PlayerMove;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
@@ -22,7 +23,7 @@ public class FlightA extends Check {
         if (player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
                 || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;
-        if (ElytraItem.isFlyEnabled(player.fabricPlayer.getInventory().getArmor(2))) return;
+        if (player.fabricPlayer.isFallFlying()) return;
 
         if (disableTick > 0) {
             disableTick--;
@@ -46,7 +47,7 @@ public class FlightA extends Check {
 
         if (!player.currentOnGround && jumpTick > 0
                 && player.currentPos.y() - player.lastOnGroundPos.y()
-                < AdvancedConfig.flightAJumpDistance * (1 + player.fabricPlayer.getJumpBoostPower()) + AntiCheatConfig.threshold
+                < PlayerMove.getJumpDistance(player.fabricPlayer) + AntiCheatConfig.threshold
 //                && player.currentPos.distanceTo(player.lastPos) < 5.612 *
 //                (1 + player.fabricPlayer.getSpeed()) + ModConfig.getThreshold()  // 警惕跳跃弱检测
         ) {
