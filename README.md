@@ -56,6 +56,8 @@
     - 允许你在空中行走。
 - **Blink** 闪现
     - 允许你暂停你的发包。
+- **AntiFall** 防摔落
+    - 防止你意外摔下。
 
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。<sup>[Release 1.1.5.1](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)及以前<sup>
