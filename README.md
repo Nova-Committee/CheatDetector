@@ -57,8 +57,6 @@
 - **Blink** 闪现
     - 允许你暂停你的发包。
 
-**Full Changelog**: https://github.com/Nova-Committee/CheatDetector/compare/2.0.0...2.1.0
-
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。<sup>[Release 1.1.5.1](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)及以前<sup>
 
