@@ -37,15 +37,16 @@ public class AntiVanish extends Module {
                 onlineUUIDs.add(player.getProfile().getId());
             }
 
+            customMsg(packetUUIDs + "\n" + onlineUUIDs);
             if (packetUUIDs.size() != onlineUUIDs.size()) {
                 val uuidDifference = ListUtils.getDifference(packetUUIDs, onlineUUIDs);
                 val stringDifference = new ArrayList<String>(uuidDifference.size());
-                for (int i = 0; i < uuidDifference.size(); i++) {
-                    val playerInfo = TRPlayer.CLIENT.getConnection().getPlayerInfo(uuidDifference.get(i));
-                    if (playerInfo != null) stringDifference.add(i, playerInfo.getProfile().getName());
-                }
+                uuidDifference.forEach(uuid -> {
+                    val playerInfo = TRPlayer.CLIENT.getConnection().getPlayerInfo(uuid);
+                    if (playerInfo != null) stringDifference.add(playerInfo.getProfile().getName());
+                });
 
-                val msg = Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference);
+                val msg = Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference, ".");
                 if (!msg.equals(lastMsg)) {
                     customMsg(msg);
                     lastMsg = msg;

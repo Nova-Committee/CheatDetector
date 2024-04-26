@@ -25,6 +25,7 @@ public class ClickGUI extends Module {
 //        LogUtils.custom(ModuleConfig.clickGUIEnabled ? "yes" : "no");
         if (ModuleConfig.clickGUIEnabled) {
             ModuleConfig.clickGUIEnabled = false;
+            getInstance().setParent(null);
             TRPlayer.CLIENT.setScreen(getInstance());
             update();
         }
@@ -51,6 +52,6 @@ public class ClickGUI extends Module {
      */
     public static void update() {
         getInstance().reDraw();
-        CheatDetector.CONFIG_HANDLER.save();
+//        CheatDetector.CONFIG_HANDLER.save();
     }
 }

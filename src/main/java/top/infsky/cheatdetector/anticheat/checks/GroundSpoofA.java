@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.anticheat.checks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Check;
@@ -52,11 +53,26 @@ public class GroundSpoofA extends Check {
                 groundPos.south(),
                 groundPos.south().east()
         );
+        final List<BlockPos> scaffolding = List.of(
+                groundPos.above().east(),
+                groundPos.above().east().north(),
+                groundPos.above().west(),
+                groundPos.above().west().south(),
+                groundPos.above().north(),
+                groundPos.above().north().west(),
+                groundPos.above().south(),
+                groundPos.above().south().east()
+        );
+
         for (BlockPos blockPos : blocks) {
             if (level.getBlockState(blockPos).isAir()) {
                 count++;
             }
         }
+        for (BlockPos blockPos : scaffolding) {
+            if (level.getBlockState(blockPos).is(Blocks.SCAFFOLDING)) return false;
+        }
+
         return count >= 8;
     }
 

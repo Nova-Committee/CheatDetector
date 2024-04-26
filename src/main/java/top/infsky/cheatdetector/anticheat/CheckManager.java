@@ -79,6 +79,9 @@ public class CheckManager {
         post.put(NoRotateSet.class, new NoRotateSet(player));
         post.put(ClickGUI.class, new ClickGUI(player));
         post.put(AntiVanish.class, new AntiVanish(player));
+        pre.put(Blink.class, new Blink(player));
+        pre.put(AirWalk.class, new AirWalk(player));
+//        pre.put(FakeSneak.class, new FakeSneak(player));
 
         return new CheckManager(pre, normal, post, player);
     }

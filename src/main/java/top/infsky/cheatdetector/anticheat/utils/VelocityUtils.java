@@ -29,6 +29,10 @@ public class VelocityUtils {
     public static boolean shouldCheck(@NotNull TRPlayer player, @NotNull VelocityDirection velocityDirection) {
         final Set<MobEffect> hasEffects = player.fabricPlayer.getActiveEffectsMap().keySet();
 
+        // passenger
+        if (player.fabricPlayer.isPassenger())
+            return false;
+
         // fire
         if ((player.fabricPlayer.isOnFire() || player.fabricPlayer.isInLava()) && !hasEffects.contains(MobEffects.FIRE_RESISTANCE))
             return false;

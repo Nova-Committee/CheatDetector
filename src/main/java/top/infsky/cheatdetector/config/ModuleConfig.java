@@ -22,4 +22,16 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean antiVanishEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean blinkEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean airWalkEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean fakeSneakEnabled = false;
 }

@@ -8,8 +8,8 @@ import top.infsky.cheatdetector.utils.LogUtils;
 
 public class Fix extends Check {
     public TRSelf player;
-    public Fix(String checkName, @NotNull TRSelf player) {
-        super(checkName, player);
+    public Fix(String fixName, @NotNull TRSelf player) {
+        super(fixName, player);
         this.player = player;
     }
 

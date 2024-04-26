@@ -4,7 +4,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
@@ -12,7 +11,8 @@ import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.config.*;
-import top.infsky.cheatdetector.mixins.MixinEntity;
+import top.infsky.cheatdetector.mixins.ConnectionInvoker;
+import top.infsky.cheatdetector.mixins.EntityInvoker;
 
 public class Spin extends Module {
     @Range(from = -180, to = 180)
@@ -20,10 +20,6 @@ public class Spin extends Module {
     @Range(from = -90, to = 90)
     public float pitch;
     public boolean pitchReserve = false;
-    @Nullable
-    public ServerboundMovePlayerPacket tickUnSend = null;
-
-    private boolean sending = false;
 
     public Spin(@NotNull TRSelf player) {
         super("Spin", player);
@@ -37,7 +33,7 @@ public class Spin extends Module {
         // TODO move-fix
         if (isDisabled()) return;
 
-        final MixinEntity camera = (MixinEntity) player.fabricPlayer;
+        final EntityInvoker camera = (EntityInvoker) player.fabricPlayer;
         if (camera == null) return;
 
         updateRot();
@@ -94,14 +90,7 @@ public class Spin extends Module {
         if (TRPlayer.CLIENT.getConnection() == null) return;
         if (!CheatDetector.inWorld) return;
 
-        if (tickUnSend != null && (FixesConfig.packetFixEnabled && FixesConfig.getPacketFixMode() == Fixes.STRICT)) {
-            // 防止丢失包，即使有被检测的风险
-            sending = true;
-            TRPlayer.CLIENT.getConnection().send(tickUnSend);
-            sending = false;
-            tickUnSend = null;
-        }
-        tickUnSend = new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround());
+        ((ConnectionInvoker) TRPlayer.CLIENT.getConnection()).sendPacket(new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround()), null);
     }
 
     @Override
@@ -111,14 +100,12 @@ public class Spin extends Module {
         if (isDisabled()) return false;
         if (!Advanced3Config.spinOnlyPacket) return false;
 
-        if (!sending && packet.hasRotation()) {
+        if (packet.getXRot(pitch) != pitch || packet.getYRot(yaw) != yaw) {
             ci.cancel();
             if (packet.hasPosition()) {  // PosRot
-                connection.send(
-                        new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround())
-                        , listener
+                ((ConnectionInvoker) connection).sendPacket(
+                        new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener
                 );
-                tickUnSend = null;
             }
         }
         return false;

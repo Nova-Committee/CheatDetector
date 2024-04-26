@@ -30,7 +30,7 @@ public class ListUtils {
             sb.append(item);
             sb.append(", ");
         }
-        sb.delete(sb.length() - 3, sb.length() - 1);
+        sb.delete(sb.length() - 2, sb.length());
         sb.append(end);
         return sb.toString();
     }

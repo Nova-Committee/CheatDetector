@@ -40,7 +40,8 @@ public class CheatDetector implements ClientModInitializer {
 
     private void onClientStarted(Minecraft minecraft) {
         CLIENT = minecraft;
-        ClickGUI.getInstance().addKeybindChangeListener(() -> ClickGUI.getInstance().reDraw());
+        ModuleConfig.clickGUIEnabled = false;
+        ClickGUI.getInstance().addKeybindChangeListener(ClickGUI::update);
 
     }
 

@@ -6,9 +6,9 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean blinkCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int blinkAlertBuffer = 20;
+    public static int blinkAlertBuffer = 10;
     @Config(category = ConfigCategory.ADVANCED)
-    public static double blinkMaxDistance = 1;
+    public static double blinkMaxDistance = 8;
 
 
     @Config(category = ConfigCategory.ADVANCED)

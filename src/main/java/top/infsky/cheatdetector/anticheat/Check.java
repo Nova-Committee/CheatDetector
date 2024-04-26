@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -68,4 +69,5 @@ public abstract class Check {
     public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
     public boolean _handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) { return false; }
     public boolean _handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket packet, CallbackInfo ci) { return false; }
+    public boolean _handlePacketSend(Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
 }

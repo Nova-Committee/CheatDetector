@@ -21,9 +21,10 @@ public abstract class MixinConnection {
         if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
         final CheckManager manager = TRSelf.getInstance().manager;
 
-        if (basePacket instanceof ServerboundUseItemOnPacket packet)
-            manager.onCustomAction((check) -> check._handleUseItemOn(packet, ci));
-        if (basePacket instanceof ServerboundMovePlayerPacket packet)
-            manager.onCustomAction((check) -> check._handleMovePlayer(packet, (Connection)(Object) this, listener, ci));
+        manager.onCustomAction(check -> check._handlePacketSend(basePacket, (Connection)(Object) this, listener, ci));
+        if (!ci.isCancelled() && basePacket instanceof ServerboundUseItemOnPacket packet)
+            manager.onCustomAction(check -> check._handleUseItemOn(packet, ci));
+        if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet)
+            manager.onCustomAction(check -> check._handleMovePlayer(packet, (Connection)(Object) this, listener, ci));
     }
 }

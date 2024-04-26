@@ -29,4 +29,18 @@ public class Advanced3Config {
     public static double spinPitchStep = 35;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean spinOnlyPacket = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkIncludeOutgoing = true;
+//    @Config(category = ConfigCategory.ADVANCED3)
+//    public static boolean blinkIncludeInComing = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkAutoDisable = false;
+    @Numeric(minValue = -1, maxValue = Integer.MAX_VALUE)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int blinkAutoSendMs = -1;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkCancelPacket = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkShowCount = false;
 }

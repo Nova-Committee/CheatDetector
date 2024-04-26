@@ -8,8 +8,9 @@
   },
   "client": [
     "MixinConnection",
+    "ConnectionInvoker",
     "MixinMultiPlayerGameMode",
     "MixinPacket",
-    "MixinEntity"
+    "EntityInvoker"
   ]
 }
