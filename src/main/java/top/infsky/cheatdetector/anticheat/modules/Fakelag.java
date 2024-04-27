@@ -1,8 +1,10 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
 import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import org.jetbrains.annotations.NotNull;
@@ -19,15 +21,15 @@ import top.infsky.cheatdetector.mixins.ConnectionInvoker;
 import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class Blink extends Module {
+public class Fakelag extends Module {
     private int lastPacketUnSend = 0;
     private int lastPacketUnReceive = 0;
     private int disablePackets = 0;
     private final Deque<OutgoingPacket> outgoingPackets = new LinkedBlockingDeque<>();
     private final Deque<IncomingPacket> incomingPackets = new LinkedBlockingDeque<>();
 
-    public Blink( @NotNull TRSelf player) {
-        super("Blink", player);
+    public Fakelag(@NotNull TRSelf player) {
+        super("Fakelag", player);
     }
 
     @Override
@@ -35,11 +37,28 @@ public class Blink extends Module {
         if (isDisabled()) {
             while (!outgoingPackets.isEmpty()) {
                 final OutgoingPacket packet = outgoingPackets.poll();
-                if (!Advanced3Config.blinkCancelPacket) packet.connection().send(packet.packet(), packet.listener());
+                packet.connection().send(packet.packet(), packet.listener());
             }
             while (!incomingPackets.isEmpty()) {
                 final IncomingPacket packet = incomingPackets.poll();
                 ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+            }
+        } else {
+            while (!outgoingPackets.isEmpty()) {
+                final OutgoingPacket packet = outgoingPackets.getLast();
+                if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.fakelagDelayMs / 50.0)) {
+                    break;
+                }
+                ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener());
+                outgoingPackets.remove(packet);
+            }
+            while (!incomingPackets.isEmpty()) {
+                final IncomingPacket packet = incomingPackets.getLast();
+                if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.fakelagDelayMs / 50.0)) {
+                    break;
+                }
+                ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+                incomingPackets.remove(packet);
             }
         }
     }
@@ -52,7 +71,7 @@ public class Blink extends Module {
         }
         if (isDisabled() || isDied() || ci.isCancelled()) return false;
 
-        if (Advanced3Config.blinkIncludeOutgoing) {
+        if (Advanced3Config.fakelagIncludeOutgoing) {
             if (packet instanceof ServerboundClientCommandPacket packet1) {
                 if (packet1.getAction().equals(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN)) {
                     onDied();
@@ -62,7 +81,7 @@ public class Blink extends Module {
 
             ci.cancel();
             outgoingPackets.addFirst(new OutgoingPacket(packet, connection, listener, player.getUpTime()));
-            if (Advanced3Config.blinkShowCount) {
+            if (Advanced3Config.fakelagShowCount) {
                 final int currentPacketUnSend = outgoingPackets.size();
                 if (currentPacketUnSend != lastPacketUnSend) moduleMsg(lastPacketUnSend + " packets to send.");
                 lastPacketUnSend = currentPacketUnSend;
@@ -80,10 +99,10 @@ public class Blink extends Module {
         }
         if (isDisabled() || isDied() || ci.isCancelled()) return false;
 
-        if (Advanced3Config.blinkIncludeInComing) {
+        if (Advanced3Config.fakelagIncludeIncoming) {
             ci.cancel();
             incomingPackets.addFirst(new IncomingPacket(packet, connection, context, player.getUpTime()));
-            if (Advanced3Config.blinkShowCount) {
+            if (Advanced3Config.fakelagShowCount) {
                 final int currentPacketUnReceive = incomingPackets.size();
                 if (currentPacketUnReceive != lastPacketUnReceive) moduleMsg(lastPacketUnReceive + " packets to receive.");
                 lastPacketUnReceive = currentPacketUnReceive;
@@ -97,8 +116,8 @@ public class Blink extends Module {
     public void _onTeleport() {
         if (isDisabled()) return;
 
-        if (Advanced3Config.blinkAutoDisable) {
-            CheatDetector.CONFIG_HANDLER.configManager.setValue("blinkEnabled", false);
+        if (Advanced3Config.fakelagAutoDisable) {
+            CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
             ClickGUI.update();
         }
     }
@@ -111,6 +130,7 @@ public class Blink extends Module {
         return false;
     }
 
+
     private void onDied() {
         outgoingPackets.clear();
         incomingPackets.clear();
@@ -118,8 +138,15 @@ public class Blink extends Module {
         lastPacketUnReceive = 0;
         disablePackets = 20;
     }
+
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.blinkEnabled;
+        if (!ModuleConfig.fakelagEnabled) return true;
+        if (ModuleConfig.backtrackEnabled) {
+            customMsg(Component.translatable("cheatdetector.chat.alert.fakelagAndBacktrack").withStyle(ChatFormatting.DARK_RED).getString());
+            CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
+            return true;
+        }
+        return false;
     }
 }

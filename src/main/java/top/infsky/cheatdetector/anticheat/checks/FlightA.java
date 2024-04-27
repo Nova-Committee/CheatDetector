@@ -1,6 +1,5 @@
 package top.infsky.cheatdetector.anticheat.checks;
 
-import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.TridentItem;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
@@ -23,7 +22,10 @@ public class FlightA extends Check {
         if (player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
                 || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;
-        if (player.fabricPlayer.isFallFlying()) return;
+        if (player.fabricPlayer.isFallFlying()) {
+            jumpTick = Short.MAX_VALUE;
+            return;
+        }
 
         if (disableTick > 0) {
             disableTick--;

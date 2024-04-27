@@ -1,11 +1,13 @@
 package top.infsky.cheatdetector.anticheat;
 
+import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -69,5 +71,7 @@ public abstract class Check {
     public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
     public boolean _handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) { return false; }
     public boolean _handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket packet, CallbackInfo ci) { return false; }
-    public boolean _handlePacketSend(Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
+    public boolean _onPacketSend(Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
+    public boolean _onPacketReceive(Packet<?> packet, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
+    public boolean _handleAttack(Entity entity) { return false; }
 }

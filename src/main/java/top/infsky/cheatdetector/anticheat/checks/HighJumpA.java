@@ -1,7 +1,6 @@
 package top.infsky.cheatdetector.anticheat.checks;
 
 import lombok.val;
-import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
@@ -20,6 +19,10 @@ public class HighJumpA extends Check {
     @Override
     public void _onTick() {
         if (player.fabricPlayer.isFallFlying()) return;
+        if (player.fabricPlayer.isFallFlying()) {
+            hasFlag = true;
+            return;
+        }
 
         if (player.isJumping() && player.lastOnGroundPos != player.lastOnLiquidGroundPos && !(player.fabricPlayer.hurtTime > 0) && !player.fabricPlayer.isPassenger()) {
             if (player.currentPos.y() > highestY) highestY = player.currentPos.y();

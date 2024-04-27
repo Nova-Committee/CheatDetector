@@ -4,6 +4,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
@@ -33,25 +34,40 @@ public class AntiFall extends Module {
         }
         if (level == null) return;
 
-        if (player.fabricPlayer.isFallFlying() || player.fabricPlayer.fallDistance < Advanced3Config.antiFallFallDistance) return;
         BlockPos current = player.fabricPlayer.blockPosition().below();
-        if (Advanced3Config.antiFallOnlyOnVoid) {
-            try {
-                for (int yPos = current.getY(); yPos >= -64; yPos--)
-                    if (!level.getBlockState(current.atY(yPos)).isAir()) return;
-            } catch (Exception e) {
-                customMsg(e.getLocalizedMessage());
+        if (!needToClutch)
+            if (Advanced3Config.antiFallOnlyOnVoid) {
+                boolean isVoid = true;
+                try {
+                    for (int yPos = -65; yPos < current.getY(); yPos++) {
+                        BlockState blockState = level.getBlockState(current.atY(yPos));
+                        if (!blockState.getBlock().getClass().equals(Blocks.AIR.getClass())) {
+                            isVoid = false;
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    customMsg(e.getLocalizedMessage());
+                }
+                if (isVoid) {
+                    needToClutch = true;
+                    customMsg(Component.translatable("cheatdetector.chat.alert.clutch").getString());
+                }
+            } else if (!player.fabricPlayer.isFallFlying() && player.fabricPlayer.fallDistance >= Advanced3Config.antiFallFallDistance) {
+                needToClutch = true;
+                customMsg(Component.translatable("cheatdetector.chat.alert.clutch").getString());
             }
-        }
 
         if (needToClutch) {
+            if (player.fabricPlayer.input.shiftKeyDown && player.currentOnGround) current = current.below();
             if (current == fakeBlockPos) return;
+
 
             if (fakeBlockPos != null) {
                 if (level.getBlockState(fakeBlockPos).is(Blocks.BARRIER)) level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
                 fakeBlockPos = null;
             }
-            if (level.getBlockState(current).isAir()) {
+            if (level.getBlockState(current).getBlock().getClass().equals(Blocks.AIR.getClass())) {
                 level.setBlock(current, Blocks.BARRIER.defaultBlockState(), 3);
                 fakeBlockPos = current;
             } else {
@@ -65,6 +81,6 @@ public class AntiFall extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.antiFallEnabled;
+        return !ModuleConfig.antiFallEnabled || ModuleConfig.airWalkEnabled;
     }
 }

@@ -1,4 +1,5 @@
 {
+  "cheatdetector.chat.alert.fakelagAndBacktrack": "Fakelag couldn't work with Backtrack!",
   "cheatdetector.chat.alert.fail": "failed",
   "cheatdetector.chat.alert.flagDetected": "Flag detected: ",
   "cheatdetector.chat.alert.clutch": "Clutch!",
@@ -56,7 +57,7 @@
   "cheatdetector.config.modules.antiVanishEnabled.comment": "If enabled, we will notice you if someone just vanished.",
   "cheatdetector.config.modules.antiVanishEnabled.name": "Enable AntiVanish",
   "cheatdetector.config.modules.antiVanishEnabled.pretty_name": "AntiVanish",
-  "cheatdetector.config.modules.blinkEnabled.comment": "If enabled, we will pause your packet send task.",
+  "cheatdetector.config.modules.blinkEnabled.comment": "If enabled, we will pause your packet task.",
   "cheatdetector.config.modules.blinkEnabled.name": "Enable Blink",
   "cheatdetector.config.modules.blinkEnabled.pretty_name": "Blink",
   "cheatdetector.config.modules.airWalkEnabled.comment": "If enabled, you could walk in the air",
@@ -65,6 +66,18 @@
   "cheatdetector.config.modules.antiFallEnabled.comment": "If enabled, we will clutch you if you fall.",
   "cheatdetector.config.modules.antiFallEnabled.name": "Enable AntiFall",
   "cheatdetector.config.modules.antiFallEnabled.pretty_name": "AntiFall",
+  "cheatdetector.config.modules.fakelagEnabled.comment": "If enabled, we will plus your latency.",
+  "cheatdetector.config.modules.fakelagEnabled.name": "Enable Fakelag",
+  "cheatdetector.config.modules.fakelagEnabled.pretty_name": "Fakelag",
+  "cheatdetector.config.modules.airPlaceEnabled.comment": "If enabled, you could place block in the air.",
+  "cheatdetector.config.modules.airPlaceEnabled.name": "Enable AirPlace",
+  "cheatdetector.config.modules.airPlaceEnabled.pretty_name": "AirPlace",
+  "cheatdetector.config.modules.invWalkEnabled.comment": "If enabled, you could walk anyway.",
+  "cheatdetector.config.modules.invWalkEnabled.name": "Enable InvWalk",
+  "cheatdetector.config.modules.invWalkEnabled.pretty_name": "InvWalk",
+  "cheatdetector.config.modules.backtrackEnabled.comment": "If enabled, you could attack player from some seconds ago.",
+  "cheatdetector.config.modules.backtrackEnabled.name": "Enable Backtrack",
+  "cheatdetector.config.modules.backtrackEnabled.pretty_name": "Backtrack",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -72,5 +85,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.1.1"
+  "cheatdetector.gui.title": "CheatDetector 2.2.0"
 }

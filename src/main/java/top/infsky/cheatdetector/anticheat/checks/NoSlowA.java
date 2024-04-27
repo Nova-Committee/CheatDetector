@@ -1,5 +1,7 @@
 package top.infsky.cheatdetector.anticheat.checks;
 
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.Check;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
@@ -40,6 +42,10 @@ public class NoSlowA extends Check {
             disableTick--;
             return;
         }
+
+        if (player.fabricPlayer.isSilent()
+                && EnchantmentHelper.getEnchantments(player.fabricPlayer.getInventory().getArmor(4)).containsKey(Enchantments.SWIFT_SNEAK))
+            return;
 
         final double secSpeed = PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos);
         final double possibleSpeed = SLOW_SPEED.get(itemUseTick) * player.speedMul + AntiCheatConfig.threshold;

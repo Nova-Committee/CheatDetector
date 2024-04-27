@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.mixins;
 
 
+import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
@@ -21,10 +22,18 @@ public abstract class MixinConnection {
         if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
         final CheckManager manager = TRSelf.getInstance().manager;
 
-        manager.onCustomAction(check -> check._handlePacketSend(basePacket, (Connection)(Object) this, listener, ci));
+        manager.onCustomAction(check -> check._onPacketSend(basePacket, (Connection)(Object) this, listener, ci));
         if (!ci.isCancelled() && basePacket instanceof ServerboundUseItemOnPacket packet)
             manager.onCustomAction(check -> check._handleUseItemOn(packet, ci));
         if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet)
             manager.onCustomAction(check -> check._handleMovePlayer(packet, (Connection)(Object) this, listener, ci));
+    }
+
+    @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Object;)V", at = @At(value = "HEAD"), cancellable = true)
+    public void channelRead0(ChannelHandlerContext channelHandlerContext, Object packet, CallbackInfo ci) {
+        if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
+        final CheckManager manager = TRSelf.getInstance().manager;
+
+        manager.onCustomAction(check -> check._onPacketReceive((Packet<?>) packet, (Connection)(Object) this, channelHandlerContext, ci));
     }
 }

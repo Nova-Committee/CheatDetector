@@ -32,20 +32,23 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkIncludeOutgoing = true;
-//    @Config(category = ConfigCategory.ADVANCED3)
-//    public static boolean blinkIncludeInComing = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkIncludeInComing = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkAutoDisable = false;
-    @Numeric(minValue = -1, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static int blinkAutoSendMs = -1;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkCancelPacket = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkShowCount = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean blinkRenderRealPosition = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean airWalkSameY = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean airWalkAutoJump = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean airWalkAntiFlag = true;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiFallAutoDisabled = false;
@@ -55,4 +58,37 @@ public class Advanced3Config {
     public static boolean antiFallOnlyOnVoid = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiFallClutchMsg = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean fakelagIncludeOutgoing = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean fakelagIncludeIncoming = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int fakelagDelayMs = 100;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean fakelagAutoDisable = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean fakelagShowCount = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean fakelagRenderRealPosition = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static double airPlaceReach = 4.5;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean invWalkAllowSneak = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean invWalkAllowSprint = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean invWalkAllowJump = true;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean backtrackShowCount = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int backtrackDelayMs = 100;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean backtrackCancelPacket = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean backtrackRenderRealPosition = false;
 }

@@ -12,7 +12,7 @@ public class AdvancedConfig {
 
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flightACheck = true;
+    public static boolean flightACheck = false;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flightAAlertBuffer = 20;
     @Config(category = ConfigCategory.ADVANCED)
@@ -26,7 +26,7 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int flightAOnTeleportDisableTick = 2;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAOnJumpJumpTick = 16;
+    public static int flightAOnJumpJumpTick = 24;
 
 
     @Config(category = ConfigCategory.ADVANCED)
