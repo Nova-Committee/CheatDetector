@@ -2,6 +2,9 @@ package top.infsky.cheatdetector.config;
 
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
+import top.infsky.cheatdetector.anticheat.utils.notebot.NotebotUtils;
+
+import java.util.List;
 
 public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
@@ -91,4 +94,34 @@ public class Advanced3Config {
     public static boolean backtrackCancelPacket = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean backtrackRenderRealPosition = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotRoundOutOfRange = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static String noteBotMode = "ExactInstruments";
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static String noteBotFilePath = "";
+    @Numeric(minValue = 1, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int noteBotCheckNoteblocksAgainDelay = 10;
+    @Numeric(minValue = 1, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int noteBotTickDelay = 1;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotSwingArm = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotAutoRotate = true;
+    @Numeric(minValue = 1, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int noteBotConcurrentTuneBlocks = 1;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotPolyphonic = true;
+
+
+    public static NotebotUtils.NotebotMode getNoteBotMode() {
+        if (noteBotMode.equals("AnyInstrument")) {
+            return NotebotUtils.NotebotMode.AnyInstrument;
+        }
+        return NotebotUtils.NotebotMode.ExactInstruments;
+    }
 }

@@ -2,7 +2,6 @@ package top.infsky.cheatdetector.anticheat;
 
 import lombok.Getter;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
@@ -87,6 +86,7 @@ public class CheckManager {
         post.put(AirPlace.class, new AirPlace(player));
         post.put(InvWalk.class, new InvWalk(player));
         post.put(Backtrack.class, new Backtrack(player));
+        post.put(NoteBot.class, new NoteBot(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -102,8 +102,8 @@ public class CheckManager {
 
         if (player.currentGameType == GameType.CREATIVE || player.currentGameType == GameType.SPECTATOR) return;
         if (player.lastOnGround && !player.currentOnGround) onJump();
-        if (TRSelf.getInstance().fabricPlayer.pick(3, 0, false) instanceof EntityHitResult entityHitResult)
-            onCustomAction(check -> check._handleAttack(entityHitResult.getEntity()));
+        if (TRPlayer.CLIENT.mouseHandler.isLeftPressed() && TRPlayer.CLIENT.crosshairPickEntity != null)
+            onCustomAction(check -> check._handleAttack(TRPlayer.CLIENT.crosshairPickEntity));
 
         for (Check check : preChecks.values()) check._onTick();
         for (Check check : normalChecks.values()) check._onTick();

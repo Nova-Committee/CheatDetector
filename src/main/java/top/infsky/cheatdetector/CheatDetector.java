@@ -47,7 +47,7 @@ public class CheatDetector implements ClientModInitializer {
 
     private void onClientStopping(Minecraft minecraft) {
         CONFIG_HANDLER.configManager.setValue("clickGUIEnabled", false);
-        CONFIG_HANDLER.configManager.setValue("vulcanDisablerEnabled", false);
+        CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
         CONFIG_HANDLER.saveToFile();
     }
 

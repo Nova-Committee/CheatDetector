@@ -28,9 +28,6 @@
   "cheatdetector.config.anticheat.disableSelfCheck.pretty_name": "Disable Self-Check",
   "cheatdetector.config.anticheat.threshold.comment": "How much extra distance should we provide the player before marking?",
   "cheatdetector.config.anticheat.threshold.name": "Maximum threshold",
-  "cheatdetector.config.fixes.omniSprintEnabled.comment": "If enabled, you could sprint anyway.",
-  "cheatdetector.config.fixes.omniSprintEnabled.name": "Enable OmniSprint",
-  "cheatdetector.config.fixes.omniSprintEnabled.pretty_name": "OmniSprint",
   "cheatdetector.config.fixes.packetFixEnabled.comment": "In order to avoid being flagged by an server-side anti-cheat error, should we fix some abnormal packets? \nThis may affect the normal operation of some Mods, so please don't use it if you haven't encountered the error flag.",
   "cheatdetector.config.fixes.packetFixEnabled.name": "Enable PacketFix",
   "cheatdetector.config.fixes.packetFixEnabled.pretty_name": "PacketFix",
@@ -78,6 +75,9 @@
   "cheatdetector.config.modules.backtrackEnabled.comment": "If enabled, you could attack player from some seconds ago.",
   "cheatdetector.config.modules.backtrackEnabled.name": "Enable Backtrack",
   "cheatdetector.config.modules.backtrackEnabled.pretty_name": "Backtrack",
+  "cheatdetector.config.modules.noteBotEnabled.comment": "If enabled, you could play .nbs song in minecraft.",
+  "cheatdetector.config.modules.noteBotEnabled.name": "Enable NoteBot",
+  "cheatdetector.config.modules.noteBotEnabled.pretty_name": "NoteBot",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -85,5 +85,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.2.0"
+  "cheatdetector.gui.title": "CheatDetector 2.2.1"
 }
