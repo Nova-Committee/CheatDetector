@@ -12,9 +12,9 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.anticheat.utils.PlayerRotation;
 import top.infsky.cheatdetector.config.*;
 import top.infsky.cheatdetector.mixins.ConnectionInvoker;
-import top.infsky.cheatdetector.mixins.EntityInvoker;
 
 public class Spin extends Module {
     @Getter
@@ -38,16 +38,12 @@ public class Spin extends Module {
         // TODO move-fix
         if (isDisabled()) return;
 
-        EntityInvoker camera = (EntityInvoker) player.fabricPlayer;
-        if (camera == null) return;
-
         updateRot();
 
         if (Advanced3Config.spinOnlyPacket) {
             packetRot();
         } else {
-            camera.doSetXRot(pitch);
-            camera.doSetYRot(yaw);
+            PlayerRotation.rotate(yaw, pitch);
         }
     }
 
@@ -100,20 +96,8 @@ public class Spin extends Module {
 
     @Override
     public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
-        if (ci.isCancelled()) return false;
-        if (!CheatDetector.inWorld) { ci.cancel(); return true; }
-        if (isDisabled()) return false;
         if (!Advanced3Config.spinOnlyPacket) return false;
-
-        if (packet.getXRot(pitch) != pitch || packet.getYRot(yaw) != yaw) {
-            ci.cancel();
-            if (packet.hasPosition()) {  // PosRot
-                ((ConnectionInvoker) connection).sendPacket(
-                        new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener
-                );
-            }
-        }
-        return false;
+        return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
     }
 
     @Override

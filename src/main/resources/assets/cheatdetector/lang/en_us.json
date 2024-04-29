@@ -82,6 +82,12 @@
   "cheatdetector.config.modules.sayHackerEnabled.comment": "If enabled, we will send the chat if someone failed.",
   "cheatdetector.config.modules.sayHackerEnabled.name": "Enable SayHacker",
   "cheatdetector.config.modules.sayHackerEnabled.pretty_name": "SayHacker",
+  "cheatdetector.config.modules.jumpResetEnabled.comment": "If enabled, we will reduce your velocity through jump reset.",
+  "cheatdetector.config.modules.jumpResetEnabled.name": "Enable Jump Reset",
+  "cheatdetector.config.modules.jumpResetEnabled.pretty_name": "Jump Reset",
+  "cheatdetector.config.modules.scaffoldEnabled.comment": "If enabled, we will place block under your feet.",
+  "cheatdetector.config.modules.scaffoldEnabled.name": "Enable Scaffold",
+  "cheatdetector.config.modules.scaffoldEnabled.pretty_name": "Scaffold",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -89,5 +95,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.2.2"
+  "cheatdetector.gui.title": "CheatDetector 2.3.0"
 }

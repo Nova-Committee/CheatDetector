@@ -58,4 +58,12 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean sayHackerEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean jumpResetEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean scaffoldEnabled = false;
 }

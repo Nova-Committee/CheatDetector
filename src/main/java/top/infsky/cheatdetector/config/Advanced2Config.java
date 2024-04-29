@@ -25,8 +25,4 @@ public class Advanced2Config {
 
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean omniSprintShowPacketSend = false;
-
-    public static short getFastPlaceSamePlaceMinDelay() {
-        return (short) fastPlaceSamePlaceMinDelay;
-    }
 }

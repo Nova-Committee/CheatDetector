@@ -4,8 +4,6 @@ import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
 import top.infsky.cheatdetector.anticheat.utils.notebot.NotebotUtils;
 
-import java.util.List;
-
 public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static int flagDetectorAlertBuffer = 1;
@@ -78,6 +76,8 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static double airPlaceReach = 4.5;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean airPlaceNoSwing = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean invWalkAllowSneak = false;
@@ -121,6 +121,22 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean noteBotDebug = false;
 
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldNoSwing = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldDoRotation = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldSilentRotation = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldSilentKeepRotation = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldNoSprint = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int scaffoldExpend = 0;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean scaffoldAutoSwitch = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int scaffoldPlaceMinDelay = 1;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

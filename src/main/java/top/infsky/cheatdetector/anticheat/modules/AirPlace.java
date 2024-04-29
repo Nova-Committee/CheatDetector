@@ -42,7 +42,7 @@ public class AirPlace extends Module {
 
         final InteractionHand hand = player.fabricPlayer.getMainHandItem().getItem() instanceof BlockItem ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
         TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, blockHitResult);
-        player.fabricPlayer.swing(hand);
+        if (!Advanced3Config.airPlaceNoSwing) player.fabricPlayer.swing(hand);
     }
 
     @Override

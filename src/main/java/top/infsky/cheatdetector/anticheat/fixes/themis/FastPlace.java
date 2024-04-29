@@ -19,7 +19,7 @@ import top.infsky.cheatdetector.config.FixesConfig;
 import java.util.Objects;
 
 public class FastPlace extends Fix {
-    public short minDelay = 1;
+    public int minDelay = 1;
     public long lastPlaceTick = 0;
     public @Nullable UseItemOn lastAction = null;
 
@@ -29,7 +29,7 @@ public class FastPlace extends Fix {
 
     @Override
     public void _onTick() {
-        minDelay = Advanced2Config.getFastPlaceSamePlaceMinDelay();
+        minDelay = Advanced2Config.fastPlaceSamePlaceMinDelay;
     }
 
     @Override

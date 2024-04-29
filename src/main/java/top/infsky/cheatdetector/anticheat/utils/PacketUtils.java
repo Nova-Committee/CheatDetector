@@ -17,16 +17,16 @@ public class PacketUtils {
                 ClientboundDamageEventPacket.class,
                 ClientboundAnimatePacket.class,
                 ClientboundHurtAnimationPacket.class,
-                ClientboundSetEntityMotionPacket.class
+                ClientboundSetEntityMotionPacket.class,
+                ClientboundEntityEventPacket.class
         );
         public static final List<Class<? extends Packet<?>>> DELAY_PACKETS = List.of(
                 ClientboundPingPacket.class,
                 ClientboundPlayerAbilitiesPacket.class,
                 ClientboundKeepAlivePacket.class,
                 ClientboundMoveEntityPacket.class,
-                ClientboundPlayerPositionPacket.class,
-                ClientboundPlayerLookAtPacket.class,
-                ClientboundSetEntityMotionPacket.class
+                ClientboundSetEntityMotionPacket.class,
+                ClientboundEntityEventPacket.class
         );
     }
 }

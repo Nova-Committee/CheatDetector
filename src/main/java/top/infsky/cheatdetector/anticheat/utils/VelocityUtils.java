@@ -11,9 +11,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.MagmaBlock;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +36,7 @@ public class VelocityUtils {
         ALL
     }
     
-    public static boolean shouldCheck(@NotNull TRPlayer player, @NotNull VelocityDirection velocityDirection) {
+    public static boolean shouldCheck(@NotNull TRPlayer player, @Nullable VelocityDirection velocityDirection) {
         final Set<MobEffect> hasEffects = player.fabricPlayer.getActiveEffectsMap().keySet();
 
         // passenger
@@ -55,20 +57,8 @@ public class VelocityUtils {
         if (player.fabricPlayer.isInWater() && !hasEffects.contains(MobEffects.WATER_BREATHING))
             return false;
 
-        // hunger
-        if (CheatDetector.CLIENT.level != null
-                && player.fabricPlayer.getFoodData().getFoodLevel() == 0 && CheatDetector.CLIENT.level.getDifficulty() == Difficulty.HARD)
-            return false;
-
-        // MagmaBlock
-        if (CheatDetector.CLIENT.level != null
-                && CheatDetector.CLIENT.level.getBlockState(player.fabricPlayer.blockPosition().below()).getBlock() instanceof MagmaBlock)
-            return false;
-
         // wall
         if (player.fabricPlayer.isInWall())
-            return false;
-        if (!player.fabricPlayer.getFeetBlockState().isAir())
             return false;
 
         // effect
@@ -77,27 +67,43 @@ public class VelocityUtils {
                 return false;
         }
 
-        // has block
-        if (CheatDetector.CLIENT.level != null) {
-            final Level level = CheatDetector.CLIENT.level;
-            final BlockPos feetBlock = player.fabricPlayer.blockPosition();
-            switch (velocityDirection) {
-                case ALL: {}
-                case HORIZON: {
-                    for (Direction direction : HORIZON_DIRECTION) {
-                        if (!level.getBlockState(feetBlock.relative(direction)).isAir())
+        try (Level level = CheatDetector.CLIENT.level) {
+            if (level == null) return false;
+
+            // hunger
+            if (player.fabricPlayer.getFoodData().getFoodLevel() == 0 && level.getDifficulty() == Difficulty.HARD)
+                return false;
+
+            // MagmaBlock
+            if (level.getBlockState(player.fabricPlayer.blockPosition().below()).getBlock() instanceof MagmaBlock)
+                return false;
+
+
+            // has block
+            if (velocityDirection != null) {
+                final BlockPos feetBlock = player.fabricPlayer.blockPosition();
+                switch (velocityDirection) {
+                    case ALL: {
+                    }
+                    case HORIZON: {
+                        for (Direction direction : HORIZON_DIRECTION) {
+                            if (!level.getBlockState(feetBlock.relative(direction)).isAir())
+                                return false;
+                        }
+                        if (velocityDirection == VelocityDirection.HORIZON) break;
+                    }
+                    case VERTICAL: {
+                        if (!level.getBlockState(feetBlock.above()).isAir()
+                                || !level.getBlockState(feetBlock).isAir()
+                                || !level.getBlockState(feetBlock.above()).isAir()) {
                             return false;
+                        }
+                        break;
                     }
-                    if (velocityDirection == VelocityDirection.HORIZON) break;
-                }
-                case VERTICAL: {
-                    if (!level.getBlockState(feetBlock.above()).isAir()
-                            || !level.getBlockState(feetBlock).isAir()) {
-                        return false;
-                    }
-                    break;
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         // as default

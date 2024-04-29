@@ -6,8 +6,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -35,6 +37,8 @@ public class Backtrack extends Module {
     private Player target;
     @Nullable
     private FakePlayer targetVisual;
+    @Nullable
+    private Player lastTarget;
 
     public Backtrack(@NotNull TRSelf player) {
         super("Backtrack", player);
@@ -49,6 +53,8 @@ public class Backtrack extends Module {
                 if (!Advanced3Config.backtrackCancelPacket) ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
             }
         } else {
+            if (target != null && target != lastTarget)  // on attack new target
+                player.fabricPlayer.connection.handleSetEntityMotion(new ClientboundSetEntityMotionPacket(target.getId(), new Vec3(0, 0, 0)));
             while (!incomingPackets.isEmpty()) {
                 final IncomingPacket packet = incomingPackets.getLast();
                 if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.backtrackDelayMs / 50.0)) {
@@ -58,22 +64,23 @@ public class Backtrack extends Module {
                 incomingPackets.remove(packet);
             }
         }
+        lastTarget = target;
     }
 
     @Override
     public boolean _handleAttack(Entity entity) {
-        if (isDisabled() || isDied() || !Advanced3Config.backtrackRenderRealPosition) return false;
+        if (isDisabled() || isDied()) return false;
 
-        customMsg("attack!");
         if (entity instanceof Player targetPlayer) {
-            customMsg("attack!");
             if (!targetPlayer.equals(target)) {
                 target = targetPlayer;
-                if (targetVisual != null)
-                    targetVisual.hide();
-                targetVisual = null;
-                targetVisual = new FakePlayer(player.fabricPlayer.level(), target.blockPosition(), target.getGameProfile());
-                targetVisual.show();
+                if (Advanced3Config.backtrackRenderRealPosition) {
+                    if (targetVisual != null)
+                        targetVisual.hide();
+                    targetVisual = null;
+                    targetVisual = new FakePlayer(player.fabricPlayer.level(), target.blockPosition(), target.getGameProfile());
+                    targetVisual.show();
+                }
             }
         }
         return false;
