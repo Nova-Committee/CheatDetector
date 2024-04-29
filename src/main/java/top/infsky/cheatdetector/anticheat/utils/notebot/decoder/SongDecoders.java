@@ -69,7 +69,7 @@ public class SongDecoders {
      * @param song A song
      */
     private static void fixSong(Song song) {
-        NoteBot notebot = (NoteBot) NoteBot.instance;
+        NoteBot notebot = (NoteBot) NoteBot.getInstance();
         if (notebot == null) return;
 
         var iterator = song.getNotesMap().entries().iterator();

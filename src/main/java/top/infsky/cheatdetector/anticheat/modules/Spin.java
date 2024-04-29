@@ -1,9 +1,11 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
+import lombok.Getter;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
@@ -15,6 +17,9 @@ import top.infsky.cheatdetector.mixins.ConnectionInvoker;
 import top.infsky.cheatdetector.mixins.EntityInvoker;
 
 public class Spin extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     @Range(from = -180, to = 180)
     public float yaw;
     @Range(from = -90, to = 90)
@@ -23,17 +28,17 @@ public class Spin extends Module {
 
     public Spin(@NotNull TRSelf player) {
         super("Spin", player);
+        instance = this;
     }
 
     @Override
     public void _onTick() {
         // 😅这若智代码写了一天还没写出来
         // xRot竟然是pitch我难绷了
-        // TODO 静默转头明天再说
         // TODO move-fix
         if (isDisabled()) return;
 
-        final EntityInvoker camera = (EntityInvoker) player.fabricPlayer;
+        EntityInvoker camera = (EntityInvoker) player.fabricPlayer;
         if (camera == null) return;
 
         updateRot();

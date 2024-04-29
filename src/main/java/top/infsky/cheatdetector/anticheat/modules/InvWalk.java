@@ -1,10 +1,12 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import lombok.Getter;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
@@ -16,12 +18,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class InvWalk extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     public InvWalk(@NotNull TRSelf player) {
         super("InvWalk", player);
+        instance = this;
     }
 
     @Override
     public void _onTick() {
+        if (isDisabled()) return;
+
+
         Screen screen = TRPlayer.CLIENT.screen;
         if (screen == null)
             return;

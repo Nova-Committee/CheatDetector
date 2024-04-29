@@ -11,7 +11,7 @@ import top.infsky.cheatdetector.anticheat.utils.notebot.song.Song;
 import java.io.File;
 
 public abstract class SongDecoder {
-    protected NoteBot notebot = (NoteBot) NoteBot.instance;
+    protected NoteBot notebot = (NoteBot) NoteBot.getInstance();
 
     /**
      * Parse file to a {@link Song} object

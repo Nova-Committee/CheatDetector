@@ -12,7 +12,6 @@ import top.hendrixshen.magiclib.malilib.impl.ConfigHandler;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
 import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.anticheat.modules.ClickGUI;
-import top.infsky.cheatdetector.config.FixesConfig;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.utils.PlayerManager;
 
@@ -41,13 +40,10 @@ public class CheatDetector implements ClientModInitializer {
     private void onClientStarted(Minecraft minecraft) {
         CLIENT = minecraft;
         ModuleConfig.clickGUIEnabled = false;
-        ClickGUI.getInstance().addKeybindChangeListener(ClickGUI::update);
-
+        ClickGUI.getConfigGui().addKeybindChangeListener(ClickGUI::update);
     }
 
     private void onClientStopping(Minecraft minecraft) {
-        CONFIG_HANDLER.configManager.setValue("clickGUIEnabled", false);
-        CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
         CONFIG_HANDLER.saveToFile();
     }
 
@@ -63,6 +59,9 @@ public class CheatDetector implements ClientModInitializer {
         inWorld = false;
         manager = null;
         TRSelf.onDisconnect();
+        CONFIG_HANDLER.configManager.setValue("clickGUIEnabled", false);
+        CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
+        CONFIG_HANDLER.configManager.setValue("sayHackerEnabled", false);
     }
 
     private void onTick(ClientLevel clientLevel) {

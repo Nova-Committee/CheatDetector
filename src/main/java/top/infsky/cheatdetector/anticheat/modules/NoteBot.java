@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.anticheat.modules;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
+import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,6 +35,7 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.utils.LogUtils;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -41,6 +43,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class NoteBot extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
+
     private CompletableFuture<Song> loadingSongFuture = null;
 
     private Song song; // Loaded song
@@ -61,6 +67,7 @@ public class NoteBot extends Module {
 
     public NoteBot(@NotNull TRSelf player) {
         super("NoteBot", player);
+        instance = this;
     }
 
     @Override
@@ -72,13 +79,14 @@ public class NoteBot extends Module {
     public void _onTick() {
         if (!lastEnabled && !isDisabled()) {
             try {
-                loadSong(new File(Advanced3Config.noteBotFilePath));
+                loadSong(Path.of(Advanced3Config.noteBotFilePath).toFile());
 //                tune();
             } catch (NullPointerException ignored) {}
         } else if (lastEnabled && isDisabled()) {
             stop();
         }
         lastEnabled = !isDisabled();
+        if (isDisabled()) return;
 
 
         // meteor code
@@ -152,9 +160,11 @@ public class NoteBot extends Module {
      * 为了兼容meteor代码
      */
     public void warning(String msg1, int msg2) {
+        if (!Advanced3Config.noteBotDebug) return;
         customMsg(ChatFormatting.GOLD + msg1.formatted(msg2));
     }
     public void warning(String msg1) {
+        if (!Advanced3Config.noteBotDebug) return;
         customMsg(ChatFormatting.GOLD + msg1);
     }
 
@@ -244,7 +254,10 @@ public class NoteBot extends Module {
             int hitsNumber = entry.getValue();
 
             if (Advanced3Config.noteBotAutoRotate)
-                PlayerRotation.silentRotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos), player.currentOnGround);
+                if (Advanced3Config.noteBotSilentRotate)
+                    PlayerRotation.silentRotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos), player.currentOnGround);
+                else
+                    PlayerRotation.rotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos));
             this.tuneNoteblockWithPackets(pos);
 
             clickedBlocks.add(pos);
@@ -349,7 +362,7 @@ public class NoteBot extends Module {
     }
 
     public void stop() {
-        info("Stopping.");
+        if (!isDisabled()) info("Stopping.");
         CheatDetector.CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
         ModuleConfig.noteBotEnabled = false;
         ClickGUI.update();
@@ -444,7 +457,10 @@ public class NoteBot extends Module {
                 BlockPos firstPos = noteBlockPositions.get(firstNote.get());
 
                 if (firstPos != null) {
-                    PlayerRotation.silentRotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos), player.currentOnGround);
+                    if (Advanced3Config.noteBotSilentRotate)
+                        PlayerRotation.silentRotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos), player.currentOnGround);
+                    else
+                        PlayerRotation.rotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos));
                 }
             }
 

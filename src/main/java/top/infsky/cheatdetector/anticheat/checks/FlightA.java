@@ -19,6 +19,7 @@ public class FlightA extends Check {
 
     @Override
     public void _onTick() {
+        if (isDisabled()) return;
         if (player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
                 || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) return;
         if (player.fabricPlayer.isPassenger()) return;

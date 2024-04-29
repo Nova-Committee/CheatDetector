@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -24,6 +25,9 @@ import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class Backtrack extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     private int lastPacketUnReceive = 0;
     private int disablePackets = 0;
     private final Deque<IncomingPacket> incomingPackets = new LinkedBlockingDeque<>();
@@ -34,6 +38,7 @@ public class Backtrack extends Module {
 
     public Backtrack(@NotNull TRSelf player) {
         super("Backtrack", player);
+        instance = this;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class Backtrack extends Module {
 
     @Override
     public boolean _handleAttack(Entity entity) {
-        if (isDisabled() || isDied() || Advanced3Config.backtrackRenderRealPosition) return false;
+        if (isDisabled() || isDied() || !Advanced3Config.backtrackRenderRealPosition) return false;
 
         customMsg("attack!");
         if (entity instanceof Player targetPlayer) {

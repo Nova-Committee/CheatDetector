@@ -1,10 +1,12 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
+import lombok.Getter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
@@ -13,8 +15,12 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.mixins.MinecraftInvoker;
 
 public class AirPlace extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     public AirPlace(@NotNull TRSelf player) {
         super("AirPlace", player);
+        instance = this;
     }
 
     @Override

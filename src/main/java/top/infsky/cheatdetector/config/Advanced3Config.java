@@ -58,7 +58,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static int antiFallFallDistance = 10;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiFallOnlyOnVoid = false;
+    public static boolean antiFallFastClutchOnVoid = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiFallClutchMsg = false;
 
@@ -111,11 +111,15 @@ public class Advanced3Config {
     public static boolean noteBotSwingArm = true;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean noteBotAutoRotate = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotSilentRotate = true;
     @Numeric(minValue = 1, maxValue = 20)
     @Config(category = ConfigCategory.ADVANCED3)
     public static int noteBotConcurrentTuneBlocks = 1;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean noteBotPolyphonic = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean noteBotDebug = false;
 
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {

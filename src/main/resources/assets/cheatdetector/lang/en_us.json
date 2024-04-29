@@ -1,4 +1,5 @@
 {
+  "cheatdetector.chat.say.sayHacker": "%s is a cheater! which failed %s | %s",
   "cheatdetector.chat.alert.fakelagAndBacktrack": "Fakelag couldn't work with Backtrack!",
   "cheatdetector.chat.alert.fail": "failed",
   "cheatdetector.chat.alert.flagDetected": "Flag detected: ",
@@ -78,6 +79,9 @@
   "cheatdetector.config.modules.noteBotEnabled.comment": "If enabled, you could play .nbs song in minecraft.",
   "cheatdetector.config.modules.noteBotEnabled.name": "Enable NoteBot",
   "cheatdetector.config.modules.noteBotEnabled.pretty_name": "NoteBot",
+  "cheatdetector.config.modules.sayHackerEnabled.comment": "If enabled, we will send the chat if someone failed.",
+  "cheatdetector.config.modules.sayHackerEnabled.name": "Enable SayHacker",
+  "cheatdetector.config.modules.sayHackerEnabled.pretty_name": "SayHacker",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -85,5 +89,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.2.1"
+  "cheatdetector.gui.title": "CheatDetector 2.2.2"
 }

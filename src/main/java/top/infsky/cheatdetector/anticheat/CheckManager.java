@@ -87,6 +87,7 @@ public class CheckManager {
         post.put(InvWalk.class, new InvWalk(player));
         post.put(Backtrack.class, new Backtrack(player));
         post.put(NoteBot.class, new NoteBot(player));
+        post.put(SayHacker.class, new SayHacker(player));
 
         return new CheckManager(pre, normal, post, player);
     }

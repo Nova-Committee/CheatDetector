@@ -18,6 +18,7 @@ public class HighJumpA extends Check {
 
     @Override
     public void _onTick() {
+        if (isDisabled()) return;
         if (player.fabricPlayer.isFallFlying()) return;
         if (player.fabricPlayer.isFallFlying()) {
             hasFlag = true;

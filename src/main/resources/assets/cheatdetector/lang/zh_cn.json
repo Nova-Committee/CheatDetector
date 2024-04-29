@@ -6,6 +6,7 @@
   "cheatdetector.chat.alert.flagDetected": "检测到标记: ",
   "cheatdetector.chat.alert.foundVanish": "找到隐身玩家: ",
   "cheatdetector.chat.alert.vlclear": "的VL已清除。",
+  "cheatdetector.chat.say.sayHacker": "%s是作弊者！它触发了%s | %s",
   "cheatdetector.config.alert.alertBuffer.comment": "在发送警报前，我们应间隔几个VL？",
   "cheatdetector.config.alert.alertBuffer.name": "警报缓冲区大小",
   "cheatdetector.config.alert.allowAlert.comment": "当一个玩家违规时，我们应显示警报在聊天框吗？(只有你会看到)",
@@ -75,8 +76,11 @@
   "cheatdetector.config.modules.noteBotEnabled.comment": "如果启用，你将能在游戏里演奏nbs乐曲。\n感谢 @§nMeteorDevelopment§r 。",
   "cheatdetector.config.modules.noteBotEnabled.name": "启用 音符机器人",
   "cheatdetector.config.modules.noteBotEnabled.pretty_name": "音符机器人",
+  "cheatdetector.config.modules.sayHackerEnabled.comment": "如果启用，我们会在黑客触发反作弊时发送聊天。",
+  "cheatdetector.config.modules.sayHackerEnabled.name": "启用 报告黑客",
+  "cheatdetector.config.modules.sayHackerEnabled.pretty_name": "报告黑客",
   "cheatdetector.config.modules.spinEnabled.comment": "如果启用，您将像大陀螺一样旋转",
-  "cheatdetector.config.modules.spinEnabled.name": "启用自旋",
+  "cheatdetector.config.modules.spinEnabled.name": "启用 自旋",
   "cheatdetector.config.modules.spinEnabled.pretty_name": "自旋",
   "cheatdetector.gui.button.tab.advanced": "高级反作弊",
   "cheatdetector.gui.button.tab.advanced2": "高级修复",
@@ -85,5 +89,5 @@
   "cheatdetector.gui.button.tab.anticheat": "反作弊",
   "cheatdetector.gui.button.tab.fixes": "修复",
   "cheatdetector.gui.button.tab.modules": "模块",
-  "cheatdetector.gui.title": "作弊检测器 2.2.1"
+  "cheatdetector.gui.title": "作弊检测器 2.2.2"
 }

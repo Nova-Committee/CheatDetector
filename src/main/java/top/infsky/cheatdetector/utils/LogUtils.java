@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.infsky.cheatdetector.CheatDetector;
+import top.infsky.cheatdetector.anticheat.modules.SayHacker;
 import top.infsky.cheatdetector.config.AlertConfig;
 
 public class LogUtils {
@@ -14,6 +15,10 @@ public class LogUtils {
             CheatDetector.CLIENT.player.sendSystemMessage(Component.literal(
                     String.format("%s§r §r%s§r %s§r %s§r | %s§r", AlertConfig.prefix, player, Component.translatable("cheatdetector.chat.alert.fail").getString(), module, extraMsg)
             ));
+
+            SayHacker sayHacker = (SayHacker) SayHacker.getInstance();
+            if (sayHacker != null)
+                sayHacker._onFailed(player, module, extraMsg);
         }
     }
 

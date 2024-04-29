@@ -8,6 +8,7 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.mixins.EntityInvoker;
 
 import java.util.Objects;
 
@@ -33,5 +34,12 @@ public class PlayerRotation {
         Connection connection = Objects.requireNonNull(TRPlayer.CLIENT.getConnection()).getConnection();
 
         connection.send(new ServerboundMovePlayerPacket.Rot((float) yaw, (float) pitch, onGround));
+    }
+
+    public static void rotate(double yaw, double pitch) {
+        EntityInvoker camera = (EntityInvoker) TRSelf.getInstance().fabricPlayer;
+
+        camera.doSetXRot((float) pitch);
+        camera.doSetYRot((float) yaw);
     }
 }

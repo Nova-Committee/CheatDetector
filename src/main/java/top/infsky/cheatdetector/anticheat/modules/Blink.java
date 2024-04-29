@@ -1,11 +1,13 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Module;
@@ -20,6 +22,9 @@ import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class Blink extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     private int lastPacketUnSend = 0;
     private int lastPacketUnReceive = 0;
     private int disablePackets = 0;
@@ -28,6 +33,7 @@ public class Blink extends Module {
 
     public Blink( @NotNull TRSelf player) {
         super("Blink", player);
+        instance = this;
     }
 
     @Override

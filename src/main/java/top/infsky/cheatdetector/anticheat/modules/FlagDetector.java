@@ -1,9 +1,11 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
+import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRSelf;
@@ -15,6 +17,9 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class FlagDetector extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     public int disableTick = 60;
     public Level lastWorld;
     public boolean shouldReduce = false;  // world change or something else
@@ -24,6 +29,7 @@ public class FlagDetector extends Module {
         super("FlagDetector", player);
         assert CheatDetector.CLIENT.player != null;
         lastWorld = CheatDetector.CLIENT.player.getCommandSenderWorld();
+        instance = this;
     }
 
     @Override

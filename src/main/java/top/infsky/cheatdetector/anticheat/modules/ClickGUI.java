@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
 import top.hendrixshen.magiclib.malilib.impl.gui.ConfigGui;
 import top.infsky.cheatdetector.CheatDetector;
@@ -13,11 +14,16 @@ import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.config.*;
 
 public class ClickGUI extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
+
     @Getter(lazy = true)
-    private static final @NotNull ConfigGui instance = create(CheatDetector.MOD_ID, ConfigCategory.ANTICHEAT, CheatDetector.CONFIG_HANDLER.configManager);
+    private static final @NotNull ConfigGui configGui = create(CheatDetector.MOD_ID, ConfigCategory.ANTICHEAT, CheatDetector.CONFIG_HANDLER.configManager);
 
     public ClickGUI(@NotNull TRSelf player) {
         super("ClickGUI", player);
+        instance = this;
     }
 
     @Override
@@ -25,8 +31,8 @@ public class ClickGUI extends Module {
 //        LogUtils.custom(ModuleConfig.clickGUIEnabled ? "yes" : "no");
         if (ModuleConfig.clickGUIEnabled) {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("clickGUIEnabled", false);
-            getInstance().setParent(null);
-            TRPlayer.CLIENT.setScreen(getInstance());
+            getConfigGui().setParent(null);
+            TRPlayer.CLIENT.setScreen(getConfigGui());
             update();
         }
     }
@@ -51,7 +57,7 @@ public class ClickGUI extends Module {
     TODO 自动更新仍在开发中。
      */
     public static void update() {
-        getInstance().reDraw();
+        getConfigGui().reDraw();
 //        CheatDetector.CONFIG_HANDLER.save();
     }
 }

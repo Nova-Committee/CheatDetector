@@ -10,7 +10,7 @@ public class ModMenu implements ModMenuApi {
     @Override
     public @NotNull ConfigScreenFactory<?> getModConfigScreenFactory() {
         return screen -> {
-            ConfigGui gui = ClickGUI.getInstance();
+            ConfigGui gui = ClickGUI.getConfigGui();
             gui.setParent(screen);
             return gui;
         };

@@ -1,9 +1,11 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
+import lombok.Getter;
 import lombok.val;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRPlayer;
@@ -14,9 +16,13 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import java.util.*;
 
 public class AntiVanish extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     private String lastMsg;
     public AntiVanish(@NotNull TRSelf player) {
         super("AntiVanish", player);
+        instance = this;
     }
 
     @Override

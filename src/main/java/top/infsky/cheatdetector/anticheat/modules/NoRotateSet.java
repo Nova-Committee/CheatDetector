@@ -1,16 +1,22 @@
 package top.infsky.cheatdetector.anticheat.modules;
 
+import lombok.Getter;
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.anticheat.Module;
 import top.infsky.cheatdetector.anticheat.TRSelf;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
 public class NoRotateSet extends Module {
+    @Getter
+    @Nullable
+    private static Module instance = null;
     public NoRotateSet(@NotNull TRSelf player) {
         super("NoRotateSet", player);
+        instance = this;
     }
 
     @Override
