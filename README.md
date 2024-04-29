@@ -48,16 +48,12 @@
     - 揪出使用vanish插件隐身的人。
 - **FlagDetector** 标记检测器
     - 基于拉回帮助你确认自己是否被服务器反作弊标记。
-- **NoRotateSet** 无旋转设定
-    - 阻止服务端旋转你的头。
 - **Spin** 自旋
     - 使你像大陀螺一样旋转。
-- **AirWalk** 空中行走
-    - 允许你在空中行走。
-- **Blink** 闪现
-    - 允许你暂停你的发包。
 - **AntiFall** 防摔落
     - 防止你意外摔下。
+- **NoteBot** 音乐机器人
+    - 在游戏里演奏.nbs乐曲。
 
 ## 可调选项
 CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。<sup>[Release 1.1.5.1](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)及以前<sup>
