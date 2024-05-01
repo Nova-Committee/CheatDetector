@@ -96,6 +96,7 @@ public class Spin extends Module {
 
     @Override
     public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
+        if (isDisabled()) return false;
         if (!Advanced3Config.spinOnlyPacket) return false;
         return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
     }

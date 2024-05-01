@@ -78,7 +78,7 @@ public class Backtrack extends Module {
                     if (targetVisual != null)
                         targetVisual.hide();
                     targetVisual = null;
-                    targetVisual = new FakePlayer(player.fabricPlayer.level(), target.blockPosition(), target.getGameProfile());
+                    targetVisual = new FakePlayer(target);
                     targetVisual.show();
                 }
             }

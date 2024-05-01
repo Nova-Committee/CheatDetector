@@ -25,8 +25,7 @@ public class PacketUtils {
                 ClientboundPlayerAbilitiesPacket.class,
                 ClientboundKeepAlivePacket.class,
                 ClientboundMoveEntityPacket.class,
-                ClientboundSetEntityMotionPacket.class,
-                ClientboundEntityEventPacket.class
+                ClientboundSetEntityMotionPacket.class
         );
     }
 }

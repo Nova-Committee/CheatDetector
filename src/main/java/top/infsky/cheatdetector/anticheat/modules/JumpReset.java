@@ -38,7 +38,6 @@ public class JumpReset extends Module {
                 if (!VelocityUtils.shouldCheck(player, null)) return;
 
                 if (player.lastOnGround) {
-                    customMsg("jump!");
                     player.fabricPlayer.jumpFromGround();
                 }
             }

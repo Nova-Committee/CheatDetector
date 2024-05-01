@@ -7,13 +7,11 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.anticheat.Module;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
 import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.anticheat.utils.LevelUtils;
 import top.infsky.cheatdetector.anticheat.utils.PlayerMove;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
-
-import java.io.IOException;
 
 public class AirWalk extends Module {
     @Getter
@@ -34,35 +32,32 @@ public class AirWalk extends Module {
     @Override
     public void _onTick() {
         BlockPos current;
-        try (ClientLevel level = TRPlayer.CLIENT.level) {
-            if (isDisabled()) {
-                if (fakeBlockPos != null && level != null) {
-                    if (level.getBlockState(fakeBlockPos).is(Blocks.BARRIER))
-                        level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
-                }
-                fakeBlockPos = null;
-                yPos = null;
-                return;
-            }
-            if (level == null) return;
-            if (yPos == null) yPos = player.fabricPlayer.getBlockY() - 1;
-
-            current = player.fabricPlayer.blockPosition().below();
-            if (Advanced3Config.airWalkSameY && fakeBlockPos != null)
-                current = current.atY(yPos);
-            if (current == fakeBlockPos) return;
-
-            if (fakeBlockPos != null) {
+        ClientLevel level = LevelUtils.getClientLevel();
+        if (isDisabled()) {
+            if (fakeBlockPos != null && level != null) {
                 if (level.getBlockState(fakeBlockPos).is(Blocks.BARRIER))
                     level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
-                fakeBlockPos = null;
             }
-            if (level.getBlockState(current).isAir()) {
-                level.setBlock(current, Blocks.BARRIER.defaultBlockState(), 3);
-                fakeBlockPos = current;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            fakeBlockPos = null;
+            yPos = null;
+            return;
+        }
+        if (level == null) return;
+        if (yPos == null) yPos = player.fabricPlayer.getBlockY() - 1;
+
+        current = player.fabricPlayer.blockPosition().below();
+        if (Advanced3Config.airWalkSameY && fakeBlockPos != null)
+            current = current.atY(yPos);
+        if (current == fakeBlockPos) return;
+
+        if (fakeBlockPos != null) {
+            if (level.getBlockState(fakeBlockPos).is(Blocks.BARRIER))
+                level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
+            fakeBlockPos = null;
+        }
+        if (level.getBlockState(current).isAir()) {
+            level.setBlock(current, Blocks.BARRIER.defaultBlockState(), 3);
+            fakeBlockPos = current;
         }
 
         if (PlayerMove.getXzSecSpeed(player.lastPos, player.currentPos) > 1.8 && Advanced3Config.airWalkAutoJump && player.currentOnGround)

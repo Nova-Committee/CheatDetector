@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,6 +36,8 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.utils.LogUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CancellationException;
@@ -78,10 +81,18 @@ public class NoteBot extends Module {
     @Override
     public void _onTick() {
         if (!lastEnabled && !isDisabled()) {
+            String baseStringPath = Advanced3Config.noteBotFilePath;
+            String stringPath = baseStringPath.charAt(0) == '"' && baseStringPath.charAt(baseStringPath.length() - 1) == '"' ?
+                    baseStringPath.substring(1, baseStringPath.length() - 1) : baseStringPath;
+
             try {
-                loadSong(Path.of(Advanced3Config.noteBotFilePath).toFile());
+                loadSong(Path.of(stringPath).toFile());
 //                tune();
-            } catch (NullPointerException ignored) {}
+            } catch (NullPointerException ignored) {
+            } catch (InvalidPathException e) {
+                error("Invalid path: %s".formatted(stringPath));
+                stop();
+            }
         } else if (lastEnabled && isDisabled()) {
             stop();
         }
@@ -235,7 +246,7 @@ public class NoteBot extends Module {
     }
 
     private void tuneBlocks() {
-        if (TRPlayer.CLIENT.level == null || player.fabricPlayer == null) {
+        if (player.fabricPlayer == null) {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
             ModuleConfig.noteBotEnabled = false;
         }
@@ -486,18 +497,20 @@ public class NoteBot extends Module {
     }
 
     private void playRotate(BlockPos pos) {
-        if (TRPlayer.CLIENT.player == null) return;
-        if (TRPlayer.CLIENT.gameMode == null) return;
         try {
-            TRPlayer.CLIENT.player.connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, pos, Direction.DOWN, 0));
+            player.fabricPlayer.connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, pos, Direction.DOWN, 0));
         } catch (NullPointerException ignored) {
         }
     }
 
     private boolean isValidScanSpot(BlockPos pos) {
-        if (TRPlayer.CLIENT.level == null) return false;
-        if (TRPlayer.CLIENT.level.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) return false;
-        return TRPlayer.CLIENT.level.getBlockState(pos.above()).isAir();
+        try (Level level = TRPlayer.CLIENT.level) {
+            if (level == null) return false;
+            if (level.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) return false;
+            return level.getBlockState(pos.above()).isAir();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
