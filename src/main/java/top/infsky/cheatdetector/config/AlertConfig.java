@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.config;
 import org.jetbrains.annotations.NotNull;
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Hotkey;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
 public class AlertConfig {
     @Hotkey

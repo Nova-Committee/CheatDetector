@@ -10,10 +10,11 @@
     "ConnectionInvoker",
     "EntityInvoker",
     "KeyMappingInvoker",
+    "LookAtPacketInvoker",
     "MinecraftInvoker",
     "MixinConnection",
     "MixinMultiPlayerGameMode",
     "MixinPacket",
-    "LookAtPacketInvoker"
+    "MouseHandlerInvoker"
   ]
 }

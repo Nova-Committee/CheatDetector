@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.config;
 
 import top.hendrixshen.magiclib.malilib.api.annotation.*;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
 public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)

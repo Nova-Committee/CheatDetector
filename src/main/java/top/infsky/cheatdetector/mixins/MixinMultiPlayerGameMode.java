@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.infsky.cheatdetector.anticheat.TRSelf;
-import top.infsky.cheatdetector.anticheat.fixes.vulcan.BadPacket1;
-import top.infsky.cheatdetector.config.Fixes;
+import top.infsky.cheatdetector.utils.TRSelf;
+import top.infsky.cheatdetector.impl.fixes.vulcan.BadPacket1;
+import top.infsky.cheatdetector.config.utils.Fixes;
 import top.infsky.cheatdetector.config.FixesConfig;
 
 @Mixin(MultiPlayerGameMode.class)

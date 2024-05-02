@@ -7,13 +7,14 @@ import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
-import top.infsky.cheatdetector.anticheat.CheckManager;
-import top.infsky.cheatdetector.anticheat.TRSelf;
+import top.infsky.cheatdetector.utils.CheckManager;
+import top.infsky.cheatdetector.utils.TRSelf;
 
 @Mixin(Connection.class)
 public abstract class MixinConnection {
@@ -25,8 +26,10 @@ public abstract class MixinConnection {
         manager.onCustomAction(check -> check._onPacketSend(basePacket, (Connection)(Object) this, listener, ci));
         if (!ci.isCancelled() && basePacket instanceof ServerboundUseItemOnPacket packet)
             manager.onCustomAction(check -> check._handleUseItemOn(packet, ci));
-        if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet)
-            manager.onCustomAction(check -> check._handleMovePlayer(packet, (Connection)(Object) this, listener, ci));
+        if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet) {
+            manager.onCustomAction(check -> check._handleMovePlayer(packet, (Connection) (Object) this, listener, ci));
+            if (!ci.isCancelled() && packet.hasRotation()) TRSelf.getInstance().rotation = new Vec2(packet.getYRot(0), packet.getXRot(0));
+        }
     }
 
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Object;)V", at = @At(value = "HEAD"), cancellable = true)

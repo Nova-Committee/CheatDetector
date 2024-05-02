@@ -2,7 +2,9 @@ package top.infsky.cheatdetector.config;
 
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
-import top.infsky.cheatdetector.anticheat.utils.notebot.NotebotUtils;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
+import top.infsky.cheatdetector.impl.utils.notebot.NotebotUtils;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
 public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
@@ -44,20 +46,20 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkRenderRealPosition = false;
 
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean airWalkSameY = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean airWalkAutoJump = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean airWalkAntiFlag = true;
 
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallAutoDisabled = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int antiFallFallDistance = 10;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallFastClutchOnVoid = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallClutchMsg = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
@@ -86,13 +88,13 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean invWalkAllowJump = true;
 
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean backtrackShowCount = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int backtrackDelayMs = 100;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean backtrackCancelPacket = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean backtrackRenderRealPosition = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
@@ -121,22 +123,50 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean noteBotDebug = false;
 
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldNoSwing = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldDoRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldSilentRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldSilentKeepRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldNoSprint = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldExpend = 0;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldAutoSwitch = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldPlaceMinDelay = 1;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean velocityOnlyHurt = true;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraAttack = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static double killauraAttackReach = 3.2;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraPreAim = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static double killauraPreAimReach = 6;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraSwitch = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static int killauraSwitchDelay = 1;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraRayCast = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraLookView = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraNoRotation = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static double killauraMinCPS = 10;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static double killauraMaxCPS = 14;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraLegitAim = false;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

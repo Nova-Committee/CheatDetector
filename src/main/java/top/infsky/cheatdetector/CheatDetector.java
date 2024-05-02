@@ -8,12 +8,16 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import org.jetbrains.annotations.NotNull;
 import top.hendrixshen.magiclib.malilib.impl.ConfigHandler;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
-import top.infsky.cheatdetector.anticheat.TRSelf;
-import top.infsky.cheatdetector.anticheat.modules.ClickGUI;
+import top.infsky.cheatdetector.utils.TRSelf;
+import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.config.ModuleConfig;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 import top.infsky.cheatdetector.utils.PlayerManager;
+
+import java.util.Objects;
 
 public class CheatDetector implements ClientModInitializer {
     public static final String MOD_ID = "cheatdetector";
@@ -47,11 +51,15 @@ public class CheatDetector implements ClientModInitializer {
         CONFIG_HANDLER.saveToFile();
     }
 
-    private void onJoinWorld(ClientPacketListener clientPacketListener, PacketSender packetSender, Minecraft minecraft) {
+    private void onJoinWorld(ClientPacketListener clientPacketListener, PacketSender packetSender, @NotNull Minecraft minecraft) {
         CLIENT = minecraft;
         inWorld = true;
         manager = null;
         manager = new PlayerManager();
+        try {
+            String ip = Objects.requireNonNull(Objects.requireNonNull(minecraft.getConnection()).getServerData()).ip;
+            ConfigPredicate.onJoinWorld(ip, CONFIG_HANDLER.configManager);
+        } catch (NullPointerException ignored) {}
     }
 
     private void onDisconnect(ClientPacketListener clientPacketListener, Minecraft minecraft) {
@@ -65,11 +73,8 @@ public class CheatDetector implements ClientModInitializer {
     }
 
     private void onTick(ClientLevel clientLevel) {
-//        CONFIG_HANDLER.load();
         if (inWorld && manager != null && CLIENT != null) {
             manager.update(CLIENT);
         }
-//        CONFIG_HANDLER.save();
-//        ClickGUI.getInstance().reDraw();
     }
 }

@@ -19,7 +19,7 @@
       "top.infsky.cheatdetector.CheatDetector"
     ],
     "modmenu": [
-      "top.infsky.cheatdetector.config.ModMenu"
+      "top.infsky.cheatdetector.ModMenu"
     ]
   },
   "mixins": [

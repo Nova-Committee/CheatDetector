@@ -4,8 +4,6 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.jetbrains.annotations.NotNull;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
-import top.infsky.cheatdetector.anticheat.TRSelf;
 
 import java.util.*;
 

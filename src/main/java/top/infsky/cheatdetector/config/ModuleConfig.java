@@ -2,8 +2,15 @@ package top.infsky.cheatdetector.config;
 
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Hotkey;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 
 public class ModuleConfig {
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean aaaPASModeEnabled = false;
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean aaaHypixelModeEnabled = false;
+
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean clickGUIEnabled = true;
@@ -28,11 +35,11 @@ public class ModuleConfig {
     public static boolean blinkEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean airWalkEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallEnabled = false;
 
     @Hotkey
@@ -48,7 +55,7 @@ public class ModuleConfig {
     public static boolean invWalkEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean backtrackEnabled = false;
 
     @Hotkey
@@ -60,10 +67,18 @@ public class ModuleConfig {
     public static boolean sayHackerEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean jumpResetEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean velocityEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.HypixelMode.class)
+    public static boolean killauraEnabled = false;
 }

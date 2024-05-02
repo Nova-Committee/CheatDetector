@@ -2,6 +2,8 @@ package top.infsky.cheatdetector.config;
 
 import org.jetbrains.annotations.NotNull;
 import top.hendrixshen.magiclib.malilib.api.annotation.*;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.Fixes;
 
 public class FixesConfig {
     @Hotkey
@@ -18,6 +20,10 @@ public class FixesConfig {
     @Hotkey
     @Config(category = ConfigCategory.FIXES)
     public static boolean vulcanOmniSprintEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.FIXES)
+    public static boolean watchdogNoSlowDisablerEnabled = false;
 
     public static @NotNull Fixes getPacketFixMode() {
         Fixes result;

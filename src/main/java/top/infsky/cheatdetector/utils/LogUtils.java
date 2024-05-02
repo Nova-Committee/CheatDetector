@@ -4,7 +4,7 @@ import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.infsky.cheatdetector.CheatDetector;
-import top.infsky.cheatdetector.anticheat.modules.SayHacker;
+import top.infsky.cheatdetector.impl.modules.common.SayHacker;
 import top.infsky.cheatdetector.config.AlertConfig;
 
 public class LogUtils {
