@@ -81,3 +81,5 @@ Mod包含69+项自定义选项，对于不同服务器，你可能需要根据�
 ## 相关项目
 - [TimeRecorder](https://github.com/Nova-Committee/TimeRecorder) （反作弊 模块在此mod基础上开发）
 - [MagicLib](https://github.com/Hendrix-Shen/MagicLib) （ClickGUI）
+
+<img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/Java/Java.png" alt="Java" width="100" />
