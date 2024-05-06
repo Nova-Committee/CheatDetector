@@ -39,7 +39,6 @@
 - 针对Vulcan反作弊
     - BadPacket (Type 1)
     - BadPacket (Type 2)
-    - Movement Disabler (适用于Vulcan 2.7.5)
     - OmniSprint Disabler (适用于Old Vulcan)
 
 ## 模块
