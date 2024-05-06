@@ -16,10 +16,6 @@ public class ConfigPredicate {
             configManager.setValue("aaaPASModeEnabled", false);
             ModuleConfig.aaaPASModeEnabled = false;
         }
-        if (!HypixelMode.getIpAddresses().contains(ip)) {
-            configManager.setValue("aaaHypixelModeEnabled", false);
-            ModuleConfig.aaaHypixelModeEnabled = false;
-        }
     }
 
 
@@ -32,16 +28,6 @@ public class ConfigPredicate {
             return ModuleConfig.aaaPASModeEnabled;
         }
 
-    }
-
-    public static class HypixelMode extends ServerMode {
-        public static @NotNull @Unmodifiable List<String> getIpAddresses() {
-            return List.of("mc.hypixel.net");
-        }
-        @Override
-        public boolean isSatisfied(ConfigOption option) {
-            return ModuleConfig.aaaHypixelModeEnabled;
-        }
     }
 
     private abstract static class ServerMode implements ConfigDependencyPredicate {

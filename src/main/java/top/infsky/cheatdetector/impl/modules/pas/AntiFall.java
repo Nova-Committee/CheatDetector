@@ -89,6 +89,6 @@ public class AntiFall extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.antiFallEnabled || ModuleConfig.airWalkEnabled || !ModuleConfig.aaaPASModeEnabled;
+        return !ModuleConfig.antiFallEnabled || !ModuleConfig.aaaPASModeEnabled;
     }
 }

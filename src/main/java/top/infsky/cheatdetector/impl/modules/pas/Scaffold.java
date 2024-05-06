@@ -4,11 +4,15 @@ import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,14 +57,18 @@ public class Scaffold extends Module {
         for (BlockPos blockPos : needToPlace) {
             try (Level level = TRPlayer.CLIENT.level) {
                 if (level == null) return;
-                if (!level.getBlockState(blockPos).isAir()) continue;
+                BlockState blockState = level.getBlockState(blockPos);
+                if (
+                        (!blockState.isAir() && !(blockState.getBlock() instanceof LiquidBlock))
+                        || blockState.hasBlockEntity()
+                ) continue;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             if (player.upTime - lastPlaceTime < Advanced3Config.scaffoldPlaceMinDelay) return;
 
-            BlockHitResult hitResult = new BlockHitResult(player.fabricPlayer.position(), BlockUtils.getPlaceSide(blockPos), blockPos, false);
+            BlockHitResult hitResult = new BlockHitResult(player.currentPos, BlockUtils.getPlaceSide(blockPos), blockPos, false);
 
             InteractionHand hand = null;
             if (player.fabricPlayer.getMainHandItem().getItem() instanceof BlockItem)
@@ -89,17 +97,19 @@ public class Scaffold extends Module {
                 else
                     PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
             }
-            TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, hitResult);
-            if (!Advanced3Config.scaffoldNoSwing) player.fabricPlayer.swing(hand);
+            InteractionResult interactionResult = TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, hitResult);
+            if (interactionResult.shouldSwing() && !Advanced3Config.scaffoldNoSwing) player.fabricPlayer.swing(hand);
             lastPlaceTime = player.upTime;
         }
     }
 
     @Override
-    public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
+    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (!Advanced3Config.scaffoldSilentKeepRotation) return false;
-        return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        if (basepacket instanceof ServerboundMovePlayerPacket packet)
+            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        return false;
     }
 
     @Override

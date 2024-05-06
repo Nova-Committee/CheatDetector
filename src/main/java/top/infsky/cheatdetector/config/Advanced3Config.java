@@ -47,13 +47,6 @@ public class Advanced3Config {
     public static boolean blinkRenderRealPosition = false;
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean airWalkSameY = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean airWalkAutoJump = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean airWalkAntiFlag = true;
-
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallAutoDisabled = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int antiFallFallDistance = 10;
@@ -140,33 +133,39 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldPlaceMinDelay = 1;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean velocityOnlyHurt = true;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraAttack = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
-    public static double killauraAttackReach = 3.2;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static double killauraAttackReach = 3.0;
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraPreAim = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static double killauraPreAimReach = 6;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraSwitch = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static int killauraSwitchDelay = 1;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraRayCast = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraLookView = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraNoRotation = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
-    public static double killauraMinCPS = 10;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
-    public static double killauraMaxCPS = 14;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static double killauraMinCPS = 2;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static double killauraMaxCPS = 2;
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraLegitAim = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean killauraIncludeArmorStands = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean killauraIncludeEntities = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean killauraIncludePlayers = false;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

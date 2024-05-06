@@ -23,7 +23,6 @@ public class ClickGUI extends Module {
     private static final @NotNull ConfigGui configGui = create(CheatDetector.MOD_ID, ConfigCategory.ANTICHEAT, CheatDetector.CONFIG_HANDLER.configManager);
 
     private boolean lastPASModeEnabled = false;
-    private boolean lastHypixelModeEnabled = false;
 
     public ClickGUI(@NotNull TRSelf player) {
         super("ClickGUI", player);
@@ -41,9 +40,7 @@ public class ClickGUI extends Module {
         }
 
         if (lastPASModeEnabled != ModuleConfig.aaaPASModeEnabled) update();
-        if (lastHypixelModeEnabled != ModuleConfig.aaaHypixelModeEnabled) update();
         lastPASModeEnabled = ModuleConfig.aaaPASModeEnabled;
-        lastHypixelModeEnabled = ModuleConfig.aaaHypixelModeEnabled;
     }
 
     @Contract("_, _, _ -> new")

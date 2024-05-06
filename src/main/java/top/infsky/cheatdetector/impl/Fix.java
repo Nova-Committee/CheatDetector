@@ -23,6 +23,7 @@ public abstract class Fix extends Check {
         if (!FixesConfig.packetFixEnabled) return;
         if (isDisabled()) return;
         violations++;
+        if (!AlertConfig.allowAlertFixes) return;
         if (!AlertConfig.disableBuffer)
             if (violations % getAlertBuffer() != 0) return;
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s)", violations));
@@ -33,6 +34,7 @@ public abstract class Fix extends Check {
         if (!FixesConfig.packetFixEnabled) return;
         if (isDisabled()) return;
         violations++;
+        if (!AlertConfig.allowAlertFixes) return;
         if (!AlertConfig.disableBuffer)
             if (violations % getAlertBuffer() != 0) return;
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s%s", violations, ChatFormatting.GRAY, extraMsg));

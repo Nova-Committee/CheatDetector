@@ -14,7 +14,6 @@
     "MinecraftInvoker",
     "MixinConnection",
     "MixinMultiPlayerGameMode",
-    "MixinPacket",
     "MouseHandlerInvoker"
   ]
 }

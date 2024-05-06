@@ -1,7 +1,7 @@
 package top.infsky.cheatdetector.impl.utils;
 
+import net.minecraft.world.entity.Entity;
 import oshi.util.tuples.Pair;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -10,25 +10,31 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 
 public class AimSimulator {
     @Contract("_, _ -> new")
-    public static @NotNull Pair<Double, Double> getLegitAim(@NotNull AbstractClientPlayer target, @NotNull TRPlayer player) {
-        double yaw, pitch;
+    public static @NotNull Pair<Double, Double> getLegitAim(@NotNull Entity target, @NotNull TRPlayer player) {
+        Vec3 aimPos;
 
         double yDiff = target.position().y() - player.currentPos.y();
         if (yDiff >= 0) {
             if (target.getEyePosition().y() - yDiff > target.position().y()) {
-                pitch = PlayerRotation.getPitch(new Vec3(target.getEyePosition().x(), target.getEyePosition().y() - yDiff, target.getEyePosition().z()));
+                aimPos = new Vec3(target.getEyePosition().x(), target.getEyePosition().y() - yDiff, target.getEyePosition().z());
             } else {
-                pitch = PlayerRotation.getPitch(new Vec3(target.position().x(), target.position().y() + 0.4, target.position().z()));
+                aimPos = new Vec3(target.position().x(), target.position().y() + 0.4, target.position().z());
             }
         } else {
-            pitch = PlayerRotation.getPitch(target.getEyePosition());
+            aimPos = target.getEyePosition();
         }
 
-        yaw = PlayerRotation.getYaw(target.position());
+        aimPos = getRandomAimPos(aimPos);
 
-        pitch += (Math.random() - 0.5) * 2 * 0.4;
-        yaw += (Math.random() - 0.5) * 2 * 0.6;
+        return new Pair<>(PlayerRotation.getYaw(aimPos), PlayerRotation.getPitch(aimPos));
+    }
 
-        return new Pair<>(yaw, pitch);
+    @Contract("_ -> new")
+    private static @NotNull Vec3 getRandomAimPos(@NotNull Vec3 basicAimPos) {
+        return new Vec3(
+                basicAimPos.x() + (Math.random() - 0.5) * 2 * 0.35,
+                basicAimPos.y() + (Math.random() - 0.5) * 2 * 0.45,
+                basicAimPos.z() + (Math.random() - 0.5) * 2 * 0.35
+                );
     }
 }

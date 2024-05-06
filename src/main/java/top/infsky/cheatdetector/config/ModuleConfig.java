@@ -8,8 +8,6 @@ import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 public class ModuleConfig {
     @Config(category = ConfigCategory.MODULES)
     public static boolean aaaPASModeEnabled = false;
-    @Config(category = ConfigCategory.MODULES)
-    public static boolean aaaHypixelModeEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
@@ -33,10 +31,6 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean blinkEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean airWalkEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
@@ -75,10 +69,10 @@ public class ModuleConfig {
     public static boolean scaffoldEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean velocityEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.HypixelMode.class)
+    @Config(category = ConfigCategory.MODULES)
     public static boolean killauraEnabled = false;
 }

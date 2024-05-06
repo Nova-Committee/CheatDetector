@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.hypixel;
+package top.infsky.cheatdetector.impl.modules.pas;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
@@ -34,6 +34,6 @@ public class Velocity extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.velocityEnabled || !ModuleConfig.aaaHypixelModeEnabled;
+        return !ModuleConfig.velocityEnabled || !ModuleConfig.aaaPASModeEnabled;
     }
 }

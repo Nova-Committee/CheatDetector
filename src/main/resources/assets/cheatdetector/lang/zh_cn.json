@@ -1,6 +1,7 @@
 {
   "cheatdetector.chat.alert.clutch": "自救！",
   "cheatdetector.chat.alert.clutchDone": "自救结束。",
+  "cheatdetector.chat.alert.creativeFlyWithoutDisabler": "创造模式飞行必须与移动禁用器一起使用！",
   "cheatdetector.chat.alert.fail": "触发了",
   "cheatdetector.chat.alert.fakelagAndBacktrack": "假延迟不能和回溯一起工作！",
   "cheatdetector.chat.alert.flagDetected": "检测到标记: ",
@@ -52,9 +53,9 @@
   "cheatdetector.config.modules.airPlaceEnabled.comment": "如果启用，你将能在空气中放方块。\n感谢 @§nWurst-Imperium§r 。",
   "cheatdetector.config.modules.airPlaceEnabled.name": "启用 空中放置",
   "cheatdetector.config.modules.airPlaceEnabled.pretty_name": "空中放置",
-  "cheatdetector.config.modules.airWalkEnabled.comment": "如果启用，你将能在空气上行走",
-  "cheatdetector.config.modules.airWalkEnabled.name": "启用 空中行走",
-  "cheatdetector.config.modules.airWalkEnabled.pretty_name": "空中行走",
+  "cheatdetector.config.modules.creativeFlyEnabled.comment": "如果启用，你将能像创造模式一样飞行。",
+  "cheatdetector.config.modules.creativeFlyEnabled.name": "启用 创造模式飞行",
+  "cheatdetector.config.modules.creativeFlyEnabled.pretty_name": "创造模式飞行",
   "cheatdetector.config.modules.antiFallEnabled.comment": "如果启用，我们会在你摔落时救下你。",
   "cheatdetector.config.modules.antiFallEnabled.name": "启用 防摔落",
   "cheatdetector.config.modules.antiFallEnabled.pretty_name": "防摔落",
@@ -110,5 +111,5 @@
   "cheatdetector.gui.button.tab.anticheat": "反作弊",
   "cheatdetector.gui.button.tab.fixes": "修复",
   "cheatdetector.gui.button.tab.modules": "模块",
-  "cheatdetector.gui.title": "作弊检测器 2.4.0"
+  "cheatdetector.gui.title": "作弊检测器 2.4.1"
 }

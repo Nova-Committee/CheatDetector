@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.*;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -69,10 +68,6 @@ public abstract class Check {
     public void _onGameTypeChange() {}
     public <T> boolean _handleStartDestroyBlock(CallbackInfoReturnable<T> cir, T fallbackReturn) { return false; }
     public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
-    public boolean _handleUseItemOn(ServerboundUseItemOnPacket packet, CallbackInfo ci) { return false; }
-    public boolean _handleMovePlayer(ServerboundMovePlayerPacket packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
-    public boolean _handleMovePlayer(ClientboundPlayerPositionPacket packet, CallbackInfo ci) { return false; }
-    public boolean _handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket packet, CallbackInfo ci) { return false; }
     public boolean _onPacketSend(Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
     public boolean _onPacketReceive(Packet<?> packet, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
     public boolean _handleAttack(Entity entity) { return false; }

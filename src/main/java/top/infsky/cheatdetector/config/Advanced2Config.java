@@ -15,9 +15,6 @@ public class Advanced2Config {
     public static int badPacket2AlertBuffer = 20;
 
     @Config(category = ConfigCategory.ADVANCED2)
-    public static boolean movementShowPacketSend = false;
-
-    @Config(category = ConfigCategory.ADVANCED2)
     public static boolean fastPlaceEnabled = true;
     @Config(category = ConfigCategory.ADVANCED2)
     public static int fastPlaceAlertBuffer = 100;

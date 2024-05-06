@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
@@ -591,10 +592,12 @@ public class NoteBot extends Module {
     }
 
     @Override
-    public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
+    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (!Advanced3Config.noteBotSilentRotate) return false;
-        return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        if (basepacket instanceof ServerboundMovePlayerPacket packet)
+            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        return false;
     }
 
     public enum Stage {

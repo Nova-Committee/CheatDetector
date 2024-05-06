@@ -29,6 +29,6 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "~${minecraft_version}",
-    "magiclib-1_20_1": "*"
+    "magiclib-${minecraft_version_prefix}": "*"
   }
 }

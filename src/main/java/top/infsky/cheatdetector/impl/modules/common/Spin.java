@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.impl.modules.common;
 import lombok.Getter;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +11,6 @@ import org.jetbrains.annotations.Range;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.config.*;
@@ -88,17 +88,18 @@ public class Spin extends Module {
     }
 
     public void packetRot() {
-        if (TRPlayer.CLIENT.getConnection() == null) return;
         if (!CheatDetector.inWorld) return;
 
-        ((ConnectionInvoker) TRPlayer.CLIENT.getConnection().getConnection()).sendPacket(new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround()), null);
+        ((ConnectionInvoker) player.fabricPlayer.connection.getConnection()).sendPacket(new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.fabricPlayer.onGround()), null);
     }
 
     @Override
-    public boolean _handleMovePlayer(@NotNull ServerboundMovePlayerPacket packet, @NotNull Connection connection, PacketSendListener listener, @NotNull CallbackInfo ci) {
+    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (!Advanced3Config.spinOnlyPacket) return false;
-        return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        if (basepacket instanceof ServerboundMovePlayerPacket packet)
+            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        return false;
     }
 
     @Override

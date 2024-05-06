@@ -1,8 +1,11 @@
 package top.infsky.cheatdetector.impl.modules.common;
 
+import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import lombok.val;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,36 +29,38 @@ public class AntiVanish extends Module {
     }
 
     @Override
-    public boolean _handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket packet, CallbackInfo ci) {
+    public boolean _onPacketReceive(Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (isDisabled()) return false;
-        if (TRPlayer.CLIENT.getConnection() == null) return false;
+        if (basePacket instanceof ClientboundPlayerInfoUpdatePacket packet) {
+            if (TRPlayer.CLIENT.getConnection() == null) return false;
 
-        final EnumSet<ClientboundPlayerInfoUpdatePacket.Action> actions = packet.actions();
+            final EnumSet<ClientboundPlayerInfoUpdatePacket.Action> actions = packet.actions();
 
-        if (actions.contains(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY)) {
-            final List<UUID> packetUUIDs = new ArrayList<>();
-            final List<UUID> onlineUUIDs = new ArrayList<>();
+            if (actions.contains(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY)) {
+                final List<UUID> packetUUIDs = new ArrayList<>();
+                final List<UUID> onlineUUIDs = new ArrayList<>();
 
-            for (val player : packet.entries()) {
-                packetUUIDs.add(player.profileId());
-            }
-            for (val player : TRPlayer.CLIENT.getConnection().getListedOnlinePlayers()) {
-                onlineUUIDs.add(player.getProfile().getId());
-            }
+                for (val player : packet.entries()) {
+                    packetUUIDs.add(player.profileId());
+                }
+                for (val player : TRPlayer.CLIENT.getConnection().getListedOnlinePlayers()) {
+                    onlineUUIDs.add(player.getProfile().getId());
+                }
 
-            customMsg(packetUUIDs + "\n" + onlineUUIDs);
-            if (packetUUIDs.size() != onlineUUIDs.size()) {
-                val uuidDifference = ListUtils.getDifference(packetUUIDs, onlineUUIDs);
-                val stringDifference = new ArrayList<String>(uuidDifference.size());
-                uuidDifference.forEach(uuid -> {
-                    val playerInfo = TRPlayer.CLIENT.getConnection().getPlayerInfo(uuid);
-                    if (playerInfo != null) stringDifference.add(playerInfo.getProfile().getName());
-                });
+                customMsg(packetUUIDs + "\n" + onlineUUIDs);
+                if (packetUUIDs.size() != onlineUUIDs.size()) {
+                    val uuidDifference = ListUtils.getDifference(packetUUIDs, onlineUUIDs);
+                    val stringDifference = new ArrayList<String>(uuidDifference.size());
+                    uuidDifference.forEach(uuid -> {
+                        val playerInfo = TRPlayer.CLIENT.getConnection().getPlayerInfo(uuid);
+                        if (playerInfo != null) stringDifference.add(playerInfo.getProfile().getName());
+                    });
 
-                val msg = Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference, ".");
-                if (!msg.equals(lastMsg)) {
-                    customMsg(msg);
-                    lastMsg = msg;
+                    val msg = Component.translatable("cheatdetector.chat.alert.foundVanish").getString() + ListUtils.getSpilt(stringDifference, ".");
+                    if (!msg.equals(lastMsg)) {
+                        customMsg(msg);
+                        lastMsg = msg;
+                    }
                 }
             }
         }

@@ -6,7 +6,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
-import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,11 +23,8 @@ public abstract class MixinConnection {
         final CheckManager manager = TRSelf.getInstance().manager;
 
         manager.onCustomAction(check -> check._onPacketSend(basePacket, (Connection)(Object) this, listener, ci));
-        if (!ci.isCancelled() && basePacket instanceof ServerboundUseItemOnPacket packet)
-            manager.onCustomAction(check -> check._handleUseItemOn(packet, ci));
-        if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet) {
-            manager.onCustomAction(check -> check._handleMovePlayer(packet, (Connection) (Object) this, listener, ci));
-            if (!ci.isCancelled() && packet.hasRotation()) TRSelf.getInstance().rotation = new Vec2(packet.getYRot(0), packet.getXRot(0));
+        if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet && packet.hasRotation()) {
+            TRSelf.getInstance().rotation = new Vec2(packet.getYRot(0), packet.getXRot(0));
         }
     }
 

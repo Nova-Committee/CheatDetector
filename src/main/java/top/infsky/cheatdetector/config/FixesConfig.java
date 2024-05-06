@@ -15,15 +15,7 @@ public class FixesConfig {
 
     @Hotkey
     @Config(category = ConfigCategory.FIXES)
-    public static boolean vulcanDisablerEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.FIXES)
     public static boolean vulcanOmniSprintEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.FIXES)
-    public static boolean watchdogNoSlowDisablerEnabled = false;
 
     public static @NotNull Fixes getPacketFixMode() {
         Fixes result;

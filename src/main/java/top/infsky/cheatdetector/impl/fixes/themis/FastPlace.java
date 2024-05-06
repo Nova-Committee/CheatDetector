@@ -1,6 +1,9 @@
 package top.infsky.cheatdetector.impl.fixes.themis;
 
+import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
@@ -13,7 +16,6 @@ import top.infsky.cheatdetector.impl.Fix;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.utils.world.UseItemOn;
 import top.infsky.cheatdetector.config.Advanced2Config;
-import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.FixesConfig;
 
 import java.util.Objects;
@@ -33,27 +35,29 @@ public class FastPlace extends Fix {
     }
 
     @Override
-    public boolean _handleUseItemOn(@NotNull ServerboundUseItemOnPacket packet, @NotNull CallbackInfo ci) {
+    public boolean _onPacketReceive(Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (!FixesConfig.packetFixEnabled) return false;
-        final InteractionHand interactionHand = packet.getHand();
-        final BlockHitResult blockHitResult = packet.getHitResult();
+        if (basePacket instanceof ServerboundUseItemOnPacket packet){
+            final InteractionHand interactionHand = packet.getHand();
+            final BlockHitResult blockHitResult = packet.getHitResult();
 
-        final ItemStack itemStack = getItemStack(player.fabricPlayer, interactionHand);
-        if (!(Objects.requireNonNull(itemStack).getItem() instanceof BlockItem)) return false;
+            final ItemStack itemStack = getItemStack(player.fabricPlayer, interactionHand);
+            if (!(Objects.requireNonNull(itemStack).getItem() instanceof BlockItem)) return false;
 
-        final UseItemOn currentAction = new UseItemOn(itemStack.getItem(), blockHitResult.getBlockPos(), blockHitResult.getDirection(), blockHitResult.getType());
-        if (player.upTime - lastPlaceTick < minDelay) {  // 在受制约的tick里
-            if (currentAction.equals(lastAction)) {  // 是spam
-                if (AlertConfig.allowAlertFixes) flag();
-                if (Advanced2Config.fastPlaceEnabled)
-                    ci.cancel();
-                lastAction = currentAction;
-                return true;
+            final UseItemOn currentAction = new UseItemOn(itemStack.getItem(), blockHitResult.getBlockPos(), blockHitResult.getDirection(), blockHitResult.getType());
+            if (player.upTime - lastPlaceTick < minDelay) {  // 在受制约的tick里
+                if (currentAction.equals(lastAction)) {  // 是spam
+                    flag();
+                    if (Advanced2Config.fastPlaceEnabled)
+                        ci.cancel();
+                    lastAction = currentAction;
+                    return true;
+                }
             }
-        }
 
-        lastAction = currentAction;
-        lastPlaceTick = player.upTime;
+            lastAction = currentAction;
+            lastPlaceTick = player.upTime;
+        }
         return false;
     }
 

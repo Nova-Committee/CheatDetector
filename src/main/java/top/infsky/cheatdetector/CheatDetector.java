@@ -57,7 +57,7 @@ public class CheatDetector implements ClientModInitializer {
         manager = null;
         manager = new PlayerManager();
         try {
-            String ip = Objects.requireNonNull(Objects.requireNonNull(minecraft.getConnection()).getServerData()).ip;
+            String ip = Objects.requireNonNull(clientPacketListener.getServerData()).ip.split(":")[0];
             ConfigPredicate.onJoinWorld(ip, CONFIG_HANDLER.configManager);
         } catch (NullPointerException ignored) {}
     }
