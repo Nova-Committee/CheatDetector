@@ -59,7 +59,7 @@ CheatDetector Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。<
 
 从[Release 2.0.0](https://github.com/Nova-Committee/CheatDetector/releases/tag/1.1.5.1)开始，Mod使用**Mod Menu**和**Cloth Config API**实现配置页面。
 
-Mod包含69+项自定义选项，对于不同服务器，你可能需要根据延迟、丢包等情况修改配置。
+Mod包含150+项自定义选项，对于不同服务器，你可能需要根据延迟、丢包等情况修改配置。
 
 默认设置为<80ms的服务器设计。
 
