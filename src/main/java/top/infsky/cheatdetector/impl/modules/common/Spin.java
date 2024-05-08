@@ -52,16 +52,14 @@ public class Spin extends Module {
 
         updateRot();
 
-        if (Advanced3Config.spinAutoPause &&
-                TRPlayer.CLIENT.screen != null && !ALLOW_SCREENS.contains(TRPlayer.CLIENT.screen.getClass())) {
-            if (Advanced3Config.spinOnlyPacket)
-                PlayerRotation.silentRotate(player.fabricPlayer.getYRot(), player.fabricPlayer.getXRot(), player.fabricPlayer.onGround());
-            disableTicks = Advanced3Config.spinAutoPauseTime;
+        if (disableTicks > 0) {
+            disableTicks--;
             return;
         }
 
-        if (disableTicks > 0) {
-            disableTicks--;
+        if (Advanced3Config.spinAutoPause &&
+                TRPlayer.CLIENT.screen != null && !ALLOW_SCREENS.contains(TRPlayer.CLIENT.screen.getClass())) {
+            disableTicks = Advanced3Config.spinAutoPauseTime;
             return;
         }
 
