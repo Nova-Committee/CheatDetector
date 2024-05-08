@@ -3,7 +3,6 @@ package top.infsky.cheatdetector.impl.modules.common;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -93,7 +92,7 @@ public class Killaura extends Module {
 
         Pair<Double, Double> rot;
         if (Advanced3Config.killauraLegitAim) {
-            rot = AimSimulator.getLegitAim(target, player);
+            rot = AimSimulator.getLegitAim(target, player, Advanced3Config.killauraLegitAimNoise);
         } else {
             rot = new Pair<>(
                     PlayerRotation.getYaw(target.getEyePosition()),
@@ -112,11 +111,10 @@ public class Killaura extends Module {
             if (TRPlayer.CLIENT.crosshairPickEntity != target) return;
         }
 
-        Connection connection = Objects.requireNonNull(TRPlayer.CLIENT.getConnection()).getConnection();
-
         player.fabricPlayer.swing(InteractionHand.MAIN_HAND);
-        connection.send(ServerboundInteractPacket.createAttackPacket(target, false));
-        player.fabricPlayer.attack(target);
+        if (TRPlayer.CLIENT.gameMode != null) {
+            TRPlayer.CLIENT.gameMode.attack(player.fabricPlayer, target);
+        }
     }
 
     @Override

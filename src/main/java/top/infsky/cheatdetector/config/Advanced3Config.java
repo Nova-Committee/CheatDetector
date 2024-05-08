@@ -32,6 +32,10 @@ public class Advanced3Config {
     public static double spinPitchStep = 35;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean spinOnlyPacket = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean spinAutoPause = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int spinAutoPauseTime = 10;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkIncludeOutgoing = true;
@@ -43,8 +47,6 @@ public class Advanced3Config {
     public static boolean blinkCancelPacket = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean blinkShowCount = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean blinkRenderRealPosition = false;
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiFallAutoDisabled = false;
@@ -66,8 +68,6 @@ public class Advanced3Config {
     public static boolean fakelagAutoDisable = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean fakelagShowCount = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean fakelagRenderRealPosition = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static double airPlaceReach = 4.5;
@@ -161,11 +161,24 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraLegitAim = false;
     @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean killauraLegitAimNoise = false;
+    @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraIncludeArmorStands = true;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraIncludeEntities = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean killauraIncludePlayers = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean handSpinPerfectSwing = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int handSpinSwingDelay = 0;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean handSpinMainHand = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean handSpinOffHand = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean handSpinDiffSwing = false;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

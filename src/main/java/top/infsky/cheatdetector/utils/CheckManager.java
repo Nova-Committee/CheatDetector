@@ -9,7 +9,7 @@ import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.checks.*;
 import top.infsky.cheatdetector.impl.modules.*;
 import top.infsky.cheatdetector.impl.fixes.vulcan.*;
-import top.infsky.cheatdetector.impl.fixes.themis.*;
+import top.infsky.cheatdetector.impl.fixes.pas.*;
 import top.infsky.cheatdetector.impl.modules.common.*;
 import top.infsky.cheatdetector.impl.modules.pas.*;
 
@@ -93,6 +93,7 @@ public class CheckManager {
         post.put(Scaffold.class, new Scaffold(player));
         post.put(Velocity.class, new Velocity(player));
         post.put(Killaura.class, new Killaura(player));
+        post.put(HandSpin.class, new HandSpin(player));
 
         return new CheckManager(pre, normal, post, player);
     }
