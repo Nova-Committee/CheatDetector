@@ -65,7 +65,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
-    modImplementation("top.hendrixshen.magiclib:magiclib-1_20_1:${project.magiclib_version}") {
+    modImplementation("top.hendrixshen.magiclib:magiclib-${project.minecraft_version.replace(".", "_")}:${project.magiclib_version}") {
         exclude(group: "carpet", module: "fabric-carpet")
     }
 
