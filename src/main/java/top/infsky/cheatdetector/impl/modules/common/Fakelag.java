@@ -56,7 +56,7 @@ public class Fakelag extends Module {
                 if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.fakelagDelayMs / 50.0)) {
                     break;
                 }
-                ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener());
+                ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener(), true);
                 outgoingPackets.remove(packet);
             }
             while (!incomingPackets.isEmpty()) {

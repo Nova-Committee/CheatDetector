@@ -52,7 +52,7 @@ public class FakePlayer extends RemotePlayer {
 
     public void show() {
         if (!isRemoved) return;
-        LevelUtils.getClientLevel().addPlayer(getId(), this);
+        LevelUtils.getClientLevel().addEntity(this);
         isRemoved = false;
     }
 
