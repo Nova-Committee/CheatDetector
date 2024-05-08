@@ -75,4 +75,8 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean killauraEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean handSpinEnabled = false;
 }

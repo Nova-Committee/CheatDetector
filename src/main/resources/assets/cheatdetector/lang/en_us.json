@@ -104,6 +104,9 @@
   "cheatdetector.config.modules.velocityEnabled.comment": "If enabled, we will cancel your velocity.",
   "cheatdetector.config.modules.velocityEnabled.name": "Enable Velocity",
   "cheatdetector.config.modules.velocityEnabled.pretty_name": "Velocity",
+  "cheatdetector.config.modules.handSpinEnabled.comment": "If enabled, you will swing your hand forever.",
+  "cheatdetector.config.modules.handSpinEnabled.name": "Enable Hand Spin",
+  "cheatdetector.config.modules.handSpinEnabled.pretty_name": "Hand Spin",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -111,5 +114,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.4.1"
+  "cheatdetector.gui.title": "CheatDetector 2.5.0"
 }

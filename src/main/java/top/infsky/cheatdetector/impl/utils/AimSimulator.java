@@ -9,32 +9,28 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 public class AimSimulator {
-    @Contract("_, _ -> new")
-    public static @NotNull Pair<Double, Double> getLegitAim(@NotNull Entity target, @NotNull TRPlayer player) {
-        Vec3 aimPos;
+    @Contract("_, _, _ -> new")
+    public static @NotNull Pair<Double, Double> getLegitAim(@NotNull Entity target, @NotNull TRPlayer player, boolean extraNoise) {
+        double yaw, pitch;
 
         double yDiff = target.position().y() - player.currentPos.y();
         if (yDiff >= 0) {
             if (target.getEyePosition().y() - yDiff > target.position().y()) {
-                aimPos = new Vec3(target.getEyePosition().x(), target.getEyePosition().y() - yDiff, target.getEyePosition().z());
+                pitch = PlayerRotation.getPitch(new Vec3(target.getEyePosition().x(), target.getEyePosition().y() - yDiff, target.getEyePosition().z()));
             } else {
-                aimPos = new Vec3(target.position().x(), target.position().y() + 0.4, target.position().z());
+                pitch = PlayerRotation.getPitch(new Vec3(target.position().x(), target.position().y() + 0.4, target.position().z()));
             }
         } else {
-            aimPos = target.getEyePosition();
+            pitch = PlayerRotation.getPitch(target.getEyePosition());
         }
 
-        aimPos = getRandomAimPos(aimPos);
+        yaw = PlayerRotation.getYaw(target.position());
 
-        return new Pair<>(PlayerRotation.getYaw(aimPos), PlayerRotation.getPitch(aimPos));
-    }
+        if (extraNoise) {
+            pitch += (Math.random() - 0.5) * 2 * 0.4;
+            yaw += (Math.random() - 0.5) * 2 * 0.6;
+        }
 
-    @Contract("_ -> new")
-    private static @NotNull Vec3 getRandomAimPos(@NotNull Vec3 basicAimPos) {
-        return new Vec3(
-                basicAimPos.x() + (Math.random() - 0.5) * 2 * 0.35,
-                basicAimPos.y() + (Math.random() - 0.5) * 2 * 0.45,
-                basicAimPos.z() + (Math.random() - 0.5) * 2 * 0.35
-                );
+        return new Pair<>(yaw, pitch);
     }
 }

@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.fixes.themis;
+package top.infsky.cheatdetector.impl.fixes.pas;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.player.AbstractClientPlayer;

@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,10 +30,13 @@ public abstract class MixinConnection {
     }
 
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Object;)V", at = @At(value = "HEAD"), cancellable = true)
-    public void channelRead0(ChannelHandlerContext channelHandlerContext, Object packet, CallbackInfo ci) {
+    public void channelRead0(ChannelHandlerContext channelHandlerContext, Object basePacket, CallbackInfo ci) {
         if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
         final CheckManager manager = TRSelf.getInstance().manager;
 
-        manager.onCustomAction(check -> check._onPacketReceive((Packet<?>) packet, (Connection)(Object) this, channelHandlerContext, ci));
+        Packet<?> packet = (Packet<?>) basePacket;
+        if (packet instanceof ClientboundPlayerPositionPacket)
+            manager.onTeleport();
+        manager.onCustomAction(check -> check._onPacketReceive(packet, (Connection)(Object) this, channelHandlerContext, ci));
     }
 }
