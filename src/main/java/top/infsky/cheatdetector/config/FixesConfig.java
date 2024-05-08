@@ -1,30 +1,32 @@
 package top.infsky.cheatdetector.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import org.jetbrains.annotations.NotNull;
+import top.hendrixshen.magiclib.malilib.api.annotation.*;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.Fixes;
 
-@Getter
-@Setter
-@Config(name = "PacketFix")
-public class FixesConfig implements ConfigData {
-    @ConfigEntry.Gui.Tooltip
-    boolean packetFixEnabled = false;
+public class FixesConfig {
+    @Hotkey
+    @Config(category = ConfigCategory.FIXES)
+    public static boolean packetFixEnabled = false;
 
-    @ConfigEntry.Gui.Tooltip
-    Fixes packetFixMode = Fixes.NORMAL;
+    @Config(category = ConfigCategory.FIXES)
+    public static @NotNull String packetFixMode = "NORMAL";
 
-    @ConfigEntry.Gui.Tooltip
-    boolean vulcanDisablerEnabled = false;
+    @Hotkey
+    @Config(category = ConfigCategory.FIXES)
+    public static boolean vulcanOmniSprintEnabled = false;
 
-    @ConfigEntry.Gui.Tooltip
-    boolean flagDetectorEnabled = false;
-
-    @ConfigEntry.Gui.Tooltip
-    boolean vulcanOmniSprintEnabled = false;
-
-    @ConfigEntry.Gui.Tooltip
-    boolean spinEnabled = false;
+    public static @NotNull Fixes getPacketFixMode() {
+        Fixes result;
+        switch (packetFixMode.toUpperCase()) {
+            case "NORMAL" -> result = Fixes.NORMAL;
+            case "STRICT" -> result = Fixes.STRICT;
+            default -> {
+                packetFixMode = "NORMAL";
+                result = Fixes.NORMAL;
+            }
+        }
+        return result;
+    }
 }

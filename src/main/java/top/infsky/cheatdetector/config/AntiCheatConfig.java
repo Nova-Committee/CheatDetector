@@ -1,24 +1,24 @@
 package top.infsky.cheatdetector.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import top.hendrixshen.magiclib.malilib.api.annotation.Config;
+import top.hendrixshen.magiclib.malilib.api.annotation.Hotkey;
+import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
-@Getter
-@Setter
-@Config(name = "AntiCheat")
-public class AntiCheatConfig implements ConfigData {
-    @ConfigEntry.Gui.Tooltip
-    boolean antiCheatEnabled = true;
+public class AntiCheatConfig {
+    @Hotkey
+    @Config(category = ConfigCategory.ANTICHEAT)
+    public static boolean antiCheatEnabled = true;
 
-    @ConfigEntry.Gui.Tooltip
-    boolean disableSelfCheck = false;
+    @Hotkey
+    @Config(category = ConfigCategory.ANTICHEAT)
+    public static boolean disableSelfCheck = false;
 
-    @ConfigEntry.Gui.Tooltip
-    double threshold = 1.0;
+    @Numeric(minValue = 0.0, maxValue = Double.MAX_VALUE)
+    @Config(category = ConfigCategory.ANTICHEAT)
+    public static double threshold = 1.0;
 
-    @ConfigEntry.Gui.Tooltip
-    long VLClearTime = 6000;
+    @Numeric(minValue = -1, maxValue = Integer.MAX_VALUE)
+    @Config(category = ConfigCategory.ANTICHEAT)
+    public static int VLClearTime = 6000;
 }

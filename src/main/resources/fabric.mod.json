@@ -19,7 +19,7 @@
       "top.infsky.cheatdetector.CheatDetector"
     ],
     "modmenu": [
-      "top.infsky.cheatdetector.config.ModMenu"
+      "top.infsky.cheatdetector.ModMenu"
     ]
   },
   "mixins": [
@@ -29,7 +29,6 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "~${minecraft_version}",
-    "modmenu": "*",
-    "cloth-config2": "*"
+    "magiclib-${minecraft_version_prefix}": "*"
   }
 }

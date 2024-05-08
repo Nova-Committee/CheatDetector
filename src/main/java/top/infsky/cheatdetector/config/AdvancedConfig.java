@@ -1,113 +1,140 @@
 package top.infsky.cheatdetector.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import top.hendrixshen.magiclib.malilib.api.annotation.*;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
-@Getter
-@Setter
-@Config(name = "Advanced")
-public class AdvancedConfig implements ConfigData {
-    @ConfigEntry.Gui.PrefixText
-    boolean blinkCheck = true;
-    long blinkAlertBuffer = 20;
-    double blinkMaxDistance = 1;
+public class AdvancedConfig {
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean blinkCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int blinkAlertBuffer = 10;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double blinkMaxDistance = 8;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean flightACheck = true;
-    long flightAAlertBuffer = 20;
-    int flightAOnGroundJumpTick = 1;
-    int flightAInLiquidLiquidTick = 8;
-    int flightAInHurtJumpTick = 6;
-    double flightAJumpDistance = 1.25219;
-    double flightAFromWaterYDistance = 0.5;
-    int flightAOnTeleportDisableTick = 2;
-    int flightAOnJumpJumpTick = 14;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean flightBCheck = true;
-    long flightBAlertBuffer = 1;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean flightACheck = false;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAAlertBuffer = 20;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAOnGroundJumpTick = 1;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAInLiquidLiquidTick = 8;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAInHurtJumpTick = 6;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double flightAFromWaterYDistance = 0.5;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAOnTeleportDisableTick = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightAOnJumpJumpTick = 24;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean gameModeACheck = true;
-    long gameModeAAlertBuffer = 1;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean highJumpACheck = true;
-    long highJumpAAlertBuffer = 10;
-    double highJumpAJumpDistance = 1.25219;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean flightBCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flightBAlertBuffer = 1;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean noSlowACheck = true;
-    long noSlowAAlertBuffer = 20;
-    double noSlowASpeedTick1 = 2.56;
-    double noSlowASpeedTick2 = 1.92;
-    double noSlowASpeedTick3 = 1.6;
-    double noSlowASpeedTick4 = 1.4;
-    double noSlowASpeedTick5 = 1.36;
-    double noSlowASpeedTick6 = 1.26;
-    double noSlowASpeedTick7 = 1.18;
-    double noSlowASpeedTick8 = 1.16;
-    int noSlowAInJumpDisableTick = 4;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean speedACheck = true;
-    long speedAAlertBuffer = 30;
-    int speedAAfterJumpJumpTick = 10;
-    double speedAAfterJumpSpeed = 7.4;
-    double speedASprintingSpeed = 5.612;
-    double speedASilentSpeed = 1.295;
-    double speedAWalkSpeed = 4.317;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean gameModeACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int gameModeAAlertBuffer = 1;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean speedBCheck = true;
-    long speedBAlertBuffer = 10;
 
-    
-    @ConfigEntry.Gui.PrefixText
-    boolean velocityACheck = true;
-    long velocityAAlertBuffer = 2;
-    int velocityAExtraDelayedMs = 20;
-    int velocityAAfterFallExtraDisableTick = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean highJumpACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int highJumpAAlertBuffer = 5;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean highJumpAFlagOne = true;
 
-    @ConfigEntry.Gui.PrefixText
-    boolean groundSpoofACheck = true;
-    long groundSpoofAAlertBuffer = 2;
 
-    public short getFlightAOnGroundJumpTick() {
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean noSlowACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int noSlowAAlertBuffer = 20;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick1 = 2.56;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick2 = 1.92;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick3 = 1.6;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick4 = 1.4;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick5 = 1.36;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick6 = 1.26;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick7 = 1.18;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double noSlowASpeedTick8 = 1.16;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int noSlowAInJumpDisableTick = 4;
+
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean speedACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int speedAAlertBuffer = 30;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int speedAAfterJumpJumpTick = 10;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double speedAAfterJumpSpeed = 7.4;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double speedASprintingSpeed = 5.612;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double speedASilentSpeed = 1.295;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double speedAWalkSpeed = 4.317;
+
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean speedBCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int speedBAlertBuffer = 10;
+
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean velocityACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int velocityAAlertBuffer = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int velocityAExtraDelayedMs = 20;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int velocityAAfterFallExtraDisableTick = 2;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean groundSpoofACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int groundSpoofAAlertBuffer = 6;
+
+    public static short getFlightAOnGroundJumpTick() {
         return (short) flightAOnGroundJumpTick;
     }
 
-    public short getFlightAInLiquidLiquidTick() {
+    public static short getFlightAInLiquidLiquidTick() {
         return (short) flightAInLiquidLiquidTick;
     }
 
-    public short getFlightAInHurtJumpTick() {
+    public static short getFlightAInHurtJumpTick() {
         return (short) flightAInHurtJumpTick;
     }
 
-    public short getFlightAOnTeleportDisableTick() {
+    public static short getFlightAOnTeleportDisableTick() {
         return (short) flightAOnTeleportDisableTick;
     }
 
-    public short getFlightAOnJumpJumpTick() {
+    public static short getFlightAOnJumpJumpTick() {
         return (short) flightAOnJumpJumpTick;
     }
 
-    public short getNoSlowAInJumpDisableTick() {
+    public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;
     }
 
-    public short getSpeedAAfterJumpJumpTick() {
+    public static short getSpeedAAfterJumpJumpTick() {
         return (short) speedAAfterJumpJumpTick;
     }
 

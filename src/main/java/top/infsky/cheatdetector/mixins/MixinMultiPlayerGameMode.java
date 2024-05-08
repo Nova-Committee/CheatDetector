@@ -10,12 +10,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.infsky.cheatdetector.anticheat.TRPlayer;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket1;
-import top.infsky.cheatdetector.anticheat.fixs.vulcan.BadPacket2;
-import top.infsky.cheatdetector.config.Fixes;
-
-import static top.infsky.cheatdetector.CheatDetector.CONFIG;
+import top.infsky.cheatdetector.utils.TRSelf;
+import top.infsky.cheatdetector.impl.fixes.vulcan.BadPacket1;
+import top.infsky.cheatdetector.config.utils.Fixes;
+import top.infsky.cheatdetector.config.FixesConfig;
 
 @Mixin(MultiPlayerGameMode.class)
 public abstract class MixinMultiPlayerGameMode {
@@ -23,25 +21,27 @@ public abstract class MixinMultiPlayerGameMode {
 
     @Inject(method = "startDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void startDestroyBlock(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
-        if (TRPlayer.SELF == null) return;
-        TRPlayer.SELF.manager.checks.get(BadPacket1.class)._handleStartDestroyBlock(cir, false);
+        if (TRSelf.getInstance() == null) return;
+        TRSelf.getInstance().manager.onCustomAction((check) -> check._handleStartDestroyBlock(cir, false));
     }
 
     @Inject(method = "continueDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void continueDestroyBlock(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
-        if (TRPlayer.SELF == null) return;
-        if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
+        if (TRSelf.getInstance() == null) return;
+        if (FixesConfig.getPacketFixMode() != Fixes.STRICT) return;
 
-        if (TRPlayer.SELF.manager.checks.get(BadPacket1.class)._handleStartDestroyBlock(cir, true)) {
+        if (TRSelf.getInstance().manager.getChecks().get(BadPacket1.class)._handleStartDestroyBlock(cir, true))
             this.stopDestroyBlock();
-        }
+        TRSelf.getInstance().manager.onCustomAction((check) -> {
+            if (check.getClass() != BadPacket1.class) check._handleStartDestroyBlock(cir, true);
+        });
     }
 
     @Inject(method = "stopDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void stopDestroyBlock(CallbackInfo ci) {
-        if (TRPlayer.SELF == null) return;
-        if (CONFIG().getFixes().getPacketFixMode() != Fixes.STRICT) return;
+        if (TRSelf.getInstance() == null) return;
+        if (FixesConfig.getPacketFixMode() != Fixes.STRICT) return;
 
-        TRPlayer.SELF.manager.checks.get(BadPacket2.class)._handleStopDestroyBlock(ci);
+        TRSelf.getInstance().manager.onCustomAction((check) -> check._handleStopDestroyBlock(ci));
     }
 }

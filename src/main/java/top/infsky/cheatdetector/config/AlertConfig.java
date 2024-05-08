@@ -1,27 +1,27 @@
 package top.infsky.cheatdetector.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import org.jetbrains.annotations.NotNull;
+import top.hendrixshen.magiclib.malilib.api.annotation.Config;
+import top.hendrixshen.magiclib.malilib.api.annotation.Hotkey;
+import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
-@Getter
-@Setter
-@Config(name = "Alert")
-public class AlertConfig implements ConfigData {
-    @ConfigEntry.Gui.Tooltip
-    boolean allowAlert = true;
+public class AlertConfig {
+    @Hotkey
+    @Config(category = ConfigCategory.ALERT)
+    public static boolean allowAlert = true;
 
-    @ConfigEntry.Gui.Tooltip
-    boolean allowAlertFixes = false;
+    @Hotkey
+    @Config(category = ConfigCategory.ALERT)
+    public static boolean allowAlertFixes = false;
 
-    @ConfigEntry.Gui.Tooltip
-    boolean allowAlertVLClear = false;
+    @Hotkey
+    @Config(category = ConfigCategory.ALERT)
+    public static boolean allowAlertVLClear = false;
 
-    @ConfigEntry.Gui.Tooltip
-    boolean disableBuffer = false;
+    @Hotkey
+    @Config(category = ConfigCategory.ALERT)
+    public static boolean disableBuffer = false;
 
-    @ConfigEntry.Gui.Tooltip
-    String prefix = "§b§lTR§r§l>";
+    @Config(category = ConfigCategory.ALERT)
+    public static @NotNull String prefix = "§b§lTR§r§l>";
 }
