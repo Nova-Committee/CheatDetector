@@ -58,16 +58,36 @@ public class Advanced3Config {
     public static boolean antiFallClutchMsg = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
+    public static String fakelagMode = "LATENCY";
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagLatencyMode.class)
     public static boolean fakelagIncludeOutgoing = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagLatencyMode.class)
     public static boolean fakelagIncludeIncoming = false;
     @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagLatencyMode.class)
     public static int fakelagDelayMs = 100;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagLatencyMode.class)
+    public static boolean fakelagShowCount = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static double fakelagMaxTargetRange = 15.0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static double fakelagStartRange = 6.0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static double fakelagStopRange = 1.0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static int fakelagMaxLagTicks = 100;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static boolean fakelagOnlyOutgoing = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static boolean fakelagStopOnHurt = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static int fakelagPauseTicksOnHurt = 10;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
+    public static boolean fakelagDebug = false;
+
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean fakelagAutoDisable = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean fakelagShowCount = false;
+
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static double airPlaceReach = 4.5;
@@ -123,7 +143,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldSilentRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean scaffoldSilentKeepRotation = true;
+    public static boolean scaffoldKeepRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldNoSprint = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -131,43 +151,22 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldAutoSwitch = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean scaffoldSilentSwitch = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldPlaceMinDelay = 1;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean velocityOnlyHurt = true;
-
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraAttack = true;
+    public static double aimAssistRange = 6;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static double killauraAttackReach = 3.0;
+    public static boolean aimAssistLegitAim = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraPreAim = true;
+    public static boolean aimAssistLegitAimNoise = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static double killauraPreAimReach = 6;
+    public static boolean aimAssistIncludeArmorStands = true;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraSwitch = true;
+    public static boolean aimAssistIncludeEntities = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static int killauraSwitchDelay = 1;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraRayCast = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraLookView = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraNoRotation = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static double killauraMinCPS = 2;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static double killauraMaxCPS = 2;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraLegitAim = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraLegitAimNoise = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraIncludeArmorStands = true;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraIncludeEntities = false;
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean killauraIncludePlayers = false;
+    public static boolean aimAssistIncludePlayers = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean handSpinPerfectSwing = false;
@@ -185,5 +184,17 @@ public class Advanced3Config {
             return NotebotUtils.NotebotMode.AnyInstrument;
         }
         return NotebotUtils.NotebotMode.ExactInstruments;
+    }
+
+    public static FakelagMode getFakelagMode() {
+        if (fakelagMode.equalsIgnoreCase("DYNAMIC")) {
+            return FakelagMode.DYNAMIC;
+        }
+        return FakelagMode.LATENCY;
+    }
+
+    public enum FakelagMode {
+        LATENCY,
+        DYNAMIC
     }
 }

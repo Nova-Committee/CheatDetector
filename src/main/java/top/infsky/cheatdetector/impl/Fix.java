@@ -11,7 +11,7 @@ import top.infsky.cheatdetector.utils.TRSelf;
 public abstract class Fix extends Check {
     @Nullable
     public static Fix instance = null;
-    public TRSelf player;
+    protected TRSelf player;
     public Fix(String fixName, @NotNull TRSelf player) {
         super(fixName, player);
         this.player = player;

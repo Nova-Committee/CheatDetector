@@ -11,6 +11,8 @@ import top.infsky.cheatdetector.impl.modules.*;
 import top.infsky.cheatdetector.impl.fixes.vulcan.*;
 import top.infsky.cheatdetector.impl.fixes.pas.*;
 import top.infsky.cheatdetector.impl.modules.common.*;
+import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagDynamic;
+import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagLatency;
 import top.infsky.cheatdetector.impl.modules.pas.*;
 
 import java.util.HashMap;
@@ -83,7 +85,8 @@ public class CheckManager {
         post.put(AntiVanish.class, new AntiVanish(player));
         post.put(Blink.class, new Blink(player));
         post.put(AntiFall.class, new AntiFall(player));
-        post.put(Fakelag.class, new Fakelag(player));
+        post.put(FakelagLatency.class, new FakelagLatency(player));
+        post.put(FakelagDynamic.class, new FakelagDynamic(player));
         post.put(AirPlace.class, new AirPlace(player));
         post.put(InvWalk.class, new InvWalk(player));
         post.put(Backtrack.class, new Backtrack(player));
@@ -91,9 +94,9 @@ public class CheckManager {
         post.put(SayHacker.class, new SayHacker(player));
         post.put(JumpReset.class, new JumpReset(player));
         post.put(Scaffold.class, new Scaffold(player));
-        post.put(Velocity.class, new Velocity(player));
-        post.put(Killaura.class, new Killaura(player));
+        post.put(AimAssist.class, new AimAssist(player));
         post.put(HandSpin.class, new HandSpin(player));
+        post.put(Debug.class, new Debug(player));
 
         return new CheckManager(pre, normal, post, player);
     }

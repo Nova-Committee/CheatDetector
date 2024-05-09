@@ -592,7 +592,7 @@ public class NoteBot extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (!Advanced3Config.noteBotSilentRotate) return false;
         if (basepacket instanceof ServerboundMovePlayerPacket packet)

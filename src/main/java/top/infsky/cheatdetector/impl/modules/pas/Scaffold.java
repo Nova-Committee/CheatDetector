@@ -6,6 +6,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
+import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.utils.world.ContainerUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
@@ -34,6 +36,8 @@ public class Scaffold extends Module {
     private static Module instance = null;
 
     private long lastPlaceTime = 0;
+    private int clientSlot = -1;
+    private int serverSlot = -1;
 
     public Scaffold(@NotNull TRSelf player) {
         super("Scaffold", player);
@@ -42,7 +46,14 @@ public class Scaffold extends Module {
 
     @Override
     public void _onTick() {
-        if (isDisabled()) return;
+        if (isDisabled()) {
+            if (clientSlot != -1 && clientSlot != serverSlot) {
+                ContainerUtils.silentSelectHotBar(clientSlot);
+            }
+            clientSlot = -1;
+            serverSlot = -1;
+            return;
+        }
         if (TRPlayer.CLIENT.gameMode == null) return;
 
         BlockPos ground = player.fabricPlayer.blockPosition().below();
@@ -78,16 +89,20 @@ public class Scaffold extends Module {
             else {
                 if (Advanced3Config.scaffoldAutoSwitch) {
                     Inventory inventory = player.fabricPlayer.getInventory();
-                    for (int i = 0; i <= 8; i++) {
-                        if (inventory.getItem(i).getItem() instanceof BlockItem) {
-                            inventory.selected = i;
-                            hand = InteractionHand.MAIN_HAND;
-                            break;
+                    try {
+                        serverSlot = ContainerUtils.findItem(inventory, BlockItem.class, ContainerUtils.SlotType.HOTBAR);
+                        if (Advanced3Config.scaffoldSilentSwitch)
+                            ContainerUtils.silentSelectHotBar(serverSlot);
+                        else {
+                            inventory.selected = serverSlot;
+                            clientSlot = serverSlot;
                         }
+                        hand = InteractionHand.MAIN_HAND;
+                    } catch (ContainerUtils.ItemNotFoundException e) {
+                        return;
                     }
                 }
             }
-            if (hand == null) return;
 
             if (Advanced3Config.scaffoldNoSprint)
                 player.fabricPlayer.setSprinting(false);
@@ -104,11 +119,16 @@ public class Scaffold extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
-        if (!Advanced3Config.scaffoldSilentKeepRotation) return false;
+        if (!Advanced3Config.scaffoldKeepRotation) return false;
         if (basepacket instanceof ServerboundMovePlayerPacket packet)
             return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
+        else if (Advanced3Config.scaffoldSilentSwitch && basepacket instanceof ServerboundSetCarriedItemPacket packet)
+            if (serverSlot != packet.getSlot()) {
+                ci.cancel();
+                clientSlot = packet.getSlot();
+            }
         return false;
     }
 

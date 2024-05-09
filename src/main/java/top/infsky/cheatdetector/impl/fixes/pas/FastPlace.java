@@ -35,7 +35,7 @@ public class FastPlace extends Fix {
     }
 
     @Override
-    public boolean _onPacketReceive(Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (!FixesConfig.packetFixEnabled) return false;
         if (basePacket instanceof ServerboundUseItemOnPacket packet){
             final InteractionHand interactionHand = packet.getHand();

@@ -24,7 +24,7 @@ public class NoRotateSet extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (isDisabled() || ci.isCancelled()) return false;
         if (basePacket instanceof ClientboundPlayerPositionPacket packet){
             if (packet.getId() != player.fabricPlayer.getId()) return false;

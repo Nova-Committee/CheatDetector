@@ -111,7 +111,7 @@ public class Spin extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
 
         if (basepacket instanceof ServerboundInteractPacket || basepacket instanceof ServerboundUseItemOnPacket) {

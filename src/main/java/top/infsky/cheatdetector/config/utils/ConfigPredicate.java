@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import top.hendrixshen.magiclib.dependency.api.ConfigDependencyPredicate;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
 import top.hendrixshen.magiclib.malilib.impl.ConfigOption;
+import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
 import java.util.List;
@@ -28,6 +29,20 @@ public class ConfigPredicate {
             return ModuleConfig.aaaPASModeEnabled;
         }
 
+    }
+
+    public static class FakelagLatencyMode implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption configOption) {
+            return Advanced3Config.getFakelagMode() == Advanced3Config.FakelagMode.LATENCY;
+        }
+    }
+
+    public static class FakelagDynamicMode implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption configOption) {
+            return Advanced3Config.getFakelagMode() == Advanced3Config.FakelagMode.DYNAMIC;
+        }
     }
 
     private abstract static class ServerMode implements ConfigDependencyPredicate {

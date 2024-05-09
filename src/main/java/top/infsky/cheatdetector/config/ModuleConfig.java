@@ -9,9 +9,9 @@ public class ModuleConfig {
     @Config(category = ConfigCategory.MODULES)
     public static boolean aaaPASModeEnabled = false;
 
-    @Hotkey
+    @Hotkey(hotkey = "INSERT")
     @Config(category = ConfigCategory.MODULES)
-    public static boolean clickGUIEnabled = true;
+    public static boolean clickGUIEnabled = false;
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean flagDetectorEnabled = false;
@@ -69,14 +69,14 @@ public class ModuleConfig {
     public static boolean scaffoldEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean velocityEnabled = false;
-
-    @Hotkey
     @Config(category = ConfigCategory.MODULES)
-    public static boolean killauraEnabled = false;
+    public static boolean aimAssistEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean handSpinEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean debugEnabled = false;
 }

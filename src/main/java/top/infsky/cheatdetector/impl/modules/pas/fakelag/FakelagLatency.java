@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.common;
+package top.infsky.cheatdetector.impl.modules.pas.fakelag;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
@@ -7,71 +7,45 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.utils.packet.PacketHandler;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.impl.utils.packet.IncomingPacket;
 import top.infsky.cheatdetector.impl.utils.packet.OutgoingPacket;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
-import top.infsky.cheatdetector.mixins.ConnectionInvoker;
 
-import java.util.Deque;
-import java.util.concurrent.LinkedBlockingDeque;
-
-public class Fakelag extends Module {
+public class FakelagLatency extends Module {
     @Getter
     @Nullable
     private static Module instance = null;
     private int lastPacketUnSend = 0;
     private int lastPacketUnReceive = 0;
     private int disablePackets = 0;
-    private final Deque<OutgoingPacket> outgoingPackets = new LinkedBlockingDeque<>();
-    private final Deque<IncomingPacket> incomingPackets = new LinkedBlockingDeque<>();
+    private final PacketHandler packetHandler;
 
-    public Fakelag(@NotNull TRSelf player) {
+    public FakelagLatency(@NotNull TRSelf player) {
         super("Fakelag", player);
+        packetHandler = new PacketHandler(player);
         instance = this;
     }
 
     @Override
     public void _onTick() {
         if (isDisabled()) {
-            while (!outgoingPackets.isEmpty()) {
-                final OutgoingPacket packet = outgoingPackets.poll();
-                packet.connection().send(packet.packet(), packet.listener());
-            }
-            while (!incomingPackets.isEmpty()) {
-                final IncomingPacket packet = incomingPackets.poll();
-                ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
-            }
+            packetHandler.releaseAll();
         } else {
-            while (!outgoingPackets.isEmpty()) {
-                final OutgoingPacket packet = outgoingPackets.getLast();
-                if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.fakelagDelayMs / 50.0)) {
-                    break;
-                }
-                ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener());
-                outgoingPackets.remove(packet);
-            }
-            while (!incomingPackets.isEmpty()) {
-                final IncomingPacket packet = incomingPackets.getLast();
-                if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.fakelagDelayMs / 50.0)) {
-                    break;
-                }
-                ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
-                incomingPackets.remove(packet);
-            }
+            packetHandler.tick(Advanced3Config.fakelagDelayMs);
         }
     }
 
     @Override
-    public boolean _onPacketSend(Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (disablePackets > 0) {
             disablePackets--;
             return false;
@@ -79,17 +53,10 @@ public class Fakelag extends Module {
         if (isDisabled() || isDied() || ci.isCancelled()) return false;
 
         if (Advanced3Config.fakelagIncludeOutgoing) {
-            if (packet instanceof ServerboundClientCommandPacket packet1) {
-                if (packet1.getAction().equals(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN)) {
-                    onDied();
-                    return false;
-                }
-            }
-
             ci.cancel();
-            outgoingPackets.addFirst(new OutgoingPacket(packet, connection, listener, player.getUpTime()));
+            packetHandler.add(new OutgoingPacket(packet, connection, listener, player.getUpTime()));
             if (Advanced3Config.fakelagShowCount) {
-                final int currentPacketUnSend = outgoingPackets.size();
+                final int currentPacketUnSend = packetHandler.getDelayedOutgoingCount();
                 if (currentPacketUnSend != lastPacketUnSend) moduleMsg(lastPacketUnSend + " packets to send.");
                 lastPacketUnSend = currentPacketUnSend;
             }
@@ -99,7 +66,7 @@ public class Fakelag extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
         if (disablePackets > 0) {
             disablePackets--;
             return false;
@@ -108,9 +75,9 @@ public class Fakelag extends Module {
 
         if (Advanced3Config.fakelagIncludeIncoming) {
             ci.cancel();
-            incomingPackets.addFirst(new IncomingPacket(packet, connection, context, player.getUpTime()));
+            packetHandler.add(new IncomingPacket(packet, connection, context, player.getUpTime()));
             if (Advanced3Config.fakelagShowCount) {
-                final int currentPacketUnReceive = incomingPackets.size();
+                final int currentPacketUnReceive = packetHandler.getDelayedIncomingCount();
                 if (currentPacketUnReceive != lastPacketUnReceive) moduleMsg(lastPacketUnReceive + " packets to receive.");
                 lastPacketUnReceive = currentPacketUnReceive;
             }
@@ -139,8 +106,6 @@ public class Fakelag extends Module {
 
 
     private void onDied() {
-        outgoingPackets.clear();
-        incomingPackets.clear();
         lastPacketUnSend = 0;
         lastPacketUnReceive = 0;
         disablePackets = 20;
@@ -148,6 +113,7 @@ public class Fakelag extends Module {
 
     @Override
     public boolean isDisabled() {
+        if (Advanced3Config.getFakelagMode() != Advanced3Config.FakelagMode.LATENCY) return true;
         if (!ModuleConfig.fakelagEnabled) return true;
         if (ModuleConfig.backtrackEnabled) {
             customMsg(Component.translatable("cheatdetector.chat.alert.fakelagAndBacktrack").withStyle(ChatFormatting.DARK_RED).getString());

@@ -88,7 +88,7 @@ public class Backtrack extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
         if (targetVisual != null && (isDisabled() || !Advanced3Config.backtrackRenderRealPosition)) {
             targetVisual.hide();
             targetVisual = null;

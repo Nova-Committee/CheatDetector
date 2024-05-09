@@ -29,7 +29,7 @@ public class AntiVanish extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (basePacket instanceof ClientboundPlayerInfoUpdatePacket packet) {
             if (TRPlayer.CLIENT.getConnection() == null) return false;
