@@ -1,6 +1,5 @@
 package top.infsky.cheatdetector.config.utils;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import top.hendrixshen.magiclib.dependency.api.ConfigDependencyPredicate;
@@ -45,10 +44,13 @@ public class ConfigPredicate {
         }
     }
 
-    private abstract static class ServerMode implements ConfigDependencyPredicate {
-        @Contract(pure = true)
-        public static @NotNull @Unmodifiable List<String> getIpAddresses() {
-            return List.of();
+    public static class AimAssistLegitMode implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption configOption) {
+            return !Advanced3Config.aimAssistInteract;
         }
+    }
+
+    private abstract static class ServerMode implements ConfigDependencyPredicate {
     }
 }

@@ -24,6 +24,7 @@ public class ClickGUI extends Module {
 
     private boolean lastPASModeEnabled = false;
     private Advanced3Config.FakelagMode lastFakelagMode = Advanced3Config.FakelagMode.LATENCY;
+    private boolean lastAimAssistInteract = false;
 
     public ClickGUI(@NotNull TRSelf player) {
         super("ClickGUI", player);
@@ -41,9 +42,11 @@ public class ClickGUI extends Module {
         }
 
         if (lastPASModeEnabled != ModuleConfig.aaaPASModeEnabled
-                || lastFakelagMode != Advanced3Config.getFakelagMode()) update();
+                || lastFakelagMode != Advanced3Config.getFakelagMode()
+                || lastAimAssistInteract != Advanced3Config.aimAssistInteract) update();
         lastPASModeEnabled = ModuleConfig.aaaPASModeEnabled;
         lastFakelagMode = Advanced3Config.getFakelagMode();
+        lastAimAssistInteract = Advanced3Config.aimAssistInteract;
     }
 
     @Contract("_, _, _ -> new")

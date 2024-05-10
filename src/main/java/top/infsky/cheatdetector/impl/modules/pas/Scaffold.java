@@ -6,7 +6,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
-import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,6 +37,7 @@ public class Scaffold extends Module {
     private long lastPlaceTime = 0;
     private int clientSlot = -1;
     private int serverSlot = -1;
+    private BlockPos lastGround = null;
 
     public Scaffold(@NotNull TRSelf player) {
         super("Scaffold", player);
@@ -47,6 +47,7 @@ public class Scaffold extends Module {
     @Override
     public void _onTick() {
         if (isDisabled()) {
+            lastGround = null;
             if (clientSlot != -1 && clientSlot != serverSlot) {
                 ContainerUtils.silentSelectHotBar(clientSlot);
             }
@@ -57,6 +58,9 @@ public class Scaffold extends Module {
         if (TRPlayer.CLIENT.gameMode == null) return;
 
         BlockPos ground = player.fabricPlayer.blockPosition().below();
+        if (Advanced3Config.scaffoldSameY && lastGround != null) ground = ground.atY(lastGround.getY());
+
+        lastGround = ground;
 
         List<BlockPos> needToPlace = new java.util.ArrayList<>();
 
@@ -91,12 +95,8 @@ public class Scaffold extends Module {
                     Inventory inventory = player.fabricPlayer.getInventory();
                     try {
                         serverSlot = ContainerUtils.findItem(inventory, BlockItem.class, ContainerUtils.SlotType.HOTBAR);
-                        if (Advanced3Config.scaffoldSilentSwitch)
-                            ContainerUtils.silentSelectHotBar(serverSlot);
-                        else {
-                            inventory.selected = serverSlot;
-                            clientSlot = serverSlot;
-                        }
+                        inventory.selected = serverSlot;
+                        clientSlot = serverSlot;
                         hand = InteractionHand.MAIN_HAND;
                     } catch (ContainerUtils.ItemNotFoundException e) {
                         return;
@@ -124,11 +124,6 @@ public class Scaffold extends Module {
         if (!Advanced3Config.scaffoldKeepRotation) return false;
         if (basepacket instanceof ServerboundMovePlayerPacket packet)
             return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
-        else if (Advanced3Config.scaffoldSilentSwitch && basepacket instanceof ServerboundSetCarriedItemPacket packet)
-            if (serverSlot != packet.getSlot()) {
-                ci.cancel();
-                clientSlot = packet.getSlot();
-            }
         return false;
     }
 

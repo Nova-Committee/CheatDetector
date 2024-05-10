@@ -29,6 +29,7 @@ public class FakelagDynamic extends Module {
     private final PacketHandler packetHandler;
     private int disableTicks = 0;
     private boolean shouldBlink = false;
+    private boolean lastHurt = false;
     private long lastStartBlinkTime = -1;
     @Nullable
     private Player target;
@@ -59,15 +60,17 @@ public class FakelagDynamic extends Module {
             disableTicks--;
         }
 
-        if (isDisabled() || disableTicks > 0) {
+        if (isDisabled()) {
             releasePackets();
+            return;
         }
 
         if (shouldBlink) {
             if (player.upTime - lastStartBlinkTime > Advanced3Config.fakelagMaxLagTicks) {
                 if (Advanced3Config.fakelagDebug) customMsg("stop lag: time out.");
+                lastStartBlinkTime = player.upTime;
                 releasePackets();
-            } else if (player.fabricPlayer.hurtTime == 10 && Advanced3Config.fakelagStopOnHurt) {
+            } else if (!lastHurt && player.fabricPlayer.hurtTime > 0 && Advanced3Config.fakelagStopOnHurt) {
                 if (Advanced3Config.fakelagDebug) customMsg("stop lag: hurt.");
                 shouldBlink = false;
                 disableTicks = Advanced3Config.fakelagPauseTicksOnHurt;
@@ -80,7 +83,8 @@ public class FakelagDynamic extends Module {
                 if (Advanced3Config.fakelagDebug) customMsg("stop lag: too low range.");
                 shouldBlink = false;
                 releasePackets();
-            } else if (!shouldBlink && player.fabricPlayer.distanceTo(target) < Advanced3Config.fakelagStartRange) {
+            } else if (!shouldBlink && player.fabricPlayer.distanceTo(target) > Advanced3Config.fakelagStopRange
+                    && player.fabricPlayer.distanceTo(target) < Advanced3Config.fakelagStartRange) {
                 if (Advanced3Config.fakelagDebug) customMsg("start lag: in range.");
                 lastStartBlinkTime = player.upTime;
                 shouldBlink = true;
@@ -95,6 +99,8 @@ public class FakelagDynamic extends Module {
                 releasePackets();
             }
         } else shouldBlink = false;
+
+        lastHurt = player.fabricPlayer.hurtTime > 0;
     }
 
     @Override
@@ -114,7 +120,7 @@ public class FakelagDynamic extends Module {
 
     @Override
     public boolean _onPacketSend(@NotNull Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
-        if (isDisabled() || ci.isCancelled() || disableTicks > 0 || !shouldBlink) return false;
+        if (isDisabled() || ci.isCancelled() || !shouldBlink) return false;
 
         ci.cancel();
         packetHandler.add(new OutgoingPacket(packet, connection, listener, player.getUpTime()));
@@ -123,7 +129,7 @@ public class FakelagDynamic extends Module {
 
     @Override
     public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
-        if (isDisabled() || ci.isCancelled() || disableTicks > 0 || !shouldBlink) return false;
+        if (isDisabled() || ci.isCancelled() || !shouldBlink) return false;
 
         if (!Advanced3Config.fakelagOnlyOutgoing) {
             ci.cancel();
@@ -152,7 +158,7 @@ public class FakelagDynamic extends Module {
     @Override
     public boolean isDisabled() {
         if (Advanced3Config.getFakelagMode() != Advanced3Config.FakelagMode.DYNAMIC) return true;
-        if (!ModuleConfig.fakelagEnabled) return true;
+        if (!ModuleConfig.fakelagEnabled || player.fabricPlayer.isPassenger() || disableTicks > 0) return true;
         if (ModuleConfig.backtrackEnabled) {
             customMsg(Component.translatable("cheatdetector.chat.alert.fakelagAndBacktrack").withStyle(ChatFormatting.DARK_RED).getString());
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);

@@ -47,14 +47,14 @@ public class CheckManager {
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
-        normal.put(FlightA.class, new FlightA(player));
+        normal.put(FlyA.class, new FlyA(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
-        normal.put(FlightB.class, new FlightB(player));
+        normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
 
         return new CheckManager(pre, normal, post, player);
@@ -65,14 +65,14 @@ public class CheckManager {
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
-        normal.put(FlightA.class, new FlightA(player));
+        normal.put(FlyA.class, new FlyA(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
-        normal.put(FlightB.class, new FlightB(player));
+        normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
@@ -107,13 +107,16 @@ public class CheckManager {
             return;
         }
         if (player.currentGameType != player.lastGameType) {
-            for (Check check : checks.values()) check._onGameTypeChange();
+            for (Check check : preChecks.values()) check._onGameTypeChange();
+            for (Check check : normalChecks.values()) check._onGameTypeChange();
+            for (Check check : postChecks.values()) check._onGameTypeChange();
         }
 
         if (player.currentGameType == GameType.CREATIVE || player.currentGameType == GameType.SPECTATOR) return;
         if (player.lastOnGround && !player.currentOnGround) onJump();
-        if (TRPlayer.CLIENT.mouseHandler.isLeftPressed() && TRPlayer.CLIENT.crosshairPickEntity != null)
-            onCustomAction(check -> check._handleAttack(TRPlayer.CLIENT.crosshairPickEntity));
+        if (player instanceof TRSelf self)
+            if (!self.lastLeftPressed && self.currentLeftPressed && TRPlayer.CLIENT.crosshairPickEntity != null)
+                onCustomAction(check -> check._handleAttack(TRPlayer.CLIENT.crosshairPickEntity));
 
         for (Check check : preChecks.values()) check._onTick();
         for (Check check : normalChecks.values()) check._onTick();
@@ -122,16 +125,22 @@ public class CheckManager {
 
     public void onTeleport() {
         if (player == null || !CheatDetector.inWorld) return;
-        for (Check check : checks.values()) check._onTeleport();
+        for (Check check : preChecks.values()) check._onTeleport();
+        for (Check check : normalChecks.values()) check._onTeleport();
+        for (Check check : postChecks.values()) check._onTeleport();
     }
 
     public void onJump() {
         player.jumping = true;
-        for (Check check : checks.values()) check._onJump();
+        for (Check check : preChecks.values()) check._onJump();
+        for (Check check : normalChecks.values()) check._onJump();
+        for (Check check : postChecks.values()) check._onJump();
     }
 
     public void onCustomAction(Consumer<Check> action) {
         if (player == null || !CheatDetector.inWorld) return;
-        for (Check check : checks.values()) action.accept(check);
+        for (Check check : preChecks.values()) action.accept(check);
+        for (Check check : normalChecks.values()) action.accept(check);
+        for (Check check : postChecks.values()) action.accept(check);
     }
 }

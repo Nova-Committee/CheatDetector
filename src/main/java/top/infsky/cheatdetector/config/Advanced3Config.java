@@ -146,25 +146,60 @@ public class Advanced3Config {
     public static boolean scaffoldKeepRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldNoSprint = false;
+    @Numeric(minValue = 0, maxValue = 6, useSlider = true)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldExpend = 0;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldAutoSwitch = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean scaffoldSilentSwitch = false;
+    public static boolean scaffoldSameY = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldPlaceMinDelay = 1;
 
+    @Numeric(minValue = 0, maxValue = 15, useSlider = true)
     @Config(category = ConfigCategory.ADVANCED3)
     public static double aimAssistRange = 6;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean aimAssistLegitAim = false;
+    public static boolean aimAssistInteract = false;
+    @Numeric(minValue = -1, maxValue = 1, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistOffsetX = 0.024;
+    @Numeric(minValue = -1, maxValue = 1, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistOffsetY = -0.11;
+    @Numeric(minValue = -1, maxValue = 1, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistOffsetZ = -0.018;
+    @Numeric(minValue = 0, maxValue = 50)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistYawSpeed = 4.5;
+    @Numeric(minValue = 0, maxValue = 50)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistPitchSpeed = 2.0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static boolean aimAssistStopOnTarget = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static boolean aimAssistNoise1 = false;
+    @Numeric(minValue = 0, maxValue = 5, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistYawRandom = 1.3;
+    @Numeric(minValue = 0, maxValue = 5, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistPitchRandom = 1.08;
+    @Numeric(minValue = 0, maxValue = 1, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistXZRandom = 0.08;
+    @Numeric(minValue = 0, maxValue = 1, useSlider = true)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static double aimAssistYRandom = 0.1;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    public static boolean aimAssistNoise2 = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean aimAssistLegitAimNoise = false;
+    public static boolean aimAssistIncludeArmorStands = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean aimAssistIncludeArmorStands = true;
+    public static boolean aimAssistIncludeEntities = true;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean aimAssistIncludeEntities = false;
+    public static boolean aimAssistIncludeAnyObjects = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean aimAssistIncludePlayers = false;
 

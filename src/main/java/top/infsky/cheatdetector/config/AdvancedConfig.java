@@ -13,27 +13,27 @@ public class AdvancedConfig {
 
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flightACheck = false;
+    public static boolean flyACheck = false;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAAlertBuffer = 20;
+    public static int flyAlertBuffer = 20;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAOnGroundJumpTick = 1;
+    public static int flyAOnGroundJumpTick = 1;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAInLiquidLiquidTick = 8;
+    public static int flyAInLiquidLiquidTick = 8;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAInHurtJumpTick = 6;
+    public static int flyAInHurtJumpTick = 6;
     @Config(category = ConfigCategory.ADVANCED)
-    public static double flightAFromWaterYDistance = 0.5;
+    public static double flyAFromWaterYDistance = 0.5;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAOnTeleportDisableTick = 2;
+    public static int flyAOnTeleportDisableTick = 2;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightAOnJumpJumpTick = 24;
+    public static int flyAOnJumpJumpTick = 24;
 
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flightBCheck = true;
+    public static boolean flyBCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flightBAlertBuffer = 1;
+    public static int flyBAlertBuffer = 1;
 
 
     @Config(category = ConfigCategory.ADVANCED)
@@ -110,24 +110,24 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int groundSpoofAAlertBuffer = 6;
 
-    public static short getFlightAOnGroundJumpTick() {
-        return (short) flightAOnGroundJumpTick;
+    public static short getFlyAOnGroundJumpTick() {
+        return (short) flyAOnGroundJumpTick;
     }
 
-    public static short getFlightAInLiquidLiquidTick() {
-        return (short) flightAInLiquidLiquidTick;
+    public static short getFlyAInLiquidLiquidTick() {
+        return (short) flyAInLiquidLiquidTick;
     }
 
-    public static short getFlightAInHurtJumpTick() {
-        return (short) flightAInHurtJumpTick;
+    public static short getFlyAInHurtJumpTick() {
+        return (short) flyAInHurtJumpTick;
     }
 
-    public static short getFlightAOnTeleportDisableTick() {
-        return (short) flightAOnTeleportDisableTick;
+    public static short getFlyAOnTeleportDisableTick() {
+        return (short) flyAOnTeleportDisableTick;
     }
 
-    public static short getFlightAOnJumpJumpTick() {
-        return (short) flightAOnJumpJumpTick;
+    public static short getFlyAOnJumpJumpTick() {
+        return (short) flyAOnJumpJumpTick;
     }
 
     public static short getNoSlowAInJumpDisableTick() {

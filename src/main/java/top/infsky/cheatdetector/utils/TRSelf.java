@@ -11,6 +11,8 @@ public class TRSelf extends TRPlayer {
     private static TRSelf instance = null;
     public LocalPlayer fabricPlayer;
     public Vec2 rotation;
+    public boolean lastLeftPressed = false;
+    public boolean currentLeftPressed = false;
 
     public TRSelf(@NotNull LocalPlayer player) {
         super(player, true);
@@ -22,8 +24,11 @@ public class TRSelf extends TRPlayer {
     public void update(AbstractClientPlayer player) {
         if (player instanceof LocalPlayer localPlayer) {
             this.fabricPlayer = localPlayer;
-            super.update(player);
         } else throw new RuntimeException("Trying update TRSelf with non-local player!");
+        lastLeftPressed = currentLeftPressed;
+        currentLeftPressed = CLIENT.mouseHandler.isLeftPressed();
+
+        super.update(player);
     }
 
     public static void onDisconnect() {

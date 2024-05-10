@@ -1,25 +1,25 @@
 package top.infsky.cheatdetector.impl.checks;
 
+import net.minecraft.world.entity.player.Abilities;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 
 
-public class FlightB extends Check {
+public class FlyB extends Check {
     public boolean hasFlag = false;
 
-    public FlightB(@NotNull TRPlayer player) {
-        super("FlightB", player);
+    public FlyB(@NotNull TRPlayer player) {
+        super("FlyB", player);
     }
 
     @Override
     public void _onTick() {
-        final boolean mayfly = player.fabricPlayer.getAbilities().mayfly;
-        final boolean flying = player.fabricPlayer.getAbilities().flying;
-        if (mayfly || flying) {
+        Abilities abilities = player.fabricPlayer.getAbilities();
+        if (abilities.mayfly || abilities.flying) {
             if (!hasFlag) {
-                flag(String.format("mayfly: %s  flying: %s", mayfly, flying));
+                flag(String.format("mayfly: %s  flying: %s", abilities.mayfly, abilities.flying));
                 hasFlag = true;
             }
         } else {
@@ -29,11 +29,11 @@ public class FlightB extends Check {
 
     @Override
     public int getAlertBuffer() {
-        return AdvancedConfig.flightBAlertBuffer;
+        return AdvancedConfig.flyBAlertBuffer;
     }
 
     @Override
     public boolean isDisabled() {
-        return !AdvancedConfig.flightBCheck;
+        return !AdvancedConfig.flyBCheck;
     }
 }

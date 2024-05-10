@@ -8,13 +8,13 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
-public class FlightA extends Check {
+public class FlyA extends Check {
     public short jumpTick = 0;
     public short liquidTick = 0;
     public short disableTick = 0;
 
-    public FlightA(@NotNull TRPlayer player) {
-        super("FlightA", player);
+    public FlyA(@NotNull TRPlayer player) {
+        super("FlyA", player);
     }
 
     @Override
@@ -34,17 +34,17 @@ public class FlightA extends Check {
         }
 
         if (player.currentOnGround) {
-            jumpTick = AdvancedConfig.getFlightAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
+            jumpTick = AdvancedConfig.getFlyAOnGroundJumpTick();  // MC原版OnGround不可靠。方块边缘会误判。
         }
 
         // fix liquid
         if (player.fabricPlayer.isInWater() || player.fabricPlayer.isInLava()) {
-            liquidTick = AdvancedConfig.getFlightAInLiquidLiquidTick();
+            liquidTick = AdvancedConfig.getFlyAInLiquidLiquidTick();
         }
 
         // fix hurt
         if (player.fabricPlayer.hurtTime > 0) {
-            jumpTick = AdvancedConfig.getFlightAInHurtJumpTick();
+            jumpTick = AdvancedConfig.getFlyAInHurtJumpTick();
         }
 
 
@@ -57,7 +57,7 @@ public class FlightA extends Check {
             jumpTick--;
         } else if ((!player.fabricPlayer.isInWater() || !player.fabricPlayer.isInLava()) && liquidTick > 0
                 && player.currentPos.y() - player.lastInLiquidPos.y()
-                < AdvancedConfig.flightAFromWaterYDistance + AntiCheatConfig.threshold  // 瞎写的0.5 (getFlightAFromWaterYDistance)
+                < AdvancedConfig.flyAFromWaterYDistance + AntiCheatConfig.threshold  // 瞎写的0.5 (getFlightAFromWaterYDistance)
 //                && (lastPos.y() - lastPos2.y() + ModConfig.getThreshold()) > (player.position().y() - lastPos.y())  // 警惕出水弱检测
         ) {
             liquidTick--;
@@ -73,22 +73,22 @@ public class FlightA extends Check {
 
     @Override
     public void _onTeleport() {
-        disableTick = AdvancedConfig.getFlightAOnTeleportDisableTick();
+        disableTick = AdvancedConfig.getFlyAOnTeleportDisableTick();
     }
 
     @Override
     public void _onJump() {
         // fix jump
-        jumpTick = AdvancedConfig.getFlightAOnJumpJumpTick();
+        jumpTick = AdvancedConfig.getFlyAOnJumpJumpTick();
     }
 
     @Override
     public int getAlertBuffer() {
-        return AdvancedConfig.flightAAlertBuffer;
+        return AdvancedConfig.flyAlertBuffer;
     }
 
     @Override
     public boolean isDisabled() {
-        return !AdvancedConfig.flightACheck;
+        return !AdvancedConfig.flyACheck;
     }
 }

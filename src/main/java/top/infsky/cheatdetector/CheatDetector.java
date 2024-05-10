@@ -73,7 +73,17 @@ public class CheatDetector implements ClientModInitializer {
     }
 
     private void onTick(ClientLevel clientLevel) {
-        if (inWorld && manager != null && CLIENT != null) {
+        if (clientLevel != null && CLIENT.getCurrentServer() != null) {
+            inWorld = true;
+            if (manager == null)
+                manager = new PlayerManager();
+        } else {
+            inWorld = false;
+            manager = null;
+            return;
+        }
+
+        if (inWorld) {
             manager.update(CLIENT);
         }
     }

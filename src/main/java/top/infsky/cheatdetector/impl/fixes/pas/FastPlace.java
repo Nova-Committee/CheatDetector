@@ -1,8 +1,8 @@
 package top.infsky.cheatdetector.impl.fixes.pas;
 
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.Connection;
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.InteractionHand;
@@ -35,7 +35,7 @@ public class FastPlace extends Fix {
     }
 
     @Override
-    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (!FixesConfig.packetFixEnabled) return false;
         if (basePacket instanceof ServerboundUseItemOnPacket packet){
             final InteractionHand interactionHand = packet.getHand();
