@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Connection.class)
 public interface ConnectionInvoker {
     @Invoker("sendPacket")
-    void sendPacket(Packet<?> basePacket, PacketSendListener listener);
+    void sendPacket(Packet<?> basePacket, PacketSendListener listener, boolean bl);
     @Invoker("channelRead0")
     void channelRead0(ChannelHandlerContext channelHandlerContext, Packet<?> packet);
 }

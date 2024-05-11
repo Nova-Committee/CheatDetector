@@ -45,7 +45,7 @@ public class PlayerRotation {
     public static void silentRotate(double yaw, double pitch, boolean onGround) {
         Connection connection = Objects.requireNonNull(TRPlayer.CLIENT.getConnection()).getConnection();
 
-        ((ConnectionInvoker) connection).sendPacket(new ServerboundMovePlayerPacket.Rot((float) yaw, (float) pitch, onGround), null);
+        ((ConnectionInvoker) connection).sendPacket(new ServerboundMovePlayerPacket.Rot((float) yaw, (float) pitch, onGround), null, true);
     }
 
     public static void rotate(double yaw, double pitch) {
@@ -67,7 +67,7 @@ public class PlayerRotation {
             if (packet.hasPosition()) {  // PosRot
                 if (connection != null)
                     ((ConnectionInvoker) connection).sendPacket(
-                            new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener
+                            new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener, true
                     );
             }
             return true;

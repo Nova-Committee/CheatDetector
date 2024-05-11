@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.impl.utils.packet;
 
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.*;
 import net.minecraft.network.protocol.game.*;
 import top.hendrixshen.magiclib.impl.carpet.MagicLibSettings;
 
