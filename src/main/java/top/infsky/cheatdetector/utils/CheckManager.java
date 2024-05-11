@@ -47,15 +47,19 @@ public class CheckManager {
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
+        pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
+        normal.put(SpeedC.class, new SpeedC(player));
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
         normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
+        normal.put(AutoBlockA.class, new AutoBlockA(player));
+        normal.put(MotionA.class, new MotionA(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -65,15 +69,19 @@ public class CheckManager {
         final Map<Class<? extends Check>, Check> normal = new HashMap<>();
         final Map<Class<? extends Check>, Check> post = new HashMap<>();
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
+        pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
+        normal.put(SpeedC.class, new SpeedC(player));
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
         normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
+        normal.put(AutoBlockA.class, new AutoBlockA(player));
+        normal.put(MotionA.class, new MotionA(player));
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
         post.put(FlagDetector.class, new FlagDetector(player));

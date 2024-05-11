@@ -109,6 +109,25 @@ public class AdvancedConfig {
     public static boolean groundSpoofACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int groundSpoofAAlertBuffer = 6;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean groundSpoofBCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int groundSpoofBAlertBuffer = 6;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean autoBlockACheck = false;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int autoBlockAAlertBuffer = 4;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean speedCCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int speedCAlertBuffer = 10;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean motionACheck = false;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int motionAAlertBuffer = 10;
 
     public static short getFlyAOnGroundJumpTick() {
         return (short) flyAOnGroundJumpTick;

@@ -1,25 +1,23 @@
 package top.infsky.cheatdetector.impl.modules.common;
 
-import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
-import net.minecraft.network.Connection;
-import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.*;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRSelf;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Debug extends Module {
     @Getter
     @Nullable
     private static Module instance = null;
+
+    private Vec3 lastMotion = Vec3.ZERO;
+    private List<Vec3> motionRecording = null;
 
     public Debug(@NotNull TRSelf player) {
         super("Debug", player);
@@ -27,25 +25,24 @@ public class Debug extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
-        if (isDisabled()) return false;
+    public void _onTick() {
+        if (isDisabled()) return;
+        Vec3 motion = player.fabricPlayer.getDeltaMovement();
+        Vec3 offset = new Vec3(motion.x() - lastMotion.x(), motion.y() - lastMotion.y(), motion.z() - lastMotion.z());
 
-        if (basePacket instanceof ServerboundInteractPacket packet) {
-            customMsg("send ServerboundInteractPacket.");
-        } else if (basePacket instanceof ServerboundSelectTradePacket packet) {
-            customMsg("send ServerboundSelectTradePacket(item=%s)".formatted(packet.getItem()));
-        } else if (basePacket instanceof ServerboundContainerClickPacket packet) {
-            customMsg("send ServerboundContainerClickPacket(containerId=%s,stateId=%s,slotNum=%s,clickType=%s,itemStack=%s,changedSlots%s)".formatted(
-                    packet.getContainerId(), packet.getStateId(), packet.getButtonNum(), packet.getClickType(),
-                    packet.getCarriedItem().getItem().toString(), packet.getChangedSlots()
-            ));
+        if (player.jumping) {
+            if (motionRecording == null) motionRecording = new ArrayList<>();
+            motionRecording.add(offset);
+        } else if (motionRecording != null) {
+            StringBuilder stringBuilder = new StringBuilder("Y Motion: ");
+            for (Vec3 vec3 : motionRecording) {
+                stringBuilder.append(vec3.y()).append(" ");
+            }
+            customMsg(stringBuilder.toString());
+            motionRecording = null;
         }
-        return false;
-    }
 
-    @Override
-    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
-        return false;
+        lastMotion = motion;
     }
 
     @Override

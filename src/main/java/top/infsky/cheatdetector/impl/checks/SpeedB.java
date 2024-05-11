@@ -14,7 +14,6 @@ public class SpeedB extends Check {
     public void _onTick() {
         if (player.fabricPlayer.isSprinting() && player.fabricPlayer.getFoodData().getFoodLevel() <= 6) {
             flag();
-            player.fabricPlayer.setSprinting(false);
         }
     }
 

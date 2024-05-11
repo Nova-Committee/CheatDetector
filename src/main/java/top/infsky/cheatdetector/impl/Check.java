@@ -68,7 +68,7 @@ public abstract class Check {
     public void _onGameTypeChange() {}
     public <T> boolean _handleStartDestroyBlock(CallbackInfoReturnable<T> cir, T fallbackReturn) { return false; }
     public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
-    public boolean _onPacketSend(@NotNull Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
-    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
+    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
+    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
     public boolean _handleAttack(Entity entity) { return false; }
 }
