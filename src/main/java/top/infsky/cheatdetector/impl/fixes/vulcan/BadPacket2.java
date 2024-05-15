@@ -22,7 +22,7 @@ public class BadPacket2 extends Fix {
      */
     @Override
     public boolean _handleStopDestroyBlock(@NotNull CallbackInfo ci) {
-        if (!FixesConfig.packetFixEnabled) return false;
+        if (isDisabled()) return false;
 
         if (!hasSend) {
             hasSend = true;
@@ -43,7 +43,7 @@ public class BadPacket2 extends Fix {
 
     @Override
     public boolean isDisabled() {
-        return !Advanced2Config.badPacket2Enabled;
+        return !Advanced2Config.badPacket2Enabled || !FixesConfig.packetFixEnabled;
     }
 
     @Override

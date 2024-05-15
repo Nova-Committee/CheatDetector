@@ -164,6 +164,6 @@ public class FakelagDynamic extends Module {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
             return true;
         }
-        return false;
+        return !ModuleConfig.aaaPASModeEnabled;
     }
 }

@@ -5,12 +5,17 @@
 
 package top.infsky.cheatdetector.impl.utils.notebot.instrumentdetect;
 
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.block.NoteBlock;
 
+@Getter
 public enum InstrumentDetectMode {
     BlockState(((noteBlock, blockPos) -> noteBlock.getValue(NoteBlock.INSTRUMENT))),
-    BelowBlock(((noteBlock, blockPos) -> Minecraft.getInstance().level.getBlockState(blockPos.below()).instrument()));
+    BelowBlock(((noteBlock, blockPos) -> {
+        assert Minecraft.getInstance().level != null;
+        return Minecraft.getInstance().level.getBlockState(blockPos.below()).instrument();
+    }));
 
     private final InstrumentDetectFunction instrumentDetectFunction;
 
@@ -18,7 +23,4 @@ public enum InstrumentDetectMode {
         this.instrumentDetectFunction = instrumentDetectFunction;
     }
 
-    public InstrumentDetectFunction getInstrumentDetectFunction() {
-        return instrumentDetectFunction;
-    }
 }

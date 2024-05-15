@@ -53,7 +53,7 @@ public class NBSSongDecoder extends SongDecoder {
             nbsversion = dataInputStream.readByte();
             dataInputStream.readByte(); // first custom instrument
             if (nbsversion >= 3) {
-                length = readShort(dataInputStream);
+                readShort(dataInputStream);
             }
         }
         readShort(dataInputStream); // Song Height

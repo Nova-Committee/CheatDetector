@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -11,6 +12,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.jetbrains.annotations.NotNull;
 import top.hendrixshen.magiclib.malilib.impl.ConfigHandler;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
+import top.infsky.cheatdetector.commands.CommandEvent;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.config.ModuleConfig;
@@ -34,6 +36,10 @@ public class CheatDetector implements ClientModInitializer {
         CONFIG_HANDLER = new ConfigHandler(MOD_ID, configManager, 1);
         ConfigHandler.register(CONFIG_HANDLER);
 
+        // command
+        ClientCommandRegistrationCallback.EVENT.register(CommandEvent::register);
+
+        // mod cycle
         ClientLifecycleEvents.CLIENT_STARTED.register(this::onClientStarted);
         ClientLifecycleEvents.CLIENT_STOPPING.register(this::onClientStopping);
         ClientPlayConnectionEvents.JOIN.register(this::onJoinWorld);

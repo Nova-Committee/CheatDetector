@@ -120,6 +120,6 @@ public class FakelagLatency extends Module {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
             return true;
         }
-        return false;
+        return !ModuleConfig.aaaPASModeEnabled;
     }
 }

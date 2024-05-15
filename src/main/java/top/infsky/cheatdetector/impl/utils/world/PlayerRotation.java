@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
-import top.infsky.cheatdetector.mixins.ConnectionInvoker;
-import top.infsky.cheatdetector.mixins.EntityInvoker;
+import top.infsky.cheatdetector.mixins.ConnectionAccessor;
+import top.infsky.cheatdetector.mixins.EntityAccessor;
 
 import java.util.Objects;
 
@@ -45,11 +45,11 @@ public class PlayerRotation {
     public static void silentRotate(double yaw, double pitch, boolean onGround) {
         Connection connection = Objects.requireNonNull(TRPlayer.CLIENT.getConnection()).getConnection();
 
-        ((ConnectionInvoker) connection).sendPacket(new ServerboundMovePlayerPacket.Rot((float) yaw, (float) pitch, onGround), null, true);
+        ((ConnectionAccessor) connection).sendPacket(new ServerboundMovePlayerPacket.Rot((float) yaw, (float) pitch, onGround), null);
     }
 
     public static void rotate(double yaw, double pitch) {
-        EntityInvoker camera = (EntityInvoker) TRSelf.getInstance().fabricPlayer;
+        EntityAccessor camera = (EntityAccessor) TRSelf.getInstance().fabricPlayer;
 
         camera.doSetXRot((float) pitch);
         camera.doSetYRot((float) yaw);
@@ -66,8 +66,8 @@ public class PlayerRotation {
             if (ci != null) ci.cancel();
             if (packet.hasPosition()) {  // PosRot
                 if (connection != null)
-                    ((ConnectionInvoker) connection).sendPacket(
-                            new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener, true
+                    ((ConnectionAccessor) connection).sendPacket(
+                            new ServerboundMovePlayerPacket.Pos(packet.getX(0), packet.getY(0), packet.getZ(0), packet.isOnGround()), listener
                     );
             }
             return true;

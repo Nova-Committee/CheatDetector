@@ -7,13 +7,13 @@
     "defaultRequire": 1
   },
   "client": [
-    "ConnectionInvoker",
-    "EntityInvoker",
-    "KeyMappingInvoker",
-    "LookAtPacketInvoker",
-    "MinecraftInvoker",
+    "ConnectionAccessor",
+    "EntityAccessor",
+    "KeyMappingAccessor",
+    "LookAtPacketAccessor",
+    "MinecraftAccessor",
     "MixinConnection",
     "MixinMultiPlayerGameMode",
-    "MouseHandlerInvoker"
+    "MouseHandlerAccessor"
   ]
 }

@@ -36,7 +36,7 @@ public class FastPlace extends Fix {
 
     @Override
     public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
-        if (!FixesConfig.packetFixEnabled) return false;
+        if (isDisabled()) return false;
         if (basePacket instanceof ServerboundUseItemOnPacket packet){
             final InteractionHand interactionHand = packet.getHand();
             final BlockHitResult blockHitResult = packet.getHitResult();
@@ -72,7 +72,7 @@ public class FastPlace extends Fix {
 
     @Override
     public boolean isDisabled() {
-        return !Advanced2Config.fastPlaceEnabled;
+        return !Advanced2Config.fastPlaceEnabled || !FixesConfig.packetFixEnabled;
     }
 
     @Override

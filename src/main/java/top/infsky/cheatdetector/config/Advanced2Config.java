@@ -1,7 +1,10 @@
 package top.infsky.cheatdetector.config;
 
+import top.hendrixshen.magiclib.dependency.api.annotation.Dependencies;
+import top.hendrixshen.magiclib.dependency.api.annotation.Dependency;
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 
 public class Advanced2Config {
     @Config(category = ConfigCategory.ADVANCED2)
@@ -20,6 +23,11 @@ public class Advanced2Config {
     public static int fastPlaceAlertBuffer = 100;
     @Config(category = ConfigCategory.ADVANCED2)
     public static int fastPlaceSamePlaceMinDelay = 1;
+
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static boolean sprintAEnabled = false;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static int sprintAAlertBuffer = 20;
 
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean omniSprintShowPacketSend = false;

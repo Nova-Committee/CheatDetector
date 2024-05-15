@@ -84,10 +84,11 @@ public class CheckManager {
         normal.put(MotionA.class, new MotionA(player));
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
-        post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(FastPlace.class, new FastPlace(player));
         pre.put(OmniSprintDisabler.class, new OmniSprintDisabler(player));
+        pre.put(SprintA.class, new SprintA(player));
         post.put(Spin.class, new Spin(player));
+        post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(NoRotateSet.class, new NoRotateSet(player));
         post.put(ClickGUI.class, new ClickGUI(player));
         post.put(AntiVanish.class, new AntiVanish(player));
@@ -105,6 +106,8 @@ public class CheckManager {
         post.put(AimAssist.class, new AimAssist(player));
         post.put(HandSpin.class, new HandSpin(player));
         post.put(Debug.class, new Debug(player));
+        post.put(Nuker.class, new Nuker(player));
+        post.put(BlockDetector.class, new BlockDetector(player));
 
         return new CheckManager(pre, normal, post, player);
     }

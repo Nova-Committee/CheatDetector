@@ -9,9 +9,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Connection.class)
-public interface ConnectionInvoker {
+public interface ConnectionAccessor {
     @Invoker("sendPacket")
-    void sendPacket(Packet<?> basePacket, PacketSendListener listener, boolean bl);
+    void sendPacket(Packet<?> basePacket, PacketSendListener listener);
     @Invoker("channelRead0")
     void channelRead0(ChannelHandlerContext channelHandlerContext, Packet<?> packet);
 }

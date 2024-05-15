@@ -5,10 +5,14 @@
 
 package top.infsky.cheatdetector.impl.utils.notebot.song;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 import java.util.Objects;
 
+@Setter
+@Getter
 public class Note {
 
     private NoteBlockInstrument instrument;
@@ -16,22 +20,6 @@ public class Note {
 
     public Note(NoteBlockInstrument instrument, int noteLevel) {
         this.instrument = instrument;
-        this.noteLevel = noteLevel;
-    }
-
-    public NoteBlockInstrument getInstrument() {
-        return this.instrument;
-    }
-
-    public void setInstrument(NoteBlockInstrument instrument) {
-        this.instrument = instrument;
-    }
-
-    public int getNoteLevel() {
-        return noteLevel;
-    }
-
-    public void setNoteLevel(int noteLevel) {
         this.noteLevel = noteLevel;
     }
 

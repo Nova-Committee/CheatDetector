@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
@@ -35,8 +34,6 @@ public class Scaffold extends Module {
     private static Module instance = null;
 
     private long lastPlaceTime = 0;
-    private int clientSlot = -1;
-    private int serverSlot = -1;
     private BlockPos lastGround = null;
 
     public Scaffold(@NotNull TRSelf player) {
@@ -48,11 +45,6 @@ public class Scaffold extends Module {
     public void _onTick() {
         if (isDisabled()) {
             lastGround = null;
-            if (clientSlot != -1 && clientSlot != serverSlot) {
-                ContainerUtils.silentSelectHotBar(clientSlot);
-            }
-            clientSlot = -1;
-            serverSlot = -1;
             return;
         }
         if (TRPlayer.CLIENT.gameMode == null) return;
@@ -73,10 +65,7 @@ public class Scaffold extends Module {
             try (Level level = TRPlayer.CLIENT.level) {
                 if (level == null) return;
                 BlockState blockState = level.getBlockState(blockPos);
-                if (
-                        (!blockState.isAir() && !(blockState.getBlock() instanceof LiquidBlock))
-                        || blockState.hasBlockEntity()
-                ) continue;
+                if (!blockState.isAir() && !blockState.canBeReplaced()) continue;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -94,9 +83,7 @@ public class Scaffold extends Module {
                 if (Advanced3Config.scaffoldAutoSwitch) {
                     Inventory inventory = player.fabricPlayer.getInventory();
                     try {
-                        serverSlot = ContainerUtils.findItem(inventory, BlockItem.class, ContainerUtils.SlotType.HOTBAR);
-                        inventory.selected = serverSlot;
-                        clientSlot = serverSlot;
+                        inventory.selected = ContainerUtils.findItem(inventory, BlockItem.class, ContainerUtils.SlotType.HOTBAR);
                         hand = InteractionHand.MAIN_HAND;
                     } catch (ContainerUtils.ItemNotFoundException e) {
                         return;
@@ -121,7 +108,7 @@ public class Scaffold extends Module {
     @Override
     public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
-        if (!Advanced3Config.scaffoldKeepRotation) return false;
+        if (Advanced3Config.scaffoldDoRotation && Advanced3Config.scaffoldSilentRotation && !Advanced3Config.scaffoldKeepRotation) return false;
         if (basepacket instanceof ServerboundMovePlayerPacket packet)
             return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
         return false;

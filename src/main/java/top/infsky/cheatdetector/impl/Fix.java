@@ -2,20 +2,16 @@ package top.infsky.cheatdetector.impl;
 
 import net.minecraft.ChatFormatting;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.FixesConfig;
 import top.infsky.cheatdetector.utils.LogUtils;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public abstract class Fix extends Check {
-    @Nullable
-    public static Fix instance = null;
     protected TRSelf player;
     public Fix(String fixName, @NotNull TRSelf player) {
         super(fixName, player);
         this.player = player;
-        instance = this;
     }
 
     @Override

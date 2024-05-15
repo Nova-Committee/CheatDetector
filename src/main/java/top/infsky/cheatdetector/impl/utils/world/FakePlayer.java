@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.game.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import top.infsky.cheatdetector.utils.TRPlayer;
-import top.infsky.cheatdetector.mixins.LookAtPacketInvoker;
+import top.infsky.cheatdetector.mixins.LookAtPacketAccessor;
 import top.infsky.cheatdetector.utils.LogUtils;
 
 import java.util.UUID;
@@ -52,7 +52,7 @@ public class FakePlayer extends RemotePlayer {
 
     public void show() {
         if (!isRemoved) return;
-        LevelUtils.getClientLevel().addEntity(this);
+        LevelUtils.getClientLevel().addFreshEntity(this);
         isRemoved = false;
     }
 
@@ -70,7 +70,7 @@ public class FakePlayer extends RemotePlayer {
             connection.handleMovePlayer(new ClientboundPlayerPositionPacket(
                     packet.getX(), packet.getY(), packet.getZ(), packet.getYRot(), packet.getXRot(), packet.getRelativeArguments(), packet.getId()));
         else if (basePacket instanceof ClientboundPlayerLookAtPacket packet) {
-            LookAtPacketInvoker packet1 = (LookAtPacketInvoker) packet;
+            LookAtPacketAccessor packet1 = (LookAtPacketAccessor) packet;
             connection.handleLookAt(new ClientboundPlayerLookAtPacket(packet1.getFromAnchor(), packet1.getX(), packet1.getY(), packet1.getZ()));
         } else if (basePacket instanceof ClientboundDamageEventPacket packet)
             connection.handleDamageEvent(new ClientboundDamageEventPacket(this, packet.getSource(this.level())));

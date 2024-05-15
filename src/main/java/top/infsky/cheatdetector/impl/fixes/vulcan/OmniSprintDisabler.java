@@ -18,7 +18,7 @@ public class OmniSprintDisabler extends Fix {
     @Override
     public void _onTick() {
         if (TRPlayer.CLIENT.getConnection() == null) return;
-        if (!FixesConfig.vulcanOmniSprintEnabled) return;
+        if (isDisabled()) return;
         if (player == null) return;
 
         // copy from rise client :D
@@ -37,5 +37,10 @@ public class OmniSprintDisabler extends Fix {
             if (Advanced2Config.omniSprintShowPacketSend)
                 moduleMsg(ChatFormatting.GRAY + "send packet.");
         }
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return !FixesConfig.vulcanOmniSprintEnabled;
     }
 }

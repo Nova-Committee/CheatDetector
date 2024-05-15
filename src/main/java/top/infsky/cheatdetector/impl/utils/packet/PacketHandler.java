@@ -1,21 +1,21 @@
 package top.infsky.cheatdetector.impl.utils.packet;
 
 import top.infsky.cheatdetector.CheatDetector;
-import top.infsky.cheatdetector.mixins.ConnectionInvoker;
+import top.infsky.cheatdetector.mixins.ConnectionAccessor;
 import top.infsky.cheatdetector.utils.TRSelf;
 
-import java.util.Deque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class PacketHandler {
     protected TRSelf player;
-    private final Deque<OutgoingPacket> outgoingPackets;
-    private final Deque<IncomingPacket> incomingPackets;
+    private final Queue<OutgoingPacket> outgoingPackets;
+    private final Queue<IncomingPacket> incomingPackets;
 
     public PacketHandler(TRSelf player) {
         this.player = player;
-        this.outgoingPackets = new LinkedBlockingDeque<>();
-        this.incomingPackets = new LinkedBlockingDeque<>();
+        this.outgoingPackets = new LinkedBlockingQueue<>();
+        this.incomingPackets = new LinkedBlockingQueue<>();
     }
 
     public void tick(int delay) {
@@ -25,19 +25,19 @@ public class PacketHandler {
         }
 
         while (!outgoingPackets.isEmpty()) {
-            final OutgoingPacket packet = outgoingPackets.getLast();
+            final OutgoingPacket packet = outgoingPackets.poll();
             if (player.getUpTime() < packet.sentTime() + Math.round(delay / 50.0)) {
                 break;
             }
-            ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener());
+            ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener());
             outgoingPackets.remove(packet);
         }
         while (!incomingPackets.isEmpty()) {
-            final IncomingPacket packet = incomingPackets.getLast();
+            final IncomingPacket packet = incomingPackets.poll();
             if (player.getUpTime() < packet.sentTime() + Math.round(delay / 50.0)) {
                 break;
             }
-            ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+            ((ConnectionAccessor) packet.connection()).channelRead0(packet.context(), packet.packet());
             incomingPackets.remove(packet);
         }
     }
@@ -50,11 +50,11 @@ public class PacketHandler {
         if (!cancel) {
             while (!outgoingPackets.isEmpty()) {
                 final OutgoingPacket packet = outgoingPackets.poll();
-                ((ConnectionInvoker) packet.connection()).sendPacket(packet.packet(), packet.listener());
+                ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener());
             }
             while (!incomingPackets.isEmpty()) {
                 final IncomingPacket packet = incomingPackets.poll();
-                ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+                ((ConnectionAccessor) packet.connection()).channelRead0(packet.context(), packet.packet());
             }
         }
         outgoingPackets.clear();
@@ -62,11 +62,11 @@ public class PacketHandler {
     }
 
     public void add(OutgoingPacket packet) {
-        outgoingPackets.add(packet);
+        outgoingPackets.offer(packet);
     }
 
     public void add(IncomingPacket packet) {
-        incomingPackets.add(packet);
+        incomingPackets.offer(packet);
     }
 
     public int getDelayedIncomingCount() {

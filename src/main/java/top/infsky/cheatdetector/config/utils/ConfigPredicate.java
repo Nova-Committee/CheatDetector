@@ -19,7 +19,7 @@ public class ConfigPredicate {
     }
 
 
-    public static class PASMode extends ServerMode {
+    public static class PASMode implements ConfigDependencyPredicate {
         public static @NotNull @Unmodifiable List<String> getIpAddresses() {
             return List.of("touch.dls3.top", "play.sry25565.online");
         }
@@ -49,8 +49,5 @@ public class ConfigPredicate {
         public boolean isSatisfied(ConfigOption configOption) {
             return !Advanced3Config.aimAssistInteract;
         }
-    }
-
-    private abstract static class ServerMode implements ConfigDependencyPredicate {
     }
 }

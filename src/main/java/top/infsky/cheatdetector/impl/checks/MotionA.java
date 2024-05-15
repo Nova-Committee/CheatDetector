@@ -2,10 +2,12 @@ package top.infsky.cheatdetector.impl.checks;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.impl.Check;
+import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class MotionA extends Check {
     public static final List<MobEffect> IGNORED_EFFECTS = List.of(MobEffects.JUMP, MobEffects.SLOW_FALLING);
+    public static final List<Class<? extends Block>> IGNORED_BLOCKS = List.of(BedBlock.class, SlimeBlock.class, HoneyBlock.class, PowderSnowBlock.class);
     public static final List<Double> JUMP_MOTIONS = List.of(0.41159999516010254, -0.08506399504327788, -0.08336271676487925, -0.0816954640195993, -0.08006155629742463, -0.07846032669852913, -0.07689112166107052, -0.07535330069443089, -0.07384623611779237, -0.07236931280394177, -0.07092192792819801);
 
     private final List<Double> motionY = new ArrayList<>();
@@ -42,15 +45,19 @@ public class MotionA extends Check {
             motionY.add(player.fabricPlayer.getDeltaMovement().y());
         } else if (jumpFromY != null) {
             if (jumpFromY == player.currentPos.y()) {  // 满足判断条件
-                if (motionY.size() != JUMP_MOTIONS.size()) {
-                    flag("Invalid jump time.");
-                } else {
+                check:
+                try {
                     for (int i = 0; i < JUMP_MOTIONS.size(); i++) {
                         if (Math.abs(motionY.get(i) - JUMP_MOTIONS.get(i)) > AntiCheatConfig.threshold) {
                             flag("Invalid jump motion at tick %s.".formatted(i));
-                            break;
+                            break check;
                         }
                     }
+                    if (JUMP_MOTIONS.size() != motionY.size()) {
+                        flag("Invalid jump time: %s ticks. (should be %s)".formatted(motionY.size(), JUMP_MOTIONS.size()));
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    flag("Invalid jump time: %s ticks. (should be %s)".formatted(motionY.size(), JUMP_MOTIONS.size()));
                 }
             }
             jumpFromY = null;
@@ -60,7 +67,14 @@ public class MotionA extends Check {
 
     private boolean check() {
         if (player.fabricPlayer.getActiveEffectsMap().keySet().stream().anyMatch(IGNORED_EFFECTS::contains)) return false;
-        if (player.fabricPlayer.isInWall() || player.fabricPlayer.isInWater() || player.fabricPlayer.isPassenger() || player.fabricPlayer.isAutoSpinAttack()) return false;
+        if (player.fabricPlayer.isInWall() || player.fabricPlayer.isInWater()
+                || player.fabricPlayer.isPassenger() || player.fabricPlayer.isVehicle()
+                || player.fabricPlayer.isAutoSpinAttack() || player.fabricPlayer.isSwimming()
+                || player.fabricPlayer.isSleeping() || player.fabricPlayer.isFallFlying()
+                || player.fabricPlayer.onClimbable() || player.fabricPlayer.hurtTime > 0
+                || !BlockUtils.isFullBlock(player.fabricPlayer.getBlockStateOn())
+                || IGNORED_BLOCKS.stream().anyMatch(block -> block.isInstance(player.fabricPlayer.getBlockStateOn().getBlock()))
+        ) return false;
         return !player.fabricPlayer.getAbilities().flying;
     }
 

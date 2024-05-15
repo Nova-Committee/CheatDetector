@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ClientboundPlayerLookAtPacket.class)
-public interface LookAtPacketInvoker {
+public interface LookAtPacketAccessor {
     @Accessor("x")
     double getX();
 

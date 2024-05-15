@@ -16,7 +16,7 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.utils.CheckManager;
 import top.infsky.cheatdetector.utils.TRSelf;
 
-@Mixin(Connection.class)
+@Mixin(value = Connection.class, priority = 1001)
 public abstract class MixinConnection {
     @Inject(method = "send(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;)V", at = @At(value = "HEAD"), cancellable = true)
     public void send(Packet<?> basePacket, PacketSendListener listener, CallbackInfo ci) {

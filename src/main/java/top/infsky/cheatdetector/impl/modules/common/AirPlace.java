@@ -12,7 +12,7 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
-import top.infsky.cheatdetector.mixins.MinecraftInvoker;
+import top.infsky.cheatdetector.mixins.MinecraftAccessor;
 
 public class AirPlace extends Module {
     @Getter
@@ -36,7 +36,7 @@ public class AirPlace extends Module {
         if(!(hitResult instanceof BlockHitResult blockHitResult))
             return;
 
-        ((MinecraftInvoker) TRPlayer.CLIENT).setRightClickDelay(4);
+        ((MinecraftAccessor) TRPlayer.CLIENT).setRightClickDelay(4);
         if(player.fabricPlayer.isHandsBusy())
             return;
 

@@ -88,15 +88,17 @@ public class NoteBot extends Module {
     public void _onTick() {
         if (!lastEnabled && !isDisabled()) {
             String baseStringPath = Advanced3Config.noteBotFilePath;
-            String stringPath = baseStringPath.charAt(0) == '"' && baseStringPath.charAt(baseStringPath.length() - 1) == '"' ?
-                    baseStringPath.substring(1, baseStringPath.length() - 1) : baseStringPath;
 
             try {
+                String stringPath = baseStringPath.charAt(0) == '"' && baseStringPath.charAt(baseStringPath.length() - 1) == '"' ?
+                        baseStringPath.substring(1, baseStringPath.length() - 1) : baseStringPath;
+                stringPath = baseStringPath.charAt(0) == '\'' && baseStringPath.charAt(baseStringPath.length() - 1) == '\'' ?
+                        baseStringPath.substring(1, baseStringPath.length() - 1) : stringPath;
                 loadSong(Path.of(stringPath).toFile());
 //                tune();
             } catch (NullPointerException ignored) {
-            } catch (InvalidPathException e) {
-                error("Invalid path: %s".formatted(stringPath));
+            } catch (InvalidPathException | IndexOutOfBoundsException e) {
+                error("Invalid path: %s".formatted(baseStringPath));
                 stop();
             }
         } else if (lastEnabled && isDisabled()) {

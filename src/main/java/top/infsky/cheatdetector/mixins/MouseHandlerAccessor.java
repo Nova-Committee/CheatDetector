@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(MouseHandler.class)
-public interface MouseHandlerInvoker {
+public interface MouseHandlerAccessor {
     @Accessor("isRightPressed")
     void setRightPressed(boolean value);
 }

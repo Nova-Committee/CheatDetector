@@ -2,11 +2,15 @@ package top.infsky.cheatdetector.impl.utils.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRSelf;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockUtils {
     public static Direction getPlaceSide(@NotNull BlockPos blockPos) {
@@ -51,5 +55,26 @@ public class BlockUtils {
                 || block instanceof DoorBlock
                 || block instanceof NoteBlock
                 || block instanceof TrapDoorBlock;
+    }
+
+    public static boolean isFullBlock(@NotNull BlockState blockState) {
+        return blockState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
+    }
+
+    public static @NotNull List<BlockPos> getAllInBox(@NotNull BlockPos from, @NotNull BlockPos to)
+    {
+        ArrayList<BlockPos> blocks = new ArrayList<>();
+
+        BlockPos min = new BlockPos(Math.min(from.getX(), to.getX()),
+                Math.min(from.getY(), to.getY()), Math.min(from.getZ(), to.getZ()));
+        BlockPos max = new BlockPos(Math.max(from.getX(), to.getX()),
+                Math.max(from.getY(), to.getY()), Math.max(from.getZ(), to.getZ()));
+
+        for(int x = min.getX(); x <= max.getX(); x++)
+            for(int y = min.getY(); y <= max.getY(); y++)
+                for(int z = min.getZ(); z <= max.getZ(); z++)
+                    blocks.add(new BlockPos(x, y, z));
+
+        return blocks;
     }
 }

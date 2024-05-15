@@ -12,7 +12,7 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
-import top.infsky.cheatdetector.mixins.KeyMappingInvoker;
+import top.infsky.cheatdetector.mixins.KeyMappingAccessor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ public class InvWalk extends Module {
 
         long window = TRPlayer.CLIENT.getWindow().getWindow();
         for (KeyMapping key : keys)
-            key.setDown(InputConstants.isKeyDown(window, ((KeyMappingInvoker) key).getKey().getValue()));
+            key.setDown(InputConstants.isKeyDown(window, ((KeyMappingAccessor) key).getKey().getValue()));
     }
 
     @Override

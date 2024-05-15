@@ -2,13 +2,11 @@ package top.infsky.cheatdetector.impl.checks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.impl.Check;
+import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.List;
@@ -37,17 +35,8 @@ public class GroundSpoofB extends Check {
         player.currentOnGround = true;
     }
 
-    private static boolean isFullBlock(@NotNull BlockState blockState) {
-        if (blockState.isAir()) return false;
-        VoxelShape collisionShape = blockState.getCollisionShape(null, null);
-        if (collisionShape.isEmpty()) return false;
-
-        AABB aabb = collisionShape.bounds();
-        return aabb.getXsize() == 1 && aabb.getYsize() == 1 && aabb.getZsize() == 1;
-    }
-
     public static boolean check(@NotNull Level level, @NotNull BlockPos groundPos) {
-        if (!isFullBlock(level.getBlockState(groundPos)) || !isFullBlock(level.getBlockState(groundPos.above())))
+        if (!BlockUtils.isFullBlock(level.getBlockState(groundPos)) || !BlockUtils.isFullBlock(level.getBlockState(groundPos.above())))
             return false;
 
         short count = 0;
@@ -63,7 +52,7 @@ public class GroundSpoofB extends Check {
         );
 
         for (BlockPos blockPos : blocks) {
-            if (isFullBlock(level.getBlockState(blockPos))) {
+            if (BlockUtils.isFullBlock(level.getBlockState(blockPos))) {
                 count++;
             }
         }

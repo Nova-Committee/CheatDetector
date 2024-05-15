@@ -22,7 +22,7 @@ import top.infsky.cheatdetector.impl.utils.packet.IncomingPacket;
 import top.infsky.cheatdetector.impl.utils.packet.PacketUtils;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
-import top.infsky.cheatdetector.mixins.ConnectionInvoker;
+import top.infsky.cheatdetector.mixins.ConnectionAccessor;
 
 import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -51,7 +51,7 @@ public class Backtrack extends Module {
         if (isDisabled()) {
             while (!incomingPackets.isEmpty()) {
                 final IncomingPacket packet = incomingPackets.poll();
-                if (!Advanced3Config.backtrackCancelPacket) ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+                if (!Advanced3Config.backtrackCancelPacket) ((ConnectionAccessor) packet.connection()).channelRead0(packet.context(), packet.packet());
             }
         } else {
             if (target != null && target != lastTarget)  // on attack new target
@@ -61,7 +61,7 @@ public class Backtrack extends Module {
                 if (player.getUpTime() < packet.sentTime() + Math.round(Advanced3Config.backtrackDelayMs / 50.0)) {
                     break;
                 }
-                ((ConnectionInvoker) packet.connection()).channelRead0(packet.context(), packet.packet());
+                ((ConnectionAccessor) packet.connection()).channelRead0(packet.context(), packet.packet());
                 incomingPackets.remove(packet);
             }
         }

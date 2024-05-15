@@ -1,5 +1,6 @@
 {
-  "cheatdetector.chat.alert.failToDeCompose": "Failed to compose '%s' as %s.",
+  "cheatdetector.chat.alert.nukerSetBlock": "Set Block Type is %s.",
+  "cheatdetector.chat.alert.blockDetected": "Detected Block (%s,%s,%s) is %s.",
   "cheatdetector.chat.say.sayHacker": "%s is a cheater! which failed %s | %s",
   "cheatdetector.chat.alert.fakelagAndBacktrack": "Fakelag couldn't work with Backtrack!",
   "cheatdetector.chat.alert.creativeFlyWithoutDisabler": "CreativeFly must use with Movement Disabler!",
@@ -107,14 +108,17 @@
   "cheatdetector.config.modules.velocityEnabled.name": "Enable Velocity",
   "cheatdetector.config.modules.velocityEnabled.pretty_name": "Velocity",
   "cheatdetector.config.modules.handSpinEnabled.comment": "If enabled, you will swing your hand forever.",
-  "cheatdetector.config.modules.handSpinEnabled.name": "Enable Hand Spin",
-  "cheatdetector.config.modules.handSpinEnabled.pretty_name": "Hand Spin",
-  "cheatdetector.config.modules.autoTradeEnabled.comment": "If enabled, we will trade for auto.",
-  "cheatdetector.config.modules.autoTradeEnabled.name": "Enable Auto Trade",
-  "cheatdetector.config.modules.autoTradeEnabled.pretty_name": "Auto Trade",
+  "cheatdetector.config.modules.handSpinEnabled.name": "Enable HandSpin",
+  "cheatdetector.config.modules.handSpinEnabled.pretty_name": "HandSpin",
   "cheatdetector.config.modules.debugEnabled.comment": "If enabled, we will show debug messages.",
   "cheatdetector.config.modules.debugEnabled.name": "Enable Debug",
   "cheatdetector.config.modules.debugEnabled.pretty_name": "Debug",
+  "cheatdetector.config.modules.nukerEnabled.comment": "If enabled, we will auto mine blocks which you click.",
+  "cheatdetector.config.modules.nukerEnabled.name": "Enable Nuker",
+  "cheatdetector.config.modules.nukerEnabled.pretty_name": "Nuker",
+  "cheatdetector.config.modules.blockDetectorEnabled.comment": "If enabled, we will keep watching this block.",
+  "cheatdetector.config.modules.blockDetectorEnabled.name": "Enable BlockDetector",
+  "cheatdetector.config.modules.blockDetectorEnabled.pretty_name": "BlockDetector",
   "cheatdetector.gui.button.tab.advanced": "Advanced AntiCheat",
   "cheatdetector.gui.button.tab.advanced2": "Advanced Fixes",
   "cheatdetector.gui.button.tab.advanced3": "Advanced Modules",
@@ -122,5 +126,5 @@
   "cheatdetector.gui.button.tab.anticheat": "AntiCheat",
   "cheatdetector.gui.button.tab.fixes": "Fixes",
   "cheatdetector.gui.button.tab.modules": "Modules",
-  "cheatdetector.gui.title": "CheatDetector 2.6.0"
+  "cheatdetector.gui.title": "CheatDetector 2.7.0"
 }
