@@ -1,6 +1,5 @@
 package top.infsky.cheatdetector.impl.utils.world;
 
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;

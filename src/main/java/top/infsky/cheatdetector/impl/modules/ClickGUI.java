@@ -1,6 +1,7 @@
 package top.infsky.cheatdetector.impl.modules;
 
 import lombok.Getter;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +52,14 @@ public class ClickGUI extends Module {
 
     @Contract("_, _, _ -> new")
     public static @NotNull ConfigGui create(String identifier, String defaultTab, ConfigManager configManager) {
-        return new ConfigGui(identifier, defaultTab, configManager, Component.translatable("cheatdetector.gui.title").getString());
+        return new ConfigGui(identifier, defaultTab, configManager,
+                Component.translatable("cheatdetector.pretty_name")
+                        .append(" ")
+                        .append(
+                                FabricLoader.getInstance().getModContainer(CheatDetector.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()
+                        )
+                        .getString()
+        );
     }
 
     public static void register(@NotNull ConfigManager manager) {

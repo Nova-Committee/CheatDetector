@@ -87,4 +87,16 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean blockDetectorEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean airStuckEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    public static boolean noFallEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean clientSpoofEnabled = false;
 }

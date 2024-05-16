@@ -35,6 +35,7 @@ public abstract class Check {
     }
 
     public void flag() {
+        if (player.manager.disableTick > 0) return;
         if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
         if (AntiCheatConfig.disableSelfCheck && player.equals(TRSelf.getInstance())) return;
@@ -45,6 +46,7 @@ public abstract class Check {
     }
 
     public void flag(String extraMsg) {
+        if (player.manager.disableTick > 0) return;
         if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
         if (AntiCheatConfig.disableSelfCheck && player.equals(TRSelf.getInstance())) return;

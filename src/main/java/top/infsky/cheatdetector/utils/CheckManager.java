@@ -108,6 +108,9 @@ public class CheckManager {
         post.put(Debug.class, new Debug(player));
         post.put(Nuker.class, new Nuker(player));
         post.put(BlockDetector.class, new BlockDetector(player));
+        post.put(AirStuck.class, new AirStuck(player));
+        pre.put(NoFall.class, new NoFall(player));
+        pre.put(ClientSpoof.class, new ClientSpoof(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -115,7 +118,6 @@ public class CheckManager {
     public void update() {
         if (disableTick > 0) {
             disableTick--;
-            return;
         }
         if (player.currentGameType != player.lastGameType) {
             for (Check check : preChecks.values()) check._onGameTypeChange();

@@ -63,7 +63,8 @@ public class Nuker extends Module {
         BlockPos blockPos = null;
         BlockState blockState = null;
         try {
-            while (blockState == null || blockState.isAir() || !blockState.is(targetBlockType)) {
+            while (blockState == null || blockState.isAir() || !blockState.is(targetBlockType)
+                    || (Advanced3Config.nukerKeepGround && blockPos.equals(player.fabricPlayer.getOnPos()))) {
                 blockPos = Objects.requireNonNull(cacheBlocks.poll());
                 blockState = LevelUtils.getClientLevel().getBlockState(blockPos);
             }

@@ -10,7 +10,6 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced3Config;
-import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
 import java.util.Queue;
@@ -76,8 +75,6 @@ public class FlagDetector extends Module {
         tasks.add(() -> {
             violations++;
             CheatDetector.CLIENT.player.refreshDimensions();
-            if (!AlertConfig.disableBuffer)
-                if (violations % getAlertBuffer() != 0) return;
             customMsg(Component.translatable("cheatdetector.chat.alert.flagDetected").getString() + ChatFormatting.DARK_GRAY + violations);
         });
     }
@@ -85,9 +82,5 @@ public class FlagDetector extends Module {
     @Override
     public boolean isDisabled() {
         return !ModuleConfig.flagDetectorEnabled;
-    }
-    @Override
-    public int getAlertBuffer() {
-        return Advanced3Config.flagDetectorAlertBuffer;
     }
 }

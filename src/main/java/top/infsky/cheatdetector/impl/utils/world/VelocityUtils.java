@@ -5,8 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.MagmaBlock;
 import org.jetbrains.annotations.NotNull;

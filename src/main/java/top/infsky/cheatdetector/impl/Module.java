@@ -12,6 +12,12 @@ public abstract class Module extends Fix {
     public void flag() {
     }
 
+    @Override
     public void flag(String extraMsg) {
+    }
+
+    @Override
+    public final int getAlertBuffer() {
+        return super.getAlertBuffer();
     }
 }

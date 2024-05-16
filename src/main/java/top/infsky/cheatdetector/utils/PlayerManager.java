@@ -40,11 +40,10 @@ public class PlayerManager {
                 // 更新
                 activeMap.replace(uuid, true);
                 try {
-                    if (player.getUUID() == client.player.getUUID()) {
-                        dataMap.get(uuid).update(player);
-                    } else dataMap.get(uuid).update(player);
-                } catch (NullPointerException e) {
-                    LogUtils.LOGGER.error(String.format("玩家 %s 的数据不存在！丢弃玩家。", player.getName()), e);
+                    dataMap.get(uuid).update(player);
+                } catch (Exception e) {
+                    LogUtils.custom("Exception in console.");
+                    LogUtils.LOGGER.error(String.format("遇到了异常，丢弃玩家 %s 数据。", player.getName().getString()), e);
                     activeMap.remove(uuid);
                 }
             }

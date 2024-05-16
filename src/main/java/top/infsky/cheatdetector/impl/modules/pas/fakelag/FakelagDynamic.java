@@ -160,7 +160,10 @@ public class FakelagDynamic extends Module {
         if (Advanced3Config.getFakelagMode() != Advanced3Config.FakelagMode.DYNAMIC) return true;
         if (!ModuleConfig.fakelagEnabled || player.fabricPlayer.isPassenger() || disableTicks > 0) return true;
         if (ModuleConfig.backtrackEnabled) {
-            customMsg(Component.translatable("cheatdetector.chat.alert.fakelagAndBacktrack").withStyle(ChatFormatting.DARK_RED).getString());
+            customMsg(Component.translatable("cheatdetector.chat.alert.couldNotWorkWith").withStyle(ChatFormatting.DARK_RED).getString().formatted(
+                    Component.translatable("cheatdetector.config.modules.fakelagEnabled.pretty_name").getString(),
+                    Component.translatable("cheatdetector.config.modules.backtrackEnabled.pretty_name").getString()
+            ));
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
             return true;
         }

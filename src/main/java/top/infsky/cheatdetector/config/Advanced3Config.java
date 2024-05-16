@@ -7,8 +7,7 @@ import top.infsky.cheatdetector.impl.utils.notebot.NotebotUtils;
 import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
 public class Advanced3Config {
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static int flagDetectorAlertBuffer = 1;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3)
     public static int flagDetectorWorldChangedDisableTick = 60;
     @Config(category = ConfigCategory.ADVANCED3)
@@ -26,14 +25,17 @@ public class Advanced3Config {
     @Numeric(minValue = -180, maxValue = 180)
     @Config(category = ConfigCategory.ADVANCED3)
     public static double spinDefaultPitch = -90;
+    @Numeric(minValue = 0, maxValue = 360)
     @Config(category = ConfigCategory.ADVANCED3)
     public static double spinYawStep = 45;
+    @Numeric(minValue = 0, maxValue = 180)
     @Config(category = ConfigCategory.ADVANCED3)
     public static double spinPitchStep = 35;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean spinOnlyPacket = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean spinAutoPause = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3)
     public static int spinAutoPauseTime = 10;
 
@@ -68,18 +70,23 @@ public class Advanced3Config {
     public static int fakelagDelayMs = 100;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagLatencyMode.class)
     public static boolean fakelagShowCount = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static double fakelagMaxTargetRange = 15.0;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static double fakelagStartRange = 6.0;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static double fakelagStopRange = 1.0;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static int fakelagMaxLagTicks = 100;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static boolean fakelagOnlyOutgoing = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static boolean fakelagStopOnHurt = true;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
     public static int fakelagPauseTicksOnHurt = 10;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.FakelagDynamicMode.class)
@@ -89,6 +96,7 @@ public class Advanced3Config {
     public static boolean fakelagAutoDisable = false;
 
 
+    @Numeric(minValue = 0, maxValue = 8)
     @Config(category = ConfigCategory.ADVANCED3)
     public static double airPlaceReach = 4.5;
     @Config(category = ConfigCategory.ADVANCED3)
@@ -103,6 +111,7 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean backtrackShowCount = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int backtrackDelayMs = 100;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -153,6 +162,7 @@ public class Advanced3Config {
     public static boolean scaffoldAutoSwitch = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldSameY = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int scaffoldPlaceMinDelay = 1;
 
@@ -205,6 +215,7 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean handSpinPerfectSwing = false;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3)
     public static int handSpinSwingDelay = 0;
     @Config(category = ConfigCategory.ADVANCED3)
@@ -214,6 +225,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean handSpinDiffSwing = false;
 
+    @Numeric(minValue = 0, maxValue = 6)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double nukerRange = 4.5;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -224,15 +236,35 @@ public class Advanced3Config {
     public static boolean nukerSilentRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerKeepRotation = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean nukerKeepGround = true;
 
+    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int blockDetectorX = 0;
+    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int blockDetectorY = 0;
+    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int blockDetectorZ = 0;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int blockDetectorPostDelay = 20;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean airStuckCancelPacket = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean airStuckLegit = false;
+    @Numeric(minValue = -1, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double airStuckMinDistanceBeforeGround = -1;
+    @Numeric(minValue = -1, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double airStuckMinFallDistance = -1;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static String clientSpoofBrand = "vanilla";
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {
