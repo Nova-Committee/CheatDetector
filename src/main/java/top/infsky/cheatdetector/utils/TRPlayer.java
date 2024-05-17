@@ -15,13 +15,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Check;
-import top.infsky.cheatdetector.impl.utils.TimeTaskManager;
 import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * 管理玩家信息的类。每个玩家都应有一个TRPlayer实例。
@@ -53,7 +54,7 @@ public class TRPlayer {
     public int latency = 0;
     public float lastFallDistance = 0;
 
-    public @NotNull TimeTaskManager timeTask = new TimeTaskManager();
+    public @NotNull ScheduledExecutorService timeTask = Executors.newSingleThreadScheduledExecutor();
     @Contract("_ -> new")
     public static @NotNull TRPlayer create(@NotNull AbstractClientPlayer player) {
         return new TRPlayer(player, false);
@@ -104,7 +105,6 @@ public class TRPlayer {
         if (fabricPlayer.isInWater() || fabricPlayer.isInLava()) {
             lastInLiquidPos = currentPos;
         }
-        timeTask.onTick();
 
         manager.update();
 

@@ -18,6 +18,6 @@ public abstract class Module extends Fix {
 
     @Override
     public final int getAlertBuffer() {
-        return super.getAlertBuffer();
+        return 1;
     }
 }

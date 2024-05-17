@@ -12,6 +12,7 @@ public class HelpCommand {
                 §r/ctr t(toggle) <moduleName> §f- §7启用/禁用某个模块§r
                 §r/ctr notebot <path> §f- §7修改音符机器人.nbs文件路径§r
                 §r/ctr blockdetector (<x> <y> <z>) §f- §7设置方块检测器坐标§r
+                §r/ctr clientspoof <brand> §f- §7设置客户端伪装名§r
                 """;
 
     public static int execute(@NotNull CommandContext<FabricClientCommandSource> context) {

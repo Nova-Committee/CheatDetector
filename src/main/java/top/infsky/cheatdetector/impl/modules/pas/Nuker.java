@@ -7,6 +7,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.InteractionHand;
@@ -64,7 +65,8 @@ public class Nuker extends Module {
         BlockState blockState = null;
         try {
             while (blockState == null || blockState.isAir() || !blockState.is(targetBlockType)
-                    || (Advanced3Config.nukerKeepGround && blockPos.equals(player.fabricPlayer.getOnPos()))) {
+                    || (Advanced3Config.nukerKeepGround && blockPos.equals(player.fabricPlayer.getOnPos()))
+                    || (Advanced3Config.nukerYCheck && blockPos.getY() < player.fabricPlayer.getBlockY())) {
                 blockPos = Objects.requireNonNull(cacheBlocks.poll());
                 blockState = LevelUtils.getClientLevel().getBlockState(blockPos);
             }
@@ -87,7 +89,7 @@ public class Nuker extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
 
         if (TRPlayer.CLIENT.mouseHandler.isLeftPressed() && basepacket instanceof ServerboundPlayerActionPacket packet) {

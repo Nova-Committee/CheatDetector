@@ -23,12 +23,12 @@ public class OmniSprintDisabler extends Fix {
 
         // copy from rise client :D
         if (player.lastPos != player.currentPos) {
-            TRPlayer.CLIENT.getConnection().send(
+            player.fabricPlayer.connection.send(
                     new ServerboundPlayerCommandPacket(
                             player.fabricPlayer, ServerboundPlayerCommandPacket.Action.START_SPRINTING
                     )
             );
-            TRPlayer.CLIENT.getConnection().send(
+            player.fabricPlayer.connection.send(
                     new ServerboundPlayerCommandPacket(
                             player.fabricPlayer, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING
                     )
@@ -42,5 +42,10 @@ public class OmniSprintDisabler extends Fix {
     @Override
     public boolean isDisabled() {
         return !FixesConfig.vulcanOmniSprintEnabled;
+    }
+
+    @Override
+    public int getAlertBuffer() {
+        return 1;
     }
 }

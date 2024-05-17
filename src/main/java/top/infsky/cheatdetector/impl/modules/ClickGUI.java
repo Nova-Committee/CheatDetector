@@ -33,9 +33,14 @@ public class ClickGUI extends Module {
     }
 
     @Override
+    public boolean isDisabled() {
+        return !ModuleConfig.clickGUIEnabled;
+    }
+
+    @Override
     public void _onTick() {
 //        LogUtils.custom(ModuleConfig.clickGUIEnabled ? "yes" : "no");
-        if (ModuleConfig.clickGUIEnabled) {
+        if (!isDisabled()) {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("clickGUIEnabled", false);
             getConfigGui().setParent(null);
             TRPlayer.CLIENT.setScreen(getConfigGui());

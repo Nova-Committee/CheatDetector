@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
@@ -111,7 +112,7 @@ public class Spin extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
 
         if (basepacket instanceof ServerboundInteractPacket || basepacket instanceof ServerboundUseItemOnPacket) {

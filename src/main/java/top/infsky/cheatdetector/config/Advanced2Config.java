@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.config;
 
 
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
+import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
 import top.infsky.cheatdetector.config.utils.ConfigCategory;
 
 public class Advanced2Config {
@@ -29,4 +30,18 @@ public class Advanced2Config {
 
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean omniSprintShowPacketSend = false;
+
+
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static boolean serverFreezeEnabled = true;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static int serverFreezeAlertBuffer = 1;
+    @Numeric(minValue = -1, maxValue = 600)
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static int serverFreezePostDelay = 1;
+    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static int serverFreezeMaxTicks = 20;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static boolean serverFreezeAutoDisableCheck = true;
 }

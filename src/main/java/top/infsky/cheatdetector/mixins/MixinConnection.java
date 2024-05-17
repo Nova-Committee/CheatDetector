@@ -5,7 +5,9 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.utils.CheckManager;
+import top.infsky.cheatdetector.utils.LogUtils;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 @Mixin(value = Connection.class, priority = 1001)
@@ -23,7 +26,11 @@ public abstract class MixinConnection {
         if (TRSelf.getInstance() == null || !CheatDetector.inWorld) return;
         final CheckManager manager = TRSelf.getInstance().manager;
 
-        manager.onCustomAction(check -> check._onPacketSend(basePacket, (Connection)(Object) this, listener, ci));
+        try {
+            manager.onCustomAction(check -> check._onPacketSend((Packet<ServerGamePacketListener>) basePacket, (Connection) (Object) this, listener, ci));
+        } catch (ClassCastException e) {
+            LogUtils.custom("Client send a Invalid Packet!");
+        }
         if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet && packet.hasRotation()) {
             TRSelf.getInstance().rotation = new Vec2(packet.getYRot(0), packet.getXRot(0));
         }
@@ -37,6 +44,10 @@ public abstract class MixinConnection {
         Packet<?> packet = (Packet<?>) basePacket;
         if (packet instanceof ClientboundPlayerPositionPacket)
             manager.onTeleport();
-        manager.onCustomAction(check -> check._onPacketReceive(packet, (Connection)(Object) this, channelHandlerContext, ci));
+        try {
+            manager.onCustomAction(check -> check._onPacketReceive((Packet<ClientGamePacketListener>) packet, (Connection) (Object) this, channelHandlerContext, ci));
+        } catch (ClassCastException e) {
+            LogUtils.custom("Server send a Invalid Packet!");
+        }
     }
 }

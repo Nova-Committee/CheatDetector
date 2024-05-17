@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
@@ -594,7 +595,7 @@ public class NoteBot extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (!Advanced3Config.noteBotSilentRotate) return false;
         if (basepacket instanceof ServerboundMovePlayerPacket packet)

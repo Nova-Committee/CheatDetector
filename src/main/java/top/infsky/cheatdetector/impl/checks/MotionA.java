@@ -27,6 +27,7 @@ public class MotionA extends Check {
     private final List<Double> motionY = new ArrayList<>();
     private boolean readyToJump = false;
     private Double jumpFromY = null;
+    private int disableTicks = 0;
 
     public MotionA(@NotNull TRPlayer player) {
         super("MotionA", player);
@@ -34,6 +35,14 @@ public class MotionA extends Check {
 
     @Override
     public void _onTick() {
+        if (disableTicks > 0) {
+            disableTicks--;
+            jumpFromY = null;
+            readyToJump = false;
+            motionY.clear();
+            return;
+        }
+
         if (!check()) {
             jumpFromY = null;
             readyToJump = false;
@@ -77,12 +86,16 @@ public class MotionA extends Check {
     }
 
     private boolean check() {
-        if (player.fabricPlayer.getActiveEffectsMap().keySet().stream().anyMatch(IGNORED_EFFECTS::contains)) return false;
-        if (player.fabricPlayer.isInWall() || player.fabricPlayer.isInWater()
+        if (player.fabricPlayer.isFallFlying()) {
+            disableTicks = (int) Math.ceil(player.latency / 50.0) + 3;
+            return false;
+        }
+        if (player.fabricPlayer.getActiveEffectsMap().keySet().stream().anyMatch(IGNORED_EFFECTS::contains)
+                || player.fabricPlayer.isInWall() || player.fabricPlayer.isInWater()
                 || player.fabricPlayer.isPassenger() || player.fabricPlayer.isVehicle()
                 || player.fabricPlayer.isAutoSpinAttack() || player.fabricPlayer.isSwimming()
-                || player.fabricPlayer.isSleeping() || player.fabricPlayer.isFallFlying()
-                || player.fabricPlayer.onClimbable() || player.fabricPlayer.hurtTime > 0
+                || player.fabricPlayer.isSleeping() || player.fabricPlayer.onClimbable()
+                || player.fabricPlayer.hurtTime > 0
                 || !BlockUtils.isFullBlock(player.fabricPlayer.getBlockStateOn())
                 || IGNORED_BLOCKS.stream().anyMatch(block -> block.isInstance(player.fabricPlayer.getBlockStateOn().getBlock()))
         ) return false;

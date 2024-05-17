@@ -229,7 +229,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double nukerRange = 4.5;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean nukerLazySearch = true;
+    public static boolean nukerLazySearch = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerDoRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -237,7 +237,9 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerKeepRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean nukerKeepGround = true;
+    public static boolean nukerKeepGround = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean nukerYCheck = false;
 
     @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -262,6 +264,8 @@ public class Advanced3Config {
     @Numeric(minValue = -1, maxValue = 20)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double airStuckMinFallDistance = -1;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean airStuckAntiKick = false;
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static String clientSpoofBrand = "vanilla";

@@ -99,4 +99,8 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean clientSpoofEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean moreKBEnabled = false;
 }

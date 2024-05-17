@@ -7,8 +7,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
-import net.minecraft.network.protocol.login.ServerboundCustomQueryPacket;
-import net.minecraft.network.protocol.status.ServerboundPingRequestPacket;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,17 +25,19 @@ public class AirStuck extends Module {
     @Nullable
     private static Module instance = null;
 
-    public static final List<Class<? extends Packet<?>>> CANCEL_PACKETS = List.of(
+    public static final List<Class<? extends Packet<?>>> NORMAL_CANCEL_PACKETS = List.of(
             ServerboundPongPacket.class,
-            ServerboundPlayerAbilitiesPacket.class,
-            ServerboundPingRequestPacket.class,
-            ServerboundPlayerActionPacket.class,
-            ServerboundPlayerCommandPacket.class,
-            ServerboundMovePlayerPacket.class,
+            ServerboundPlayerInputPacket.class,
+            ServerboundMoveVehiclePacket.class,
+            ServerboundCustomPayloadPacket.class
+    );
+
+    public static final List<Class<? extends Packet<?>>> ANTI_KICK_CANCEL_PACKETS = List.of(
+            ServerboundPongPacket.class,
             ServerboundPlayerInputPacket.class,
             ServerboundMoveVehiclePacket.class,
             ServerboundCustomPayloadPacket.class,
-            ServerboundCustomQueryPacket.class
+            ServerboundMovePlayerPacket.class
     );
 
     private boolean shouldStuck = false;
@@ -86,13 +86,18 @@ public class AirStuck extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled() || !shouldStuck || !Advanced3Config.airStuckCancelPacket) return false;
 
         if (Advanced3Config.airStuckLegit) {
             ci.cancel();
             return true;
-        } else if (CANCEL_PACKETS.stream().anyMatch(aClass -> aClass.isInstance(basePacket.getClass()))) {
+        } else if (Advanced3Config.airStuckAntiKick) {
+            if (ANTI_KICK_CANCEL_PACKETS.stream().anyMatch(aClass -> aClass.isInstance(basePacket))) {
+                ci.cancel();
+                return true;
+            }
+        } else if (NORMAL_CANCEL_PACKETS.stream().anyMatch(aClass -> aClass.isInstance(basePacket))) {
             ci.cancel();
             return true;
         }

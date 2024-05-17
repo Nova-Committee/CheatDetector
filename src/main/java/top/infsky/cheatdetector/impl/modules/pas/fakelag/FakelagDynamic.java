@@ -7,6 +7,8 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
@@ -104,8 +106,8 @@ public class FakelagDynamic extends Module {
     }
 
     @Override
-    public boolean _handleAttack(Entity entity) {
-        if (isDisabled()) return false;
+    public void _handleAttack(Entity entity) {
+        if (isDisabled()) return;
 
         if (entity instanceof Player targetPlayer) {
             if (!targetPlayer.equals(target)) {
@@ -115,11 +117,10 @@ public class FakelagDynamic extends Module {
                 releasePackets();
             }
         }
-        return false;
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled() || ci.isCancelled() || !shouldBlink) return false;
 
         ci.cancel();
@@ -128,7 +129,7 @@ public class FakelagDynamic extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
         if (isDisabled() || ci.isCancelled() || !shouldBlink) return false;
 
         if (!Advanced3Config.fakelagOnlyOutgoing) {

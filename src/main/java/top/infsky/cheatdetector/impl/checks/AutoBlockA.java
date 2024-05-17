@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.impl.checks;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
@@ -19,7 +20,7 @@ public class AutoBlockA extends Check {
     }
 
     @Override
-    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (basePacket instanceof ClientboundAnimatePacket packet) {
             if (packet.getId() != player.fabricPlayer.getId()) return false;
             if (packet.getAction() != ClientboundAnimatePacket.SWING_MAIN_HAND) return false;

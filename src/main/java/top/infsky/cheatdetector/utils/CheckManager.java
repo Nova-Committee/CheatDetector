@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.checks.*;
+import top.infsky.cheatdetector.impl.fixes.ServerFreeze;
 import top.infsky.cheatdetector.impl.modules.*;
 import top.infsky.cheatdetector.impl.fixes.vulcan.*;
 import top.infsky.cheatdetector.impl.fixes.pas.*;
@@ -87,6 +88,7 @@ public class CheckManager {
         pre.put(FastPlace.class, new FastPlace(player));
         pre.put(OmniSprintDisabler.class, new OmniSprintDisabler(player));
         pre.put(SprintA.class, new SprintA(player));
+        pre.put(ServerFreeze.class, new ServerFreeze(player));
         post.put(Spin.class, new Spin(player));
         post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(NoRotateSet.class, new NoRotateSet(player));

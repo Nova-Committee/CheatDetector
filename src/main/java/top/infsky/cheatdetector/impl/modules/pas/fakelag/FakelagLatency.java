@@ -7,6 +7,8 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -45,7 +47,7 @@ public class FakelagLatency extends Module {
     }
 
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> packet, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (disablePackets > 0) {
             disablePackets--;
             return false;
@@ -66,7 +68,7 @@ public class FakelagLatency extends Module {
     }
 
     @Override
-    public boolean _onPacketReceive(@NotNull Packet<?> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
+    public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> packet, Connection connection, ChannelHandlerContext context, CallbackInfo ci) {
         if (disablePackets > 0) {
             disablePackets--;
             return false;

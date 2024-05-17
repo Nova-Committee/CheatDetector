@@ -14,6 +14,10 @@ public class AntiCheatConfig {
     @Config(category = ConfigCategory.ANTICHEAT)
     public static boolean disableSelfCheck = false;
 
+    @Hotkey
+    @Config(category = ConfigCategory.ANTICHEAT)
+    public static boolean falseFlagFix = false;
+
     @Numeric(minValue = 0.0, maxValue = Double.MAX_VALUE)
     @Config(category = ConfigCategory.ANTICHEAT)
     public static double threshold = 1.0;

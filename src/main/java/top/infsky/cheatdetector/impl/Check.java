@@ -6,6 +6,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,12 +29,8 @@ public abstract class Check {
         this.player = player;
     }
 
-    public int getAlertBuffer() {
-        return 1;
-    }
-    public boolean isDisabled() {
-        return false;
-    }
+    public abstract int getAlertBuffer();
+    public abstract boolean isDisabled();
 
     public void flag() {
         if (player.manager.disableTick > 0) return;
@@ -70,7 +68,8 @@ public abstract class Check {
     public void _onGameTypeChange() {}
     public <T> boolean _handleStartDestroyBlock(CallbackInfoReturnable<T> cir, T fallbackReturn) { return false; }
     public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
-    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
-    public boolean _onPacketReceive(@NotNull Packet<?> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
-    public boolean _handleAttack(Entity entity) { return false; }
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
+    public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
+    public void _handleAttack(Entity entity) {
+    }
 }

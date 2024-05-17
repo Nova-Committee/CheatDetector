@@ -37,6 +37,10 @@ public class CommandEvent {
                                         .then(argument("z", IntegerArgumentType.integer())
                                                 .executes(BlockDetectorCommand::execute))))
                 )
+                .then(literal("clientspoof")
+                        .then(argument("brand", StringArgumentType.string())
+                                .executes(ClientSpoofCommand::execute))
+                )
         );
     }
 }

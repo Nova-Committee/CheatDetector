@@ -8,6 +8,7 @@ import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundLoginPacket;
+import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +33,7 @@ public class ClientSpoof extends Module {
      * 修改第444行的发包行为
      */
     @Override
-    public boolean _onPacketSend(@NotNull Packet<?> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
+    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (basePacket instanceof ServerboundCustomPayloadPacket packet
                 && packet.getIdentifier() == ServerboundCustomPayloadPacket.BRAND) {
@@ -43,6 +44,7 @@ public class ClientSpoof extends Module {
                             new FriendlyByteBuf(Unpooled.buffer()).writeUtf(Advanced3Config.clientSpoofBrand)
                     ), listener
             );
+            customMsg("spoofed client: %s.".formatted(Advanced3Config.clientSpoofBrand));
             return true;
         }
         return false;

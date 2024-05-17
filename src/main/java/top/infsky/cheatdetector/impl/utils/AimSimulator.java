@@ -52,7 +52,7 @@ public class AimSimulator {
         return new Pair<>(yaw, pitch);
     }
 
-    private static double random(double multiple) {
+    public static double random(double multiple) {
         return (Math.random() - 0.5) * 2 * multiple;
     }
 
