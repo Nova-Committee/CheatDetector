@@ -30,7 +30,6 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
-import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.impl.utils.notebot.NotebotUtils;
 import top.infsky.cheatdetector.impl.utils.notebot.decoder.SongDecoders;
@@ -222,9 +221,7 @@ public class NoteBot extends Module {
         this.playingMode = PlayingMode.Noteblocks;
         if (!loadFileToMap(file, () -> stage = Stage.SetUp)) {
             onSongEnd();
-            return;
         }
-        ClickGUI.update();
     }
 
     /**
@@ -384,8 +381,6 @@ public class NoteBot extends Module {
     public void stop() {
         if (!isDisabled()) info("Stopping.");
         CheatDetector.CONFIG_HANDLER.configManager.setValue("noteBotEnabled", false);
-        ModuleConfig.noteBotEnabled = false;
-        ClickGUI.update();
     }
 
     private void resetVariables() {

@@ -45,6 +45,6 @@ public class NoRotateSet extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.noRotateSetEnabled;
+        return !ModuleConfig.noRotateSetEnabled || (ModuleConfig.flyEnabled && ModuleConfig.aaaPASModeEnabled);
     }
 }

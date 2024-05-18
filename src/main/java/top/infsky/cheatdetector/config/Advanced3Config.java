@@ -270,6 +270,17 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static String clientSpoofBrand = "vanilla";
 
+    @Numeric(minValue = 0, maxValue = 5)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double flyAcceptTeleportMaxDistance = 1;
+
+    @Numeric(minValue = 1, maxValue = 2)
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int writerPart = 1;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean writerToBook = false;
+
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {
             return NotebotUtils.NotebotMode.AnyInstrument;

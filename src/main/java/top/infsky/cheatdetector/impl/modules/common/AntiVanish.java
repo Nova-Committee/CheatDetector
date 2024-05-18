@@ -1,9 +1,7 @@
 package top.infsky.cheatdetector.impl.modules.common;
 
-import com.mojang.authlib.GameProfile;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -20,7 +18,6 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
-import javax.naming.NameNotFoundException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -29,84 +26,58 @@ public class AntiVanish extends Module {
     @Nullable
     private static Module instance = null;
 
-    private final Map<GameProfile, Integer> playerLeaveCache = new HashMap<>();
+    private final Map<String, Integer> playerLeaveCache = new HashMap<>();
+
+    private final List<String> currentVanish = new LinkedList<>();
     public AntiVanish(@NotNull TRSelf player) {
         super("AntiVanish", player);
         instance = this;
     }
 
-    @SneakyThrows
     @Override
     public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
         if (isDisabled()) return false;
         if (basePacket instanceof ClientboundPlayerInfoRemovePacket packet) {
-            packet.profileIds().forEach(uuid -> {
-                GameProfile profile = getProfile(uuid);
-                if (playerLeaveCache.containsKey(profile)) {
-                    playerLeaveCache.remove(profile);
-                } else {
-                    playerLeaveCache.put(profile, 1);
-                    player.timeTask.schedule(() -> {
-                        if (playerLeaveCache.getOrDefault(profile, 2) < 2) {
-                            customMsg(Component.translatable("cheatdetector.chat.alert.foundVanish").append(profile.getName()).getString());
-                        }
-                        playerLeaveCache.remove(profile);
-                    }, player.getLatency() + 50, TimeUnit.MILLISECONDS);
+            packet.profileIds().forEach(uuid -> getName(uuid).ifPresentOrElse(name -> {
+                if (currentVanish.contains(name)) {
+                    currentVanish.remove(name);
+                    customMsg(Component.translatable("cheatdetector.chat.alert.stopVanish").getString().formatted(name));
                 }
-            });
+
+                if (playerLeaveCache.containsKey(name)) {
+                    playerLeaveCache.remove(name);
+                } else {
+                    playerLeaveCache.put(name, 1);
+                    player.timeTask.schedule(() -> {
+                        if (playerLeaveCache.getOrDefault(name, 1) < 2) {
+                            customMsg(Component.translatable("cheatdetector.chat.alert.startVanish").getString().formatted(name));
+                            currentVanish.add(name);
+                        }
+                        playerLeaveCache.remove(name);
+                    }, 150, TimeUnit.MILLISECONDS);
+                }
+            }, () -> customMsg("receive invalid player leave packet: %s".formatted(uuid))));
         }
         if (basePacket instanceof ClientboundSystemChatPacket packet && packet.content().getString().endsWith("退出了游戏")) {
             String msg = packet.content().getString();
-            GameProfile profile = getProfile(msg.substring(0, msg.length() - 6));
-            if (profile != null) {
-                playerLeaveCache.put(profile, playerLeaveCache.getOrDefault(profile, 0));
-
-                if (playerLeaveCache.containsKey(profile)) {
-                    playerLeaveCache.remove(profile);
-                } else {
-                    playerLeaveCache.put(profile, 1);
-                    player.timeTask.schedule(() -> {
-                        if (playerLeaveCache.getOrDefault(profile, 2) < 2) {
-                            customMsg(Component.translatable("cheatdetector.chat.alert.foundVanish").append(profile.getName()).getString());
-                        }
-                        playerLeaveCache.remove(profile);
-                    }, player.getLatency() + 50, TimeUnit.MILLISECONDS);
-                }
-            } else {
-                throw new NameNotFoundException("receive invalid player leave msg: %s".formatted(msg));
-            }
+            String name = msg.substring(0, msg.length() - 5);
+            playerLeaveCache.put(name, playerLeaveCache.getOrDefault(name, 1) + 1);
         }
         return false;
     }
 
-    private @NotNull GameProfile getProfile(UUID uuid) {
+    private @NotNull Optional<String> getName(UUID uuid) {
         TRPlayer trPlayer = CheatDetector.manager.getDataMap().getOrDefault(uuid, null);
         if (trPlayer != null) {
-            return trPlayer.fabricPlayer.getGameProfile();
+            return Optional.of(trPlayer.fabricPlayer.getGameProfile().getName());
         }
 
         PlayerInfo playerInfo = player.fabricPlayer.connection.getPlayerInfo(uuid);
         if (playerInfo != null) {
-            return playerInfo.getProfile();
+            return Optional.of(playerInfo.getProfile().getName());
         }
 
-        return new GameProfile(uuid, uuid.toString());
-    }
-
-    private @Nullable GameProfile getProfile(String name) {
-        for (TRPlayer trPlayer : CheatDetector.manager.getDataMap().values()) {
-            if (trPlayer.fabricPlayer.getName().getString().equals(name)) {
-                return trPlayer.fabricPlayer.getGameProfile();
-            }
-        }
-
-
-        PlayerInfo playerInfo = player.fabricPlayer.connection.getPlayerInfo(name);
-        if (playerInfo != null) {
-            return playerInfo.getProfile();
-        }
-
-        return null;
+        return Optional.empty();
     }
 
     @Override

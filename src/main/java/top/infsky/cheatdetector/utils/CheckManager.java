@@ -113,6 +113,9 @@ public class CheckManager {
         post.put(AirStuck.class, new AirStuck(player));
         pre.put(NoFall.class, new NoFall(player));
         pre.put(ClientSpoof.class, new ClientSpoof(player));
+        post.put(Fly.class, new Fly(player));
+        post.put(NoJumpDelay.class, new NoJumpDelay(player));
+        post.put(Writer.class, new Writer(player));
 
         return new CheckManager(pre, normal, post, player);
     }

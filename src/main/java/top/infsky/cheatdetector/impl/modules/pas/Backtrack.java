@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRSelf;
-import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.impl.utils.world.FakePlayer;
 import top.infsky.cheatdetector.impl.utils.packet.IncomingPacket;
 import top.infsky.cheatdetector.impl.utils.packet.PacketUtils;
@@ -124,7 +123,6 @@ public class Backtrack extends Module {
 
         if (Advanced3Config.fakelagAutoDisable) {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
-            ClickGUI.update();
         }
     }
 

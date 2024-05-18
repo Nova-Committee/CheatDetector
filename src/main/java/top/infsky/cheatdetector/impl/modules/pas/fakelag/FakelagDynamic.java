@@ -18,7 +18,6 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.impl.modules.ClickGUI;
 import top.infsky.cheatdetector.impl.utils.packet.IncomingPacket;
 import top.infsky.cheatdetector.impl.utils.packet.OutgoingPacket;
 import top.infsky.cheatdetector.impl.utils.packet.PacketHandler;
@@ -146,7 +145,6 @@ public class FakelagDynamic extends Module {
 
         if (Advanced3Config.fakelagAutoDisable) {
             CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
-            ClickGUI.update();
         }
     }
 

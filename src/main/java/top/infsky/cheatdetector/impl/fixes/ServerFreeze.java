@@ -1,21 +1,24 @@
 package top.infsky.cheatdetector.impl.fixes;
 
 import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.status.ServerboundPingRequestPacket;
+import net.minecraft.network.protocol.game.ServerboundPongPacket;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced2Config;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.impl.Fix;
+import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public class ServerFreeze extends Fix {
     private long lastReceiveTime = -1;
-    public boolean freeze = false;
+    private int pingRequest = 0;
 
     public ServerFreeze(@NotNull TRSelf player) {
         super("ServerFreeze", player);
@@ -30,12 +33,19 @@ public class ServerFreeze extends Fix {
         if (player.upTime - lastReceiveTime > Advanced2Config.serverFreezeMaxTicks) {
             if (Advanced2Config.serverFreezeAutoDisableCheck)
                 CheatDetector.manager.getDataMap().forEach((uuid, player1) -> player1.manager.disableTick = 10);
-            if (!freeze)
-                flag("Server", "frozen over %s ms!".formatted(player.upTime - lastReceiveTime));
+            if (Advanced2Config.serverFreezeAlert) {
+                TRPlayer.CLIENT.gui.setOverlayMessage(
+                        Component.literal(Component.translatable("cheatdetector.overlay.alert.serverFreezeAlert")
+                                .withStyle(ChatFormatting.DARK_RED)
+                                .getString()
+                                .formatted((player.upTime - lastReceiveTime) * 50)),
+                        true);
+            }
         }
 
         if (Advanced2Config.serverFreezePostDelay != -1 && player.upTime % Advanced2Config.serverFreezePostDelay == 0) {
-            player.fabricPlayer.connection.send(new ServerboundPingRequestPacket(System.currentTimeMillis()));
+            player.fabricPlayer.connection.send(new ServerboundPongPacket(pingRequest));
+            pingRequest = pingRequest < -32767 ? 0 : pingRequest - 1;
         }
     }
 

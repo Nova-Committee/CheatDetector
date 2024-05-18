@@ -41,6 +41,10 @@ public class CommandEvent {
                         .then(argument("brand", StringArgumentType.string())
                                 .executes(ClientSpoofCommand::execute))
                 )
+                .then(literal("writer")
+                        .then(argument("part", IntegerArgumentType.integer(1, 2))
+                                .executes(WriterCommand::execute))
+                )
         );
     }
 }

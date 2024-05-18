@@ -38,10 +38,12 @@ public class Advanced2Config {
     public static int serverFreezeAlertBuffer = 1;
     @Numeric(minValue = -1, maxValue = 600)
     @Config(category = ConfigCategory.ADVANCED2)
-    public static int serverFreezePostDelay = 1;
+    public static int serverFreezePostDelay = -1;
     @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED2)
     public static int serverFreezeMaxTicks = 20;
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean serverFreezeAutoDisableCheck = true;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static boolean serverFreezeAlert = true;
 }

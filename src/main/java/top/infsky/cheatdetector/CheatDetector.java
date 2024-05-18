@@ -35,6 +35,7 @@ public class CheatDetector implements ClientModInitializer {
         ClickGUI.register(configManager);
         CONFIG_HANDLER = new ConfigHandler(MOD_ID, configManager, 1);
         ConfigHandler.register(CONFIG_HANDLER);
+        CONFIG_HANDLER.configManager.getAllOptions().forEach(option -> option.setValueChangeCallback(configOption -> ClickGUI.update()));
 
         // command
         ClientCommandRegistrationCallback.EVENT.register(CommandEvent::register);

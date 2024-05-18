@@ -15,6 +15,7 @@
     "MixinConnection",
     "MixinLocalPlayer",
     "MixinMultiPlayerGameMode",
-    "MouseHandlerAccessor"
+    "MouseHandlerAccessor",
+    "LivingEntityAccessor"
   ]
 }

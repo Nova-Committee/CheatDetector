@@ -23,10 +23,6 @@ public class ClickGUI extends Module {
     @Getter(lazy = true)
     private static final @NotNull ConfigGui configGui = create(CheatDetector.MOD_ID, ConfigCategory.ANTICHEAT, CheatDetector.CONFIG_HANDLER.configManager);
 
-    private boolean lastPASModeEnabled = false;
-    private Advanced3Config.FakelagMode lastFakelagMode = Advanced3Config.FakelagMode.LATENCY;
-    private boolean lastAimAssistInteract = false;
-
     public ClickGUI(@NotNull TRSelf player) {
         super("ClickGUI", player);
         instance = this;
@@ -46,13 +42,6 @@ public class ClickGUI extends Module {
             TRPlayer.CLIENT.setScreen(getConfigGui());
             update();
         }
-
-        if (lastPASModeEnabled != ModuleConfig.aaaPASModeEnabled
-                || lastFakelagMode != Advanced3Config.getFakelagMode()
-                || lastAimAssistInteract != Advanced3Config.aimAssistInteract) update();
-        lastPASModeEnabled = ModuleConfig.aaaPASModeEnabled;
-        lastFakelagMode = Advanced3Config.getFakelagMode();
-        lastAimAssistInteract = Advanced3Config.aimAssistInteract;
     }
 
     @Contract("_, _, _ -> new")
@@ -77,12 +66,8 @@ public class ClickGUI extends Module {
         manager.parseConfigClass(Advanced3Config.class);
     }
 
-    /*
-    如果你修改了配置文件，执行这个函数以显式更新。
-    TODO 自动更新仍在开发中。
-     */
     public static void update() {
         getConfigGui().reDraw();
-//        CheatDetector.CONFIG_HANDLER.save();
+        CheatDetector.CONFIG_HANDLER.save();
     }
 }

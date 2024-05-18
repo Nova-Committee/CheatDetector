@@ -90,7 +90,7 @@ public class AntiFall extends Module {
 
     @Override
     public boolean isDisabled() {
-        if (!ModuleConfig.antiFallEnabled || player.fabricPlayer.isFallFlying()) return true;
+        if (!ModuleConfig.antiFallEnabled || player.fabricPlayer.isFallFlying() || (ModuleConfig.flyEnabled && ModuleConfig.aaaPASModeEnabled)) return true;
         if (ModuleConfig.noFallEnabled) {
             customMsg(Component.translatable("cheatdetector.chat.alert.couldNotWorkWith").withStyle(ChatFormatting.DARK_RED).getString().formatted(
                     Component.translatable("cheatdetector.config.modules.antiFallEnabled.pretty_name").getString(),

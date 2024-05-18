@@ -102,5 +102,13 @@ public class ModuleConfig {
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
-    public static boolean moreKBEnabled = false;
+    public static boolean noJumpDelayEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    public static boolean flyEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean writerEnabled = false;
 }
