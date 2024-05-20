@@ -8,9 +8,7 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.impl.utils.book.AishaBook1;
-import top.infsky.cheatdetector.impl.utils.book.AishaBook2;
-import top.infsky.cheatdetector.impl.utils.book.Book;
+import top.infsky.cheatdetector.impl.utils.book.*;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 import java.util.List;
@@ -40,6 +38,7 @@ public class Writer extends Module {
         switch (Advanced3Config.writerPart) {
             case 1 -> book = new AishaBook1();
             case 2 -> book = new AishaBook2();
+            case 3 -> book = new AishaBook3();
             default -> book = new Book() {
                 @Override
                 public @NotNull String getTitle() {

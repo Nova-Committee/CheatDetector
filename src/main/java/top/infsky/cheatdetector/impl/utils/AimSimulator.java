@@ -10,11 +10,11 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public class AimSimulator {
-    public static @NotNull Pair<Double, Double> getLegitAim(@NotNull Entity target, @NotNull TRSelf player,
-                                                            @Nullable Pair<Double, Double> speed, @Nullable Triplet<Double, Double, Double> offset,
-                                                            boolean noise1, Pair<Double, Double> noise1Random,
-                                                            boolean noise2, Pair<Double, Double> noise2Random) {
-        double yaw, pitch;
+    public static @NotNull Pair<Float, Float> getLegitAim(@NotNull Entity target, @NotNull TRSelf player,
+                                                            @Nullable Pair<Float, Float> speed, @Nullable Triplet<Float, Float, Float> offset,
+                                                            boolean noise1, Pair<Float, Float> noise1Random,
+                                                            boolean noise2, Pair<Float, Float> noise2Random) {
+        float yaw, pitch;
 
         double yDiff = target.position().y() - player.currentPos.y();
         Vec3 targetPosition;
@@ -52,11 +52,11 @@ public class AimSimulator {
         return new Pair<>(yaw, pitch);
     }
 
-    public static double random(double multiple) {
-        return (Math.random() - 0.5) * 2 * multiple;
+    public static float random(double multiple) {
+        return (float) ((Math.random() - 0.5) * 2 * multiple);
     }
 
-    private static double rotMove(double target, double current, double diff) {
+    private static float rotMove(float target, float current, float diff) {
         if (target > current)
             if (target - current > diff)
                 return current + diff;

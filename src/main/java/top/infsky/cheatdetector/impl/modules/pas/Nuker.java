@@ -8,7 +8,6 @@ import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
-import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
@@ -51,41 +51,45 @@ public class Nuker extends Module {
         }
 
         if (targetBlockType == null) return;
-        if (player.lastPos.distanceTo(player.currentPos) > 0 || !Advanced3Config.nukerLazySearch) {
-            cacheBlocks.clear();
-            Vec3 eyePosition = player.fabricPlayer.getEyePosition();
-            Vec3 range = new Vec3(Advanced3Config.nukerRange, Advanced3Config.nukerRange, Advanced3Config.nukerRange);
-            BlockUtils.getAllInBox(BlockPos.containing(eyePosition.subtract(range)), BlockPos.containing(eyePosition.add(range)))
-                    .stream()
-                    .filter(blockPos -> blockPos.getCenter().distanceTo(eyePosition) <= Advanced3Config.nukerRange)
-                    .forEach(cacheBlocks::add);
-        }
+        cacheBlocks.clear();
+        Vec3 eyePosition = player.fabricPlayer.getEyePosition();
+        Vec3 range = new Vec3(Advanced3Config.nukerRange, Advanced3Config.nukerRange, Advanced3Config.nukerRange);
+        BlockUtils.getAllInBox(BlockPos.containing(eyePosition.subtract(range)), BlockPos.containing(eyePosition.add(range)))
+                .stream()
+                .filter(blockPos -> blockPos.getCenter().distanceTo(eyePosition) <= Advanced3Config.nukerRange)
+                .forEach(cacheBlocks::add);
 
-        BlockPos blockPos = null;
-        BlockState blockState = null;
-        try {
-            while (blockState == null || blockState.isAir() || !blockState.is(targetBlockType)
-                    || (Advanced3Config.nukerKeepGround && blockPos.equals(player.fabricPlayer.getOnPos()))
-                    || (Advanced3Config.nukerYCheck && blockPos.getY() < player.fabricPlayer.getBlockY())) {
-                blockPos = Objects.requireNonNull(cacheBlocks.poll());
-                blockState = LevelUtils.getClientLevel().getBlockState(blockPos);
+        int hasBreak = 0;
+        while (!cacheBlocks.isEmpty() && hasBreak < Advanced3Config.nukerMultiBreak) {
+            BlockPos blockPos = null;
+            BlockState blockState = null;
+            try {
+                while (blockState == null || blockState.isAir() || !blockState.is(targetBlockType)
+                        || (Advanced3Config.nukerKeepGround && blockPos.equals(player.fabricPlayer.getOnPos()))
+                        || (Advanced3Config.nukerYCheck && blockPos.getY() < player.fabricPlayer.getBlockY())) {
+                    blockPos = Objects.requireNonNull(cacheBlocks.poll());
+                    blockState = LevelUtils.getClientLevel().getBlockState(blockPos);
+                }
+            } catch (NullPointerException e) {
+                return;
             }
-        } catch (NullPointerException e) {
-            return;
-        }
 
-        double yaw = player.fabricPlayer.getYRot();
-        if (Advanced3Config.nukerDoRotation) {
-            if (Advanced3Config.nukerSilentRotation) {
-                PlayerRotation.silentRotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos), player.currentOnGround);
-            } else {
-                PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
+            double yaw = player.fabricPlayer.getYRot();
+            if (Advanced3Config.nukerDoRotation) {
+                if (Advanced3Config.nukerSilentRotation) {
+                    Rotation.silentRotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
+                } else {
+                    PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
+                }
             }
-        }
-        if (TRPlayer.CLIENT.gameMode == null) throw new NullPointerException("Player GameMode is null!");
+            if (TRPlayer.CLIENT.gameMode == null) throw new NullPointerException("Player GameMode is null!");
 
-        TRPlayer.CLIENT.gameMode.continueDestroyBlock(blockPos, Direction.fromYRot(yaw));
-        player.fabricPlayer.swing(InteractionHand.MAIN_HAND);
+
+            TRPlayer.CLIENT.gameMode.continueDestroyBlock(blockPos, Direction.fromYRot(yaw));
+            player.fabricPlayer.swing(InteractionHand.MAIN_HAND);
+
+            hasBreak++;
+        }
     }
 
     @Override
@@ -101,10 +105,6 @@ public class Nuker extends Module {
                 }
             }
         }
-
-        if (Advanced3Config.nukerDoRotation && Advanced3Config.nukerSilentRotation && Advanced3Config.nukerKeepRotation &&
-                basepacket instanceof ServerboundMovePlayerPacket packet)
-            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
         return false;
     }
 

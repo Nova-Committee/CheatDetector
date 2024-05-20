@@ -54,7 +54,7 @@ public class TRPlayer {
     public int latency = 0;
     public float lastFallDistance = 0;
 
-    public @NotNull ScheduledExecutorService timeTask = Executors.newSingleThreadScheduledExecutor();
+    public @NotNull ScheduledExecutorService timeTask = Executors.newScheduledThreadPool(2);
     @Contract("_ -> new")
     public static @NotNull TRPlayer create(@NotNull AbstractClientPlayer player) {
         return new TRPlayer(player, false);

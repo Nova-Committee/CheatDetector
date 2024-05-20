@@ -32,7 +32,7 @@ public abstract class Check {
     public abstract int getAlertBuffer();
     public abstract boolean isDisabled();
 
-    public void flag() {
+    protected void flag() {
         if (player.manager.disableTick > 0) return;
         if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
@@ -43,7 +43,7 @@ public abstract class Check {
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s)", violations));
     }
 
-    public void flag(String extraMsg) {
+    protected void flag(String extraMsg) {
         if (player.manager.disableTick > 0) return;
         if (!AntiCheatConfig.antiCheatEnabled) return;
         if (isDisabled()) return;
@@ -54,11 +54,11 @@ public abstract class Check {
         LogUtils.alert(player.fabricPlayer.getName().getString(), checkName, String.format("(VL:%s) %s%s", violations, ChatFormatting.GRAY, extraMsg));
     }
 
-    public void moduleMsg(String msg) {
+    protected void moduleMsg(String msg) {
         LogUtils.prefix(checkName, msg);
     }
 
-    public void customMsg(String msg) {
+    protected static void customMsg(String msg) {
         LogUtils.custom(msg);
     }
 

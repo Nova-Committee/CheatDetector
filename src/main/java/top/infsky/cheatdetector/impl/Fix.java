@@ -15,7 +15,7 @@ public abstract class Fix extends Check {
     }
 
     @Override
-    public void flag() {
+    protected void flag() {
         if (player.manager.disableTick > 0) return;
         if (!FixesConfig.packetFixEnabled) return;
         if (isDisabled()) return;
@@ -27,7 +27,7 @@ public abstract class Fix extends Check {
     }
 
     @Override
-    public void flag(String extraMsg) {
+    protected void flag(String extraMsg) {
         if (player.manager.disableTick > 0) return;
         if (!FixesConfig.packetFixEnabled) return;
         if (isDisabled()) return;

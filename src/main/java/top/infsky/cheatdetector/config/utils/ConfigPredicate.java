@@ -11,11 +11,8 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import java.util.List;
 
 public class ConfigPredicate {
-    public static void onJoinWorld(String ip, ConfigManager configManager) {
-        if (!PASMode.getIpAddresses().contains(ip)) {
-            configManager.setValue("aaaPASModeEnabled", false);
-            ModuleConfig.aaaPASModeEnabled = false;
-        }
+    public static void onJoinWorld(String ip, @NotNull ConfigManager configManager) {
+        configManager.setValue("aaaPASModeEnabled", PASMode.getIpAddresses().contains(ip));
     }
 
 

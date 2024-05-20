@@ -7,7 +7,7 @@ import java.util.List;
 public class AishaBook1 implements Book {
     @Override
     public @NotNull String getTitle() {
-        return "小小神明招招摇摇的异世界行记1";
+        return "小小神明招招摇摇的异世界行记 第一部分";
     }
 
     @Override

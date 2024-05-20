@@ -30,6 +30,7 @@ public class Fly extends Module {
     private BlockPos fakeBlockPos = null;
     private State state = State.NONE;
     private Vec3 doneFlyingPos = Vec3.ZERO;
+    @Getter
     private boolean hasFly = false;
     @Getter
     private boolean noJump = false;

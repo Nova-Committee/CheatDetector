@@ -8,10 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.modules.pas.Fly;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -63,6 +65,11 @@ public class FlagDetector extends Module {
     @Override
     public void _onTeleport() {
         if (disableTick > 0) return;
+        if (Advanced3Config.flagDetectorShouldReduceKnownTeleport) {
+            if (Objects.requireNonNull((Fly) Fly.getInstance()).isHasFly()) {
+                return;
+            }
+        }
         flag();
     }
 

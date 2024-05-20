@@ -10,12 +10,12 @@
     "ConnectionAccessor",
     "EntityAccessor",
     "KeyMappingAccessor",
+    "LivingEntityAccessor",
     "LookAtPacketAccessor",
     "MinecraftAccessor",
     "MixinConnection",
     "MixinLocalPlayer",
     "MixinMultiPlayerGameMode",
-    "MouseHandlerAccessor",
-    "LivingEntityAccessor"
+    "MouseHandlerAccessor"
   ]
 }

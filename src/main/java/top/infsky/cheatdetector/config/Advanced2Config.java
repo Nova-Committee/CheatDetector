@@ -24,11 +24,6 @@ public class Advanced2Config {
     public static int fastPlaceSamePlaceMinDelay = 1;
 
     @Config(category = ConfigCategory.ADVANCED2)
-    public static boolean sprintAEnabled = false;
-    @Config(category = ConfigCategory.ADVANCED2)
-    public static int sprintAAlertBuffer = 20;
-
-    @Config(category = ConfigCategory.ADVANCED2)
     public static boolean omniSprintShowPacketSend = false;
 
 
@@ -46,4 +41,11 @@ public class Advanced2Config {
     public static boolean serverFreezeAutoDisableCheck = true;
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean serverFreezeAlert = true;
+
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static boolean invalidYawEnabled = true;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static int invalidYawAlertBuffer = 1;
+    @Config(category = ConfigCategory.ADVANCED2)
+    public static double invalidYawMaxYaw = 360000;
 }

@@ -3,6 +3,7 @@ package top.infsky.cheatdetector.mixins;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
+import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -10,11 +11,13 @@ import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.phys.Vec2;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
+import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.utils.CheckManager;
 import top.infsky.cheatdetector.utils.LogUtils;
 import top.infsky.cheatdetector.utils.TRSelf;
@@ -33,6 +36,15 @@ public abstract class MixinConnection {
         }
         if (!ci.isCancelled() && basePacket instanceof ServerboundMovePlayerPacket packet && packet.hasRotation()) {
             TRSelf.getInstance().rotation = new Vec2(packet.getYRot(0), packet.getXRot(0));
+        }
+    }
+
+    @Inject(method = "doSendPacket", at = @At(value = "HEAD"), cancellable = true)
+    public void doSendPacket(Packet<?> packet, @Nullable PacketSendListener packetSendListener, ConnectionProtocol connectionProtocol, ConnectionProtocol connectionProtocol2, CallbackInfo ci) {
+        Rotation rotation = (Rotation) Rotation.getInstance();
+
+        if (rotation != null) {
+            rotation.onFinallyPacketSend((ConnectionAccessor) this, packet, packetSendListener, connectionProtocol, connectionProtocol2, ci);
         }
     }
 

@@ -47,7 +47,7 @@ public class AimAssist extends Module {
     }
 
     private void rotate(Entity target) {
-        Pair<Double, Double> rot;
+        Pair<Float, Float> rot;
 
         if (Advanced3Config.aimAssistInteract) {
             rot = new Pair<>(
@@ -58,12 +58,12 @@ public class AimAssist extends Module {
             if (Advanced3Config.aimAssistStopOnTarget && TRPlayer.CLIENT.crosshairPickEntity == target) return;
 
             rot = AimSimulator.getLegitAim(target, player,
-                    new Pair<>(Advanced3Config.aimAssistYawSpeed, Advanced3Config.aimAssistPitchSpeed),
-                    new Triplet<>(Advanced3Config.aimAssistOffsetX, Advanced3Config.aimAssistOffsetY, Advanced3Config.aimAssistOffsetZ),
+                    new Pair<>((float) Advanced3Config.aimAssistYawSpeed, (float) Advanced3Config.aimAssistPitchSpeed),
+                    new Triplet<>((float) Advanced3Config.aimAssistOffsetX, (float) Advanced3Config.aimAssistOffsetY, (float) Advanced3Config.aimAssistOffsetZ),
                     Advanced3Config.aimAssistNoise1,
-                    new Pair<>(Advanced3Config.aimAssistYawRandom, Advanced3Config.aimAssistPitchRandom),
+                    new Pair<>((float) Advanced3Config.aimAssistYawRandom, (float) Advanced3Config.aimAssistPitchRandom),
                     Advanced3Config.aimAssistNoise2,
-                    new Pair<>(Advanced3Config.aimAssistXZRandom, Advanced3Config.aimAssistYRandom)
+                    new Pair<>((float) Advanced3Config.aimAssistXZRandom, (float) Advanced3Config.aimAssistYRandom)
             );
         }
 

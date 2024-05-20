@@ -5,6 +5,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -12,7 +13,9 @@ import top.infsky.cheatdetector.impl.modules.common.AirStuck;
 import top.infsky.cheatdetector.impl.modules.pas.Fly;
 
 @Mixin(LocalPlayer.class)
-public class MixinLocalPlayer {
+public abstract class MixinLocalPlayer {
+    @Shadow protected abstract void sendIsSprintingIfNeeded();
+
     @Inject(method = "move", at = @At(value = "HEAD"), cancellable = true)
     public void move(MoverType moverType, Vec3 vec3, @NotNull CallbackInfo ci) {
         if (ci.isCancelled()) return;
@@ -37,5 +40,7 @@ public class MixinLocalPlayer {
                 }
             }
         }
+
+        sendIsSprintingIfNeeded();
     }
 }

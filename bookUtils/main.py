@@ -1,9 +1,13 @@
+from pyperclip import copy, paste
+
 inputStr = ""
 while True:
     cur = input()
     if cur == "done": break
     inputStr += cur + "\n"
 
-for line in inputStr.split("\n"):
-    if line != "":
-        print(line)
+result = ""
+for s in (i for i in inputStr.split("\n") if i != ""):
+    result += s + "\n"
+
+copy(result)

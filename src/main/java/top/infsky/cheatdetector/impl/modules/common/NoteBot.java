@@ -6,11 +6,6 @@ import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.Connection;
-import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ServerGamePacketListener;
-import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -25,7 +20,6 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRPlayer;
@@ -272,7 +266,7 @@ public class NoteBot extends Module {
 
             if (Advanced3Config.noteBotAutoRotate)
                 if (Advanced3Config.noteBotSilentRotate)
-                    PlayerRotation.silentRotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos), player.currentOnGround);
+                    Rotation.silentRotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos));
                 else
                     PlayerRotation.rotate(PlayerRotation.getYaw(pos), PlayerRotation.getPitch(pos));
             this.tuneNoteblockWithPackets(pos);
@@ -473,7 +467,7 @@ public class NoteBot extends Module {
 
                 if (firstPos != null) {
                     if (Advanced3Config.noteBotSilentRotate)
-                        PlayerRotation.silentRotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos), player.currentOnGround);
+                        Rotation.silentRotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos));
                     else
                         PlayerRotation.rotate(PlayerRotation.getYaw(firstPos), PlayerRotation.getPitch(firstPos));
                 }
@@ -587,15 +581,6 @@ public class NoteBot extends Module {
             }
             warning(uniqueNotesToUse.size()+" missing notes!");
         }
-    }
-
-    @Override
-    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
-        if (isDisabled()) return false;
-        if (!Advanced3Config.noteBotSilentRotate) return false;
-        if (basepacket instanceof ServerboundMovePlayerPacket packet)
-            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
-        return false;
     }
 
     public enum Stage {

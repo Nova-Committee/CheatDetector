@@ -2,11 +2,6 @@ package top.infsky.cheatdetector.impl.modules.pas;
 
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.Connection;
-import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ServerGamePacketListener;
-import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.impl.utils.world.ContainerUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
@@ -92,11 +87,13 @@ public class Scaffold extends Module {
                 }
             }
 
+            if (hand == null) return;
+
             if (Advanced3Config.scaffoldNoSprint)
                 player.fabricPlayer.setSprinting(false);
             if (Advanced3Config.scaffoldDoRotation) {
                 if (Advanced3Config.scaffoldSilentRotation)
-                    PlayerRotation.silentRotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos), player.currentOnGround);
+                    Rotation.silentRotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
                 else
                     PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
             }
@@ -104,15 +101,6 @@ public class Scaffold extends Module {
             if (interactionResult.shouldSwing() && !Advanced3Config.scaffoldNoSwing) player.fabricPlayer.swing(hand);
             lastPlaceTime = player.upTime;
         }
-    }
-
-    @Override
-    public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basepacket, Connection connection, PacketSendListener listener, CallbackInfo ci) {
-        if (isDisabled()) return false;
-        if (Advanced3Config.scaffoldDoRotation && Advanced3Config.scaffoldSilentRotation && !Advanced3Config.scaffoldKeepRotation) return false;
-        if (basepacket instanceof ServerboundMovePlayerPacket packet)
-            return PlayerRotation.cancelRotationPacket(packet, connection, listener, ci);
-        return false;
     }
 
     @Override

@@ -8,6 +8,7 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.checks.*;
 import top.infsky.cheatdetector.impl.fixes.ServerFreeze;
+import top.infsky.cheatdetector.impl.fixes.grimac.InvalidYaw;
 import top.infsky.cheatdetector.impl.modules.*;
 import top.infsky.cheatdetector.impl.fixes.vulcan.*;
 import top.infsky.cheatdetector.impl.fixes.pas.*;
@@ -87,8 +88,8 @@ public class CheckManager {
         pre.put(BadPacket2.class, new BadPacket2(player));
         pre.put(FastPlace.class, new FastPlace(player));
         pre.put(OmniSprintDisabler.class, new OmniSprintDisabler(player));
-        pre.put(SprintA.class, new SprintA(player));
         pre.put(ServerFreeze.class, new ServerFreeze(player));
+        pre.put(InvalidYaw.class, new InvalidYaw(player));
         post.put(Spin.class, new Spin(player));
         post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(NoRotateSet.class, new NoRotateSet(player));
@@ -100,7 +101,6 @@ public class CheckManager {
         post.put(FakelagDynamic.class, new FakelagDynamic(player));
         post.put(AirPlace.class, new AirPlace(player));
         post.put(InvWalk.class, new InvWalk(player));
-        post.put(Backtrack.class, new Backtrack(player));
         post.put(NoteBot.class, new NoteBot(player));
         post.put(SayHacker.class, new SayHacker(player));
         post.put(JumpReset.class, new JumpReset(player));
@@ -109,13 +109,14 @@ public class CheckManager {
         post.put(HandSpin.class, new HandSpin(player));
         post.put(Debug.class, new Debug(player));
         post.put(Nuker.class, new Nuker(player));
-        post.put(BlockDetector.class, new BlockDetector(player));
         post.put(AirStuck.class, new AirStuck(player));
-        pre.put(NoFall.class, new NoFall(player));
         pre.put(ClientSpoof.class, new ClientSpoof(player));
         post.put(Fly.class, new Fly(player));
         post.put(NoJumpDelay.class, new NoJumpDelay(player));
         post.put(Writer.class, new Writer(player));
+        post.put(AntiBot.class, new AntiBot(player));
+        post.put(Rotation.class, new Rotation(player));
+        post.put(Sprint.class, new Sprint(player));
 
         return new CheckManager(pre, normal, post, player);
     }

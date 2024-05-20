@@ -39,7 +39,7 @@ public class ServerFreeze extends Fix {
                                 .withStyle(ChatFormatting.DARK_RED)
                                 .getString()
                                 .formatted((player.upTime - lastReceiveTime) * 50)),
-                        true);
+                        false);
             }
         }
 

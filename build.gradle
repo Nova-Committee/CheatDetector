@@ -50,6 +50,7 @@ dependencies {
     modImplementation("top.hendrixshen.magiclib:magiclib-${project.minecraft_version.replace(".", "_")}:${project.magiclib_version}") {
         exclude(group: "carpet", module: "fabric-carpet")
     }
+    modImplementation("maven.modrinth:replaymod:${project.minecraft_version}-${project.replaymod_version}")
 
 //    modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
 

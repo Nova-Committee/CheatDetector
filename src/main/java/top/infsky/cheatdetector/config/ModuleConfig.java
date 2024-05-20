@@ -25,7 +25,7 @@ public class ModuleConfig {
     public static boolean noRotateSetEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES)
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean antiVanishEnabled = false;
 
     @Hotkey
@@ -85,10 +85,6 @@ public class ModuleConfig {
     public static boolean nukerEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean blockDetectorEnabled = false;
-
-    @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean airStuckEnabled = false;
 
@@ -111,4 +107,16 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean writerEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    public static boolean antiBotEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean rotationEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean sprintEnabled = false;
 }

@@ -109,16 +109,6 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean invWalkAllowJump = true;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean backtrackShowCount = false;
-    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static int backtrackDelayMs = 100;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean backtrackCancelPacket = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean backtrackRenderRealPosition = false;
-
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean noteBotRoundOutOfRange = false;
     @Config(category = ConfigCategory.ADVANCED3)
@@ -151,8 +141,6 @@ public class Advanced3Config {
     public static boolean scaffoldDoRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldSilentRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean scaffoldKeepRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean scaffoldNoSprint = false;
     @Numeric(minValue = 0, maxValue = 6, useSlider = true)
@@ -229,30 +217,16 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double nukerRange = 4.5;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean nukerLazySearch = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerDoRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerSilentRotation = true;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static boolean nukerKeepRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerKeepGround = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean nukerYCheck = false;
-
-    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
+    @Numeric(minValue = 1, maxValue = 20)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static int blockDetectorX = 0;
-    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static int blockDetectorY = 0;
-    @Numeric(minValue = Integer.MIN_VALUE, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static int blockDetectorZ = 0;
-    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static int blockDetectorPostDelay = 20;
+    public static int nukerMultiBreak = 1;
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean airStuckCancelPacket = true;
@@ -274,12 +248,22 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double flyAcceptTeleportMaxDistance = 1;
 
-    @Numeric(minValue = 1, maxValue = 2)
+    @Numeric(minValue = 1, maxValue = Integer.MAX_VALUE)
     @Config(category = ConfigCategory.ADVANCED3)
     public static int writerPart = 1;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean writerToBook = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiBotMessage = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiBotLatency = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiBotDebug = false;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean rotationFixSprint = true;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {
