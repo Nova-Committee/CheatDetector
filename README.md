@@ -42,7 +42,6 @@
 - 针对Vulcan反作弊
     - BadPacket (Type 1)
     - BadPacket (Type 2)
-    - OmniSprint Disabler
 - ServerFreeze 服务器冻结修复
     - 在服务器冻结时提醒你，并主动避免反作弊误判
 
