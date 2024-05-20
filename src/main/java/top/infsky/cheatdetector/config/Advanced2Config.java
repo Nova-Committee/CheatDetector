@@ -24,10 +24,6 @@ public class Advanced2Config {
     public static int fastPlaceSamePlaceMinDelay = 1;
 
     @Config(category = ConfigCategory.ADVANCED2)
-    public static boolean omniSprintShowPacketSend = false;
-
-
-    @Config(category = ConfigCategory.ADVANCED2)
     public static boolean serverFreezeEnabled = true;
     @Config(category = ConfigCategory.ADVANCED2)
     public static int serverFreezeAlertBuffer = 1;

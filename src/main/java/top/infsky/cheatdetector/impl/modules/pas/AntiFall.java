@@ -1,7 +1,6 @@
 package top.infsky.cheatdetector.impl.modules.pas;
 
 import lombok.Getter;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -91,14 +90,6 @@ public class AntiFall extends Module {
     @Override
     public boolean isDisabled() {
         if (!ModuleConfig.antiFallEnabled || player.fabricPlayer.isFallFlying() || (ModuleConfig.flyEnabled && ModuleConfig.aaaPASModeEnabled)) return true;
-        if (ModuleConfig.noFallEnabled) {
-            customMsg(Component.translatable("cheatdetector.chat.alert.couldNotWorkWith").withStyle(ChatFormatting.DARK_RED).getString().formatted(
-                    Component.translatable("cheatdetector.config.modules.antiFallEnabled.pretty_name").getString(),
-                    Component.translatable("cheatdetector.config.modules.noFallEnabled.pretty_name").getString()
-            ));
-            CheatDetector.CONFIG_HANDLER.configManager.setValue("antiFallEnabled", false);
-            return true;
-        }
         return !ModuleConfig.aaaPASModeEnabled;
     }
 }

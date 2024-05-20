@@ -52,17 +52,12 @@ public class Rotation extends Module {
             pitch = null;
         }
 
-        if (yaw == null) return;
-
         if (!Advanced3Config.rotationFixSprint) {
             canSprint = true;
         } else {
-            if (TRPlayer.CLIENT.options.keyLeft.isDown() || TRPlayer.CLIENT.options.keyRight.isDown() || Math.abs(yaw - player.fabricPlayer.getYRot()) % 180 > 45) {
+            if (yaw != null && (TRPlayer.CLIENT.options.keyLeft.isDown() || TRPlayer.CLIENT.options.keyRight.isDown() || Math.abs(yaw - player.fabricPlayer.getYRot()) % 180 > 45)) {
                 player.fabricPlayer.setSprinting(false);
-                if (canSprint) {
-                    player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING));
-                    canSprint = false;
-                }
+                canSprint = false;
             } else {
                 canSprint = true;
             }
@@ -93,9 +88,14 @@ public class Rotation extends Module {
             }
         }
         if (basePacket instanceof ServerboundPlayerCommandPacket packet) {
-            if (packet.getAction() == ServerboundPlayerCommandPacket.Action.START_SPRINTING && !canSprint) {
-                ci.cancel();
-                player.fabricPlayer.setSprinting(false);
+            if (!canSprint) {
+                if (player.fabricPlayer.isSprinting()) {
+                    player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING));
+                }
+                if (packet.getAction() == ServerboundPlayerCommandPacket.Action.START_SPRINTING) {
+                    ci.cancel();
+                    player.fabricPlayer.setSprinting(false);
+                }
             }
         }
     }

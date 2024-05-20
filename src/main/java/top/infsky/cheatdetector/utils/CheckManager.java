@@ -87,7 +87,6 @@ public class CheckManager {
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
         pre.put(FastPlace.class, new FastPlace(player));
-        pre.put(OmniSprintDisabler.class, new OmniSprintDisabler(player));
         pre.put(ServerFreeze.class, new ServerFreeze(player));
         pre.put(InvalidYaw.class, new InvalidYaw(player));
         post.put(Spin.class, new Spin(player));

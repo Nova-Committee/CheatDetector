@@ -2,10 +2,8 @@ package top.infsky.cheatdetector.impl.modules.pas.fakelag;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
@@ -115,14 +113,6 @@ public class FakelagLatency extends Module {
     public boolean isDisabled() {
         if (Advanced3Config.getFakelagMode() != Advanced3Config.FakelagMode.LATENCY) return true;
         if (!ModuleConfig.fakelagEnabled) return true;
-        if (ModuleConfig.backtrackEnabled) {
-            customMsg(Component.translatable("cheatdetector.chat.alert.couldNotWorkWith").withStyle(ChatFormatting.DARK_RED).getString().formatted(
-                    Component.translatable("cheatdetector.config.modules.fakelagEnabled.pretty_name").getString(),
-                    Component.translatable("cheatdetector.config.modules.backtrackEnabled.pretty_name").getString()
-            ));
-            CheatDetector.CONFIG_HANDLER.configManager.setValue("fakelagEnabled", false);
-            return true;
-        }
         return !ModuleConfig.aaaPASModeEnabled;
     }
 }

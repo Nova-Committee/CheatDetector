@@ -49,10 +49,6 @@ public class ModuleConfig {
     public static boolean invWalkEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean backtrackEnabled = false;
-
-    @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean noteBotEnabled = false;
 
@@ -87,10 +83,6 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean airStuckEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean noFallEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
