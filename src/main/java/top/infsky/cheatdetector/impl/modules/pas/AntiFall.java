@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
+import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
@@ -89,7 +90,7 @@ public class AntiFall extends Module {
 
     @Override
     public boolean isDisabled() {
-        if (!ModuleConfig.antiFallEnabled || player.fabricPlayer.isFallFlying() || (ModuleConfig.flyEnabled && ModuleConfig.aaaPASModeEnabled)) return true;
+        if (!ModuleConfig.antiFallEnabled || player.fabricPlayer.isFallFlying() || (DangerConfig.flyEnabled && DangerConfig.aaaDangerModeEnabled)) return true;
         return !ModuleConfig.aaaPASModeEnabled;
     }
 }

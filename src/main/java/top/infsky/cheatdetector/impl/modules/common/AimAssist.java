@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import oshi.util.tuples.Pair;
 import oshi.util.tuples.Triplet;
 import top.infsky.cheatdetector.config.Advanced3Config;
-import top.infsky.cheatdetector.config.ModuleConfig;
+import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.utils.AimSimulator;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
@@ -72,6 +72,6 @@ public class AimAssist extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.aimAssistEnabled;
+        return !DangerConfig.aimAssistEnabled || !DangerConfig.aaaDangerModeEnabled;
     }
 }

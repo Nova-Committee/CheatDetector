@@ -14,7 +14,7 @@ public class SpeedC extends Check {
 
     @Override
     public void _onTick() {
-        if (player.fabricPlayer.isSprinting()) {
+        if (player.fabricPlayer.isSprinting() && !player.fabricPlayer.isSwimming() && !player.fabricPlayer.isPassenger()) {
             double speed = PlayerMove.getXzTickSpeed(player.lastPos, player.currentPos);
             if (speed == 0) {
                 Vec3 motion = player.fabricPlayer.getDeltaMovement();

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced3Config;
-import top.infsky.cheatdetector.config.ModuleConfig;
+import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
@@ -137,7 +137,7 @@ public class Fly extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.flyEnabled || !ModuleConfig.aaaPASModeEnabled;
+        return !DangerConfig.flyEnabled || !DangerConfig.aaaDangerModeEnabled;
     }
 
     public enum State {

@@ -129,6 +129,11 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int motionAAlertBuffer = 10;
 
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean flyCCheck = false;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flyCAlertBuffer = 10;
+
     public static short getFlyAOnGroundJumpTick() {
         return (short) flyAOnGroundJumpTick;
     }

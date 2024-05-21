@@ -15,7 +15,6 @@ import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.mixins.ConnectionAccessor;
-import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 import java.util.Objects;
@@ -34,7 +33,9 @@ public class Rotation extends Module {
     @Nullable
     private static Float pitch = null;
 
-    private boolean canSprint = true;
+    private boolean stoppedSprint = false;
+    private long lastStopSprintTime = -1;
+
     public Rotation(@NotNull TRSelf player) {
         super("Rotation", player);
         instance = this;
@@ -51,17 +52,6 @@ public class Rotation extends Module {
             yaw = null;
             pitch = null;
         }
-
-        if (!Advanced3Config.rotationFixSprint) {
-            canSprint = true;
-        } else {
-            if (yaw != null && (TRPlayer.CLIENT.options.keyLeft.isDown() || TRPlayer.CLIENT.options.keyRight.isDown() || Math.abs(yaw - player.fabricPlayer.getYRot()) % 180 > 45)) {
-                player.fabricPlayer.setSprinting(false);
-                canSprint = false;
-            } else {
-                canSprint = true;
-            }
-        }
     }
 
     public void onFinallyPacketSend(ConnectionAccessor connection, Packet<?> basePacket, @Nullable PacketSendListener packetSendListener, ConnectionProtocol connectionProtocol, ConnectionProtocol connectionProtocol2, CallbackInfo ci) {
@@ -77,6 +67,17 @@ public class Rotation extends Module {
 
         if (basePacket instanceof ServerboundMovePlayerPacket packet) {
             ci.cancel();
+
+            if (Advanced3Config.rotationFixSprintVulcan && yaw != null && pitch != null) {
+                if (!stoppedSprint && player.upTime - lastStopSprintTime > Advanced3Config.rotationFixSprintDelay) {
+                    player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING));
+                    stoppedSprint = true;
+                    lastStopSprintTime = player.upTime;
+                }
+            } else if (stoppedSprint) {
+                player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.START_SPRINTING));
+            }
+
             if (basePacket instanceof Pos) {
                 send(connection, new Pos(packet.getX(player.fabricPlayer.getX()), packet.getY(player.fabricPlayer.getY()), packet.getZ(player.fabricPlayer.getZ()), packet.isOnGround()), packetSendListener, connectionProtocol, connectionProtocol2);
             } else if (basePacket instanceof Rot) {
@@ -88,13 +89,9 @@ public class Rotation extends Module {
             }
         }
         if (basePacket instanceof ServerboundPlayerCommandPacket packet) {
-            if (!canSprint) {
-                if (player.fabricPlayer.isSprinting()) {
-                    player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING));
-                }
+            if (Advanced3Config.rotationFixSprintVulcan && stoppedSprint) {
                 if (packet.getAction() == ServerboundPlayerCommandPacket.Action.START_SPRINTING) {
                     ci.cancel();
-                    player.fabricPlayer.setSprinting(false);
                 }
             }
         }

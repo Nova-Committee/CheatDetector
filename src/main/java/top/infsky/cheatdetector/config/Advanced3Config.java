@@ -155,50 +155,50 @@ public class Advanced3Config {
     public static int scaffoldPlaceMinDelay = 1;
 
     @Numeric(minValue = 0, maxValue = 15, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistRange = 6;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistInteract = false;
     @Numeric(minValue = -1, maxValue = 1, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistOffsetX = 0.024;
     @Numeric(minValue = -1, maxValue = 1, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistOffsetY = -0.11;
     @Numeric(minValue = -1, maxValue = 1, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistOffsetZ = -0.018;
     @Numeric(minValue = 0, maxValue = 50)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistYawSpeed = 4.5;
     @Numeric(minValue = 0, maxValue = 50)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistPitchSpeed = 2.0;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistStopOnTarget = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistNoise1 = false;
     @Numeric(minValue = 0, maxValue = 5, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistYawRandom = 1.3;
     @Numeric(minValue = 0, maxValue = 5, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistPitchRandom = 1.08;
     @Numeric(minValue = 0, maxValue = 1, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistXZRandom = 0.08;
     @Numeric(minValue = 0, maxValue = 1, useSlider = true)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double aimAssistYRandom = 0.1;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.AimAssistLegitMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistNoise2 = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistIncludeArmorStands = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistIncludeEntities = true;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistIncludeAnyObjects = false;
-    @Config(category = ConfigCategory.ADVANCED3)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean aimAssistIncludePlayers = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
@@ -214,38 +214,38 @@ public class Advanced3Config {
     public static boolean handSpinDiffSwing = false;
 
     @Numeric(minValue = 0, maxValue = 6)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double nukerRange = 4.5;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean nukerDoRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean nukerSilentRotation = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean nukerKeepGround = false;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean nukerYCheck = false;
     @Numeric(minValue = 1, maxValue = 20)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static int nukerMultiBreak = 1;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean airStuckCancelPacket = true;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean airStuckLegit = false;
     @Numeric(minValue = -1, maxValue = 20)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double airStuckMinDistanceBeforeGround = -1;
     @Numeric(minValue = -1, maxValue = 20)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double airStuckMinFallDistance = -1;
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean airStuckAntiKick = false;
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static String clientSpoofBrand = "vanilla";
 
     @Numeric(minValue = 0, maxValue = 5)
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double flyAcceptTeleportMaxDistance = 1;
 
     @Numeric(minValue = 1, maxValue = Integer.MAX_VALUE)
@@ -258,12 +258,39 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotMessage = true;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiBotLatency = false;
+    public static boolean antiBotLatency = true;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotDebug = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiBotApi = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean rotationFixSprint = true;
+    public static boolean rotationFixSprintVulcan = true;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static int rotationFixSprintDelay = 10;
+
+    @Numeric(minValue = -10, maxValue = 10)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static double slowMotionMultiplyXZ = 0.6;
+    @Numeric(minValue = -10, maxValue = 10)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static double slowMotionMultiplyY = 0.6;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static boolean slowMotionLimit = false;
+    @Numeric(minValue = 0, maxValue = 10)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static double slowMotionLimitXZ = 0.15;
+    @Numeric(minValue = 0, maxValue = 10)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static double slowMotionLimitY = 0.15;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static boolean slowMotionOnlyElytra = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static boolean slowMotionNotWhileFallFlying = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static boolean slowMotionStopOnDisabled = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
+    public static boolean slowMotionFastStop = false;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

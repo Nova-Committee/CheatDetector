@@ -51,6 +51,8 @@ public class CheckManager {
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
         pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
+        normal.put(FlyB.class, new FlyB(player));
+        normal.put(FlyC.class, new FlyC(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
@@ -58,7 +60,6 @@ public class CheckManager {
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
-        normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
@@ -73,6 +74,8 @@ public class CheckManager {
         pre.put(GroundSpoofA.class, new GroundSpoofA(player));
         pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
+        normal.put(FlyB.class, new FlyB(player));
+        normal.put(FlyC.class, new FlyC(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
@@ -80,7 +83,6 @@ public class CheckManager {
         normal.put(HighJumpA.class, new HighJumpA(player));
         normal.put(NoSlowA.class, new NoSlowA(player));
         normal.put(GameModeA.class, new GameModeA(player));
-        normal.put(FlyB.class, new FlyB(player));
         normal.put(VelocityA.class, new VelocityA(player));
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
@@ -116,6 +118,7 @@ public class CheckManager {
         post.put(AntiBot.class, new AntiBot(player));
         post.put(Rotation.class, new Rotation(player));
         post.put(Sprint.class, new Sprint(player));
+        post.put(SlowMotion.class, new SlowMotion(player));
 
         return new CheckManager(pre, normal, post, player);
     }

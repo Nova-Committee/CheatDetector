@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.mixins.ConnectionAccessor;
 import top.infsky.cheatdetector.utils.TRSelf;
@@ -45,6 +46,6 @@ public class NoRotateSet extends Module {
 
     @Override
     public boolean isDisabled() {
-        return !ModuleConfig.noRotateSetEnabled || (ModuleConfig.flyEnabled && ModuleConfig.aaaPASModeEnabled);
+        return !ModuleConfig.noRotateSetEnabled || (DangerConfig.flyEnabled && DangerConfig.aaaDangerModeEnabled);
     }
 }

@@ -66,23 +66,11 @@ public class ModuleConfig {
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
-    public static boolean aimAssistEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES)
     public static boolean handSpinEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean debugEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean nukerEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES)
-    public static boolean airStuckEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
@@ -91,10 +79,6 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
     public static boolean noJumpDelayEnabled = false;
-
-    @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
-    public static boolean flyEnabled = false;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)

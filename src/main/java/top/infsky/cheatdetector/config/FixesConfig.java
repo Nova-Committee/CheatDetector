@@ -13,10 +13,6 @@ public class FixesConfig {
     @Config(category = ConfigCategory.FIXES)
     public static @NotNull String packetFixMode = "NORMAL";
 
-    @Hotkey
-    @Config(category = ConfigCategory.FIXES)
-    public static boolean vulcanOmniSprintEnabled = false;
-
     public static @NotNull Fixes getPacketFixMode() {
         Fixes result;
         switch (packetFixMode.toUpperCase()) {

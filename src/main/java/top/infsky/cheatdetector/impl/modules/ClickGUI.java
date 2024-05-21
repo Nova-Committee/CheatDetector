@@ -60,6 +60,7 @@ public class ClickGUI extends Module {
         manager.parseConfigClass(AntiCheatConfig.class);
         manager.parseConfigClass(FixesConfig.class);
         manager.parseConfigClass(ModuleConfig.class);
+        manager.parseConfigClass(DangerConfig.class);
         manager.parseConfigClass(AlertConfig.class);
         manager.parseConfigClass(AdvancedConfig.class);
         manager.parseConfigClass(Advanced2Config.class);

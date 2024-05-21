@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.utils.packet.NetUtils;
 import top.infsky.cheatdetector.impl.utils.world.EntityUtils;
@@ -50,7 +51,9 @@ public class AntiVanish extends Module {
         if (basePacket instanceof ClientboundPlayerInfoRemovePacket packet) {
             packet.profileIds().forEach(uuid -> EntityUtils.getName(uuid).ifPresentOrElse(
                     this::onPlayerLeave,
-                    () -> player.timeTask.execute(() -> onPlayerLeave(NetUtils.get("https://api.mojang.com/user/profile/%s".formatted(uuid), "name")))));
+                    Advanced3Config.antiBotApi ?
+                            () -> player.timeTask.execute(() -> onPlayerLeave(NetUtils.get("https://api.mojang.com/user/profile/%s".formatted(uuid), "name"))) :
+                            () -> customMsg("receive invalid player leave packet: %s".formatted(uuid))));
         }
         if (basePacket instanceof ClientboundSystemChatPacket packet) {
             for (String end : possiblePlayerLeaveMsg) {

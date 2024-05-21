@@ -6,6 +6,7 @@ import top.hendrixshen.magiclib.dependency.api.ConfigDependencyPredicate;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
 import top.hendrixshen.magiclib.malilib.impl.ConfigOption;
 import top.infsky.cheatdetector.config.Advanced3Config;
+import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class ConfigPredicate {
 
     }
 
+    public static class DangerMode implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption option) {
+            return DangerConfig.aaaDangerModeEnabled;
+        }
+
+    }
+
     public static class FakelagLatencyMode implements ConfigDependencyPredicate {
         @Override
         public boolean isSatisfied(ConfigOption configOption) {
@@ -38,13 +47,6 @@ public class ConfigPredicate {
         @Override
         public boolean isSatisfied(ConfigOption configOption) {
             return Advanced3Config.getFakelagMode() == Advanced3Config.FakelagMode.DYNAMIC;
-        }
-    }
-
-    public static class AimAssistLegitMode implements ConfigDependencyPredicate {
-        @Override
-        public boolean isSatisfied(ConfigOption configOption) {
-            return !Advanced3Config.aimAssistInteract;
         }
     }
 }

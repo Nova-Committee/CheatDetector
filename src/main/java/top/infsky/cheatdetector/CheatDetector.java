@@ -35,7 +35,11 @@ public class CheatDetector implements ClientModInitializer {
         ClickGUI.register(configManager);
         CONFIG_HANDLER = new ConfigHandler(MOD_ID, configManager, 1);
         ConfigHandler.register(CONFIG_HANDLER);
-        CONFIG_HANDLER.configManager.getAllOptions().forEach(option -> option.setValueChangeCallback(configOption -> ClickGUI.update()));
+
+        CheatDetector.CONFIG_HANDLER.configManager.getOptionByName("aaaPASModeEnabled").orElseThrow().setValueChangeCallback(configOption -> ClickGUI.update());
+        CheatDetector.CONFIG_HANDLER.configManager.getOptionByName("aaaDangerModeEnabled").orElseThrow().setValueChangeCallback(configOption -> ClickGUI.update());
+        CheatDetector.CONFIG_HANDLER.configManager.getOptionByName("fakelagMode").orElseThrow().setValueChangeCallback(configOption -> ClickGUI.update());
+        CheatDetector.CONFIG_HANDLER.configManager.getOptionByName("aimAssistInteract").orElseThrow().setValueChangeCallback(configOption -> ClickGUI.update());
 
         // command
         ClientCommandRegistrationCallback.EVENT.register(CommandEvent::register);
