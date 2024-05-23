@@ -241,7 +241,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean airStuckAntiKick = false;
 
-    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.ADVANCED3)
     public static String clientSpoofBrand = "vanilla";
 
     @Numeric(minValue = 0, maxValue = 5)
@@ -291,6 +291,24 @@ public class Advanced3Config {
     public static boolean slowMotionStopOnDisabled = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean slowMotionFastStop = false;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static String autoCatchName = "";
+    @Numeric(minValue = 0, maxValue = 100)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double autoCatchDistance = 6;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean autoCatchFast = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean autoCatchAlways = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean autoCatchAsPossible = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double autoCatchAsPossibleTeleportDistance = 10;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean autoCatchRotate = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean autoCatchSilentRotate = false;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

@@ -2,11 +2,8 @@ package top.infsky.cheatdetector.impl.modules.pas;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
@@ -31,10 +28,11 @@ public class AntiBot extends Module {
     private static final String botLeftMsg = " left the game";
 
     @Getter
-    private static List<PlayerInfo> botList = new ArrayList<>();
+    private static List<UUID> botList = new LinkedList<>();
 
     public AntiBot(@NotNull TRSelf player) {
         super("AntiBot", player);
+        botList = new LinkedList<>();
         instance = this;
     }
 
@@ -54,10 +52,10 @@ public class AntiBot extends Module {
                 String msg = packet.content().getString();
                 try {
                     if (msg.endsWith(botJoinMsg)) {
-                        final String name = msg.substring(0, msg.length() - botJoinMsg.length());
+                        String name = msg.substring(0, msg.length() - botJoinMsg.length());
                         addBotVisual(player.fabricPlayer.connection.getPlayerInfo(name));
                     } else if (msg.endsWith(botLeftMsg)) {
-                        final String name = msg.substring(0, msg.length() - botLeftMsg.length());
+                        String name = msg.substring(0, msg.length() - botLeftMsg.length());
                         removeBotVisual(player.fabricPlayer.connection.getPlayerInfo(name));
                     }
                 } catch (NullPointerException e) {
@@ -65,8 +63,8 @@ public class AntiBot extends Module {
                 }
             }
             if (Advanced3Config.antiBotLatency && basePacket instanceof ClientboundPlayerInfoUpdatePacket packet) {
-                List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
-                if (packet.newEntries().isEmpty()) {
+                if (packet.actions().stream().allMatch(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY::equals)) {
+                    List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
                     packet.entries().forEach(entry -> {
                         try {
                             PlayerInfo playerInfo = Objects.requireNonNull(player.fabricPlayer.connection.getPlayerInfo(entry.profileId()));
@@ -84,14 +82,11 @@ public class AntiBot extends Module {
     }
 
     private void addBotVisual(PlayerInfo playerInfo) {
-        if (botList.contains(playerInfo)) return;
+        if (playerInfo == null) return;
+        if (botList.contains(playerInfo.getProfile().getId())) return;
         player.timeTask.schedule(() -> {
-            MutableComponent displayName = Objects.requireNonNullElse(playerInfo.getTabListDisplayName(), Component.literal(playerInfo.getProfile().getName())).copy();
-            if (displayName.getString().startsWith(Component.translatable("cheatdetector.overlay.tab.bot").withStyle(ChatFormatting.AQUA).getString())) return;
-            playerInfo.setTabListDisplayName(Component.literal(
-                    Component.translatable("cheatdetector.overlay.tab.bot").withStyle(ChatFormatting.AQUA).getString() + ChatFormatting.RESET + displayName.getString()
-            ));
-            botList.add(playerInfo);
+            if (getBotList().contains(playerInfo.getProfile().getId())) return;
+            getBotList().add(playerInfo.getProfile().getId());
             if (Advanced3Config.antiBotDebug) {
                 customMsg("remove bot :)");
             }
@@ -99,14 +94,11 @@ public class AntiBot extends Module {
     }
 
     private void removeBotVisual(PlayerInfo playerInfo) {
-        if (!botList.contains(playerInfo)) return;
+        if (playerInfo == null) return;
+        if (!botList.contains(playerInfo.getProfile().getId())) return;
         player.timeTask.schedule(() -> {
-            MutableComponent displayName = Objects.requireNonNullElse(playerInfo.getTabListDisplayName(), Component.literal(playerInfo.getProfile().getName())).copy();
-            if (!displayName.getString().startsWith(Component.translatable("cheatdetector.overlay.tab.bot").withStyle(ChatFormatting.AQUA).getString())) return;
-            playerInfo.setTabListDisplayName(Component.literal(
-                    displayName.getString().substring(Component.translatable("cheatdetector.overlay.tab.bot").withStyle(ChatFormatting.AQUA).getString().length())
-            ));
-            botList.remove(playerInfo);
+            if (getBotList().contains(playerInfo.getProfile().getId())) return;
+            getBotList().remove(playerInfo.getProfile().getId());
         }, player.getLatency() + 150, TimeUnit.MILLISECONDS);
     }
 

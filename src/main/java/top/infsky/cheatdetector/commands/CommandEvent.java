@@ -38,6 +38,11 @@ public class CommandEvent {
                         .then(argument("part", IntegerArgumentType.integer(1))
                                 .executes(WriterCommand::execute))
                 )
+                .then(literal("catch")
+                        .executes(CatchCommand::execute)
+                        .then(argument("name", StringArgumentType.string())
+                                .executes(CatchCommand::execute))
+                )
         );
     }
 }

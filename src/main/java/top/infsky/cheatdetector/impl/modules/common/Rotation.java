@@ -74,8 +74,10 @@ public class Rotation extends Module {
                     stoppedSprint = true;
                     lastStopSprintTime = player.upTime;
                 }
-            } else if (stoppedSprint) {
-                player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.START_SPRINTING));
+            } else {
+                if (stoppedSprint)
+                    player.fabricPlayer.connection.send(new ServerboundPlayerCommandPacket(player.fabricPlayer, ServerboundPlayerCommandPacket.Action.START_SPRINTING));
+                stoppedSprint = false;
             }
 
             if (basePacket instanceof Pos) {

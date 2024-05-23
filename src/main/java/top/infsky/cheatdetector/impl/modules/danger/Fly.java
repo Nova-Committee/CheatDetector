@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.pas;
+package top.infsky.cheatdetector.impl.modules.danger;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;

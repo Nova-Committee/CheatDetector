@@ -4,6 +4,8 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.jetbrains.annotations.NotNull;
+import top.infsky.cheatdetector.impl.modules.pas.AntiBot;
+import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 
 import java.util.*;
 
@@ -24,7 +26,11 @@ public class PlayerManager {
 
         // 遍历活动玩家
         try {
-            for (AbstractClientPlayer player : client.level.players()) {
+            for (AbstractClientPlayer player : LevelUtils.getClientLevel().players()) {
+                if (AntiBot.getBotList().stream().anyMatch(player.getUUID()::equals)) {
+                    continue;
+                }
+
                 final UUID uuid = player.getUUID();
                 if (!activeMap.containsKey(uuid)) {
                     final TRPlayer trPlayer;

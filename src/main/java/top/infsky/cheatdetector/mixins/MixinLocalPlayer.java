@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.infsky.cheatdetector.impl.modules.common.AirStuck;
-import top.infsky.cheatdetector.impl.modules.pas.Fly;
+import top.infsky.cheatdetector.impl.modules.danger.AirStuck;
+import top.infsky.cheatdetector.impl.modules.danger.Fly;
 
 @Mixin(LocalPlayer.class)
 public abstract class MixinLocalPlayer {

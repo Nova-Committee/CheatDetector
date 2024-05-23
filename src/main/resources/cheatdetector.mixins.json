@@ -16,6 +16,6 @@
     "MixinConnection",
     "MixinLocalPlayer",
     "MixinMultiPlayerGameMode",
-    "MouseHandlerAccessor"
+    "MixinEntity"
   ]
 }

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.impl.modules.pas.Fly;
+import top.infsky.cheatdetector.impl.modules.danger.Fly;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;

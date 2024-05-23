@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.pas;
+package top.infsky.cheatdetector.impl.modules.danger;
 
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;

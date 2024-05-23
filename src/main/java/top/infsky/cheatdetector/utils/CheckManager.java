@@ -13,6 +13,7 @@ import top.infsky.cheatdetector.impl.modules.*;
 import top.infsky.cheatdetector.impl.fixes.vulcan.*;
 import top.infsky.cheatdetector.impl.fixes.pas.*;
 import top.infsky.cheatdetector.impl.modules.common.*;
+import top.infsky.cheatdetector.impl.modules.danger.*;
 import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagDynamic;
 import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagLatency;
 import top.infsky.cheatdetector.impl.modules.pas.*;
@@ -119,6 +120,7 @@ public class CheckManager {
         post.put(Rotation.class, new Rotation(player));
         post.put(Sprint.class, new Sprint(player));
         post.put(SlowMotion.class, new SlowMotion(player));
+        post.put(AutoCatch.class, new AutoCatch(player));
 
         return new CheckManager(pre, normal, post, player);
     }

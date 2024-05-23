@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.common;
+package top.infsky.cheatdetector.impl.modules.danger;
 
 import lombok.Getter;
 import net.minecraft.client.multiplayer.ClientLevel;

@@ -6,10 +6,11 @@ import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class ContainerUtils {
-    public static class ItemNotFoundException extends RuntimeException {
+    public static class ItemNotFoundException extends NoSuchElementException {
         public ItemNotFoundException(String message) {
             super(message);
         }

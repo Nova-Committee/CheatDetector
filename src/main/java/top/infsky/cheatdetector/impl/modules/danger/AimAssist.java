@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.common;
+package top.infsky.cheatdetector.impl.modules.danger;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

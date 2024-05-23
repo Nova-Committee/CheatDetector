@@ -22,11 +22,11 @@ public class ListUtils {
     }
 
     @Contract(pure = true)
-    public static @NotNull String getSpilt(@NotNull List<String> list, String end) {
+    public static @NotNull String getSpilt(@NotNull List<?> list, String end) {
         if (list.isEmpty()) return "";
 
         StringBuilder sb = new StringBuilder();
-        for (String item : list) {
+        for (Object item : list) {
             sb.append(item);
             sb.append(", ");
         }
@@ -36,7 +36,7 @@ public class ListUtils {
     }
 
     @Contract(pure = true)
-    public static @NotNull String getSpilt(@NotNull List<String> list) {
+    public static @NotNull String getSpilt(@NotNull List<?> list) {
         return getSpilt(list, "");
     }
 }
