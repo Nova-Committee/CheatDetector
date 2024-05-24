@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.Objects;
 
@@ -35,5 +36,28 @@ public class PlayerMove {
         } catch (NullPointerException e) {
             return 1.252203340253729;
         }
+    }
+
+    public static boolean isMove() {
+        return TRPlayer.CLIENT.options.keyUp.isDown()
+                || TRPlayer.CLIENT.options.keyDown.isDown()
+                || TRPlayer.CLIENT.options.keyLeft.isDown()
+                || TRPlayer.CLIENT.options.keyRight.isDown();
+    }
+
+    /**
+     * Gets the players predicted jump motion the specified amount of ticks ahead
+     *
+     * @return predicted jump motion
+     */
+    public static double predictedMotion(final double motion, final int ticks) {
+        if (ticks == 0) return motion;
+        double predicted = motion;
+
+        for (int i = 0; i < ticks; i++) {
+            predicted = (predicted - 0.08) * 0.98F;
+        }
+
+        return predicted;
     }
 }

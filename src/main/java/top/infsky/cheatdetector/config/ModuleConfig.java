@@ -99,4 +99,8 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean autoCatchEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    public static boolean speedEnabled = false;
 }

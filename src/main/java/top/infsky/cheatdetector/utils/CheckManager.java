@@ -121,6 +121,7 @@ public class CheckManager {
         post.put(Sprint.class, new Sprint(player));
         post.put(SlowMotion.class, new SlowMotion(player));
         post.put(AutoCatch.class, new AutoCatch(player));
+        post.put(Speed.class, new Speed(player));
 
         return new CheckManager(pre, normal, post, player);
     }

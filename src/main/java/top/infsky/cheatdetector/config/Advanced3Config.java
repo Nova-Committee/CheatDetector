@@ -312,6 +312,10 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean autoCatchSilentRotate = false;
 
+    @Numeric(minValue = 0, maxValue = 4)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static int speedBoost = 2;
+
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {
             return NotebotUtils.NotebotMode.AnyInstrument;

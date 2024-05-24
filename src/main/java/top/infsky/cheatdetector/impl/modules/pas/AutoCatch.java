@@ -45,9 +45,9 @@ public class AutoCatch extends Module {
     private void doCatch() {
         try {
             target = LevelUtils.getClientLevel().players().stream()
-                            .filter(p -> p.getName().getString().endsWith(Advanced3Config.autoCatchName))
-                            .findAny()
-                            .orElseThrow();
+                    .filter(p -> p.getName().getString().endsWith(Advanced3Config.autoCatchName))
+                    .min((p1, p2) -> (int) (p1.distanceTo(player.fabricPlayer) - p2.distanceTo(player.fabricPlayer)))
+                    .orElseThrow();
 
             double distance = target.distanceTo(player.fabricPlayer);
             if (distance > Advanced3Config.autoCatchDistance && !Advanced3Config.autoCatchAsPossible) return;
