@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,8 @@ public class AutoCatch extends Module {
     @Getter
     @Nullable
     private static Module instance = null;
+    @Nullable
+    private AbstractClientPlayer target;
     public AutoCatch(@NotNull TRSelf player) {
         super("AutoCatch", player);
         instance = this;
@@ -30,7 +33,10 @@ public class AutoCatch extends Module {
 
     @Override
     public void _onTick() {
-        if (isDisabled()) return;
+        if (isDisabled()) {
+            target = null;
+            return;
+        }
         if (!Advanced3Config.autoCatchAlways && player.fabricPlayer.isPassenger()) return;
 
         doCatch();
@@ -38,10 +44,10 @@ public class AutoCatch extends Module {
 
     private void doCatch() {
         try {
-            AbstractClientPlayer target = LevelUtils.getClientLevel().players().stream()
-                    .filter(p -> p.getGameProfile().getName().equals(Advanced3Config.autoCatchName))
-                    .findFirst()
-                    .orElseThrow();
+            target = LevelUtils.getClientLevel().players().stream()
+                            .filter(p -> p.getName().getString().endsWith(Advanced3Config.autoCatchName))
+                            .findAny()
+                            .orElseThrow();
 
             double distance = target.distanceTo(player.fabricPlayer);
             if (distance > Advanced3Config.autoCatchDistance && !Advanced3Config.autoCatchAsPossible) return;
@@ -52,7 +58,9 @@ public class AutoCatch extends Module {
                     return;
                 }
             }
-            player.fabricPlayer.setDeltaMovement(0, 0, 0);
+            if (Advanced3Config.autoCatchResetMotion) {
+                player.fabricPlayer.setDeltaMovement(0, 0, 0);
+            }
 
             player.fabricPlayer.getInventory().selected = ContainerUtils.findItem(player.fabricPlayer.getInventory(), AirItem.class, ContainerUtils.SlotType.HOTBAR);
             if (Advanced3Config.autoCatchRotate) {
@@ -68,7 +76,8 @@ public class AutoCatch extends Module {
             player.fabricPlayer.setSilent(false);
             player.fabricPlayer.connection.send(ServerboundInteractPacket.createInteractionPacket(target, false, InteractionHand.MAIN_HAND, player.fabricPlayer.position()));
             player.fabricPlayer.swing(InteractionHand.MAIN_HAND);
-        } catch (NoSuchElementException ignored) {
+        } catch (NoSuchElementException | NullPointerException e) {
+            target = null;
         }
     }
 
@@ -92,11 +101,13 @@ public class AutoCatch extends Module {
         }
     }
 
-    public void onStopRiding() {
+    public void onStopRiding(Entity entity) {
         if (isDisabled()) return;
         if (!Advanced3Config.autoCatchFast) return;
 
-        doCatch();
+        if (target != null && entity.is(target)) {
+            doCatch();
+        }
     }
 
     @Override

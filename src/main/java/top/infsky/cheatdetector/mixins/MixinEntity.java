@@ -15,7 +15,7 @@ public class MixinEntity {
         AutoCatch autoCatch = (AutoCatch) AutoCatch.getInstance();
 
         if (autoCatch != null) {
-            autoCatch.onStopRiding();
+            autoCatch.onStopRiding((Entity) (Object) this);
         }
     }
 }

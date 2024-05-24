@@ -294,7 +294,7 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static String autoCatchName = "";
-    @Numeric(minValue = 0, maxValue = 100)
+    @Numeric(minValue = 0, maxValue = 6)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static double autoCatchDistance = 6;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
@@ -304,7 +304,9 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean autoCatchAsPossible = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
-    public static double autoCatchAsPossibleTeleportDistance = 10;
+    public static boolean autoCatchResetMotion = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double autoCatchAsPossibleTeleportDistance = 6;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean autoCatchRotate = false;
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)

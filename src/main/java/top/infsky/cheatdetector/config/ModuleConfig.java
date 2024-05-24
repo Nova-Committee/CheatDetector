@@ -90,7 +90,7 @@ public class ModuleConfig {
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)
-    public static boolean rotationEnabled = false;
+    public static boolean rotationEnabled = true;
 
     @Hotkey
     @Config(category = ConfigCategory.MODULES)

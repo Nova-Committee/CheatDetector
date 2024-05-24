@@ -13,7 +13,7 @@ public class AdvancedConfig {
 
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyACheck = false;
+    public static boolean flyACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flyAlertBuffer = 20;
     @Config(category = ConfigCategory.ADVANCED)
@@ -26,9 +26,6 @@ public class AdvancedConfig {
     public static double flyAFromWaterYDistance = 0.5;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flyAOnTeleportDisableTick = 2;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAOnJumpJumpTick = 24;
-
 
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean flyBCheck = true;
@@ -43,7 +40,7 @@ public class AdvancedConfig {
 
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean highJumpACheck = true;
+    public static boolean highJumpACheck = false;
     @Config(category = ConfigCategory.ADVANCED)
     public static int highJumpAAlertBuffer = 5;
     @Config(category = ConfigCategory.ADVANCED)
@@ -109,6 +106,7 @@ public class AdvancedConfig {
     public static boolean groundSpoofACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int groundSpoofAAlertBuffer = 6;
+
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean groundSpoofBCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
@@ -125,7 +123,7 @@ public class AdvancedConfig {
     public static int speedCAlertBuffer = 10;
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean motionACheck = false;
+    public static boolean motionACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int motionAAlertBuffer = 10;
 
@@ -148,10 +146,6 @@ public class AdvancedConfig {
 
     public static short getFlyAOnTeleportDisableTick() {
         return (short) flyAOnTeleportDisableTick;
-    }
-
-    public static short getFlyAOnJumpJumpTick() {
-        return (short) flyAOnJumpJumpTick;
     }
 
     public static short getNoSlowAInJumpDisableTick() {

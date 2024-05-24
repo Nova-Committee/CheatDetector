@@ -51,6 +51,11 @@ public class ServerFreeze extends Fix {
 
     @Override
     public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
+        if (player.upTime - lastReceiveTime > Advanced2Config.serverFreezeMaxTicks) {
+            customMsg(Component.translatable("cheatdetector.chat.alert.freezeDetected").getString()
+                    + ChatFormatting.DARK_GRAY + (player.upTime - lastReceiveTime) * 50 + "ms");
+        }
+
         lastReceiveTime = player.upTime;
         return false;
     }

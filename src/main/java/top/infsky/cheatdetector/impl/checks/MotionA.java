@@ -61,7 +61,7 @@ public class MotionA extends Check {
         } else if (jumpFromY != null) {
             if (jumpFromY == player.currentPos.y()) {  // 满足判断条件
                 try {
-                    List<Double> possibleMotion = Objects.requireNonNull(getPossibleMotions());
+                    List<Double> possibleMotion = Objects.requireNonNull(getPossibleMotions(player));
 
                     check:
                     try {
@@ -102,7 +102,7 @@ public class MotionA extends Check {
         return !player.fabricPlayer.getAbilities().flying;
     }
 
-    private @Nullable List<Double> getPossibleMotions() {
+    public static @Nullable List<Double> getPossibleMotions(@NotNull TRPlayer player) {
         List<Double> result;
         Map<MobEffect, MobEffectInstance> activeEffectsMap = player.fabricPlayer.getActiveEffectsMap();
         if (!activeEffectsMap.containsKey(MobEffects.JUMP)) {

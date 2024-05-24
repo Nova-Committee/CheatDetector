@@ -8,6 +8,8 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
+import java.util.List;
+
 public class FlyA extends Check {
     public short jumpTick = 0;
     public short liquidTick = 0;
@@ -20,8 +22,8 @@ public class FlyA extends Check {
     @Override
     public void _onTick() {
         if (isDisabled()) return;
-        if (player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
-                || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) return;
+        if ((player.fabricPlayer.getMainHandItem().getItem() instanceof TridentItem
+                || player.fabricPlayer.getOffhandItem().getItem() instanceof TridentItem) && player.fabricPlayer.isUsingItem()) return;
         if (player.fabricPlayer.isPassenger()) return;
         if (player.fabricPlayer.isFallFlying()) {
             jumpTick = Short.MAX_VALUE;
@@ -78,8 +80,9 @@ public class FlyA extends Check {
 
     @Override
     public void _onJump() {
-        // fix jump
-        jumpTick = AdvancedConfig.getFlyAOnJumpJumpTick();
+        List<Double> motions = MotionA.getPossibleMotions(player);
+
+        jumpTick = motions != null ? (short) motions.size() : Short.MAX_VALUE;
     }
 
     @Override

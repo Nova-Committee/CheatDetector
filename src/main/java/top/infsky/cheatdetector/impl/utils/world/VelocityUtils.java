@@ -6,13 +6,11 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.MagmaBlock;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +19,7 @@ public class VelocityUtils {
             Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH
     );
     public static final List<MobEffect> HURT_EFFECTS = List.of(
-            MobEffects.WITHER, MobEffects.POISON
+            MobEffects.WITHER, MobEffects.POISON, MobEffects.HARM
     );
 
     public enum VelocityDirection {
@@ -36,12 +34,6 @@ public class VelocityUtils {
         // passenger
         if (player.fabricPlayer.isPassenger())
             return false;
-
-//        // 下界合金套
-//        for (ItemStack itemStack : player.fabricPlayer.getInventory().armor) {
-//            if (NETHERITE_KITS.contains(itemStack.getItem()))
-//                return false;
-//        }
 
         // fire
         if ((player.fabricPlayer.isOnFire() || player.fabricPlayer.isInLava()) && !hasEffects.contains(MobEffects.FIRE_RESISTANCE))
@@ -61,43 +53,38 @@ public class VelocityUtils {
                 return false;
         }
 
-        try (Level level = CheatDetector.CLIENT.level) {
-            if (level == null) return false;
+        // MagmaBlock
+        if (player.fabricPlayer.getBlockStateOn().is(Blocks.MAGMA_BLOCK))
+            return false;
 
-            // hunger
-            if (player.fabricPlayer.getFoodData().getFoodLevel() == 0 && level.getDifficulty() == Difficulty.HARD)
-                return false;
+        Level level = LevelUtils.getClientLevel();
 
-            // MagmaBlock
-            if (level.getBlockState(player.fabricPlayer.blockPosition().below()).getBlock() instanceof MagmaBlock)
-                return false;
+        // hunger
+        if (player.fabricPlayer.getFoodData().getFoodLevel() == 0 && level.getDifficulty() == Difficulty.HARD)
+            return false;
 
-
-            // has block
-            if (velocityDirection != null) {
-                final BlockPos feetBlock = player.fabricPlayer.blockPosition();
-                switch (velocityDirection) {
-                    case ALL: {
-                    }
-                    case HORIZON: {
-                        for (Direction direction : HORIZON_DIRECTION) {
-                            if (!level.getBlockState(feetBlock.relative(direction)).isAir())
-                                return false;
-                        }
-                        if (velocityDirection == VelocityDirection.HORIZON) break;
-                    }
-                    case VERTICAL: {
-                        if (!level.getBlockState(feetBlock.above()).isAir()
-                                || !level.getBlockState(feetBlock).isAir()
-                                || !level.getBlockState(feetBlock.above()).isAir()) {
+        // has block
+        if (velocityDirection != null) {
+            final BlockPos feetBlock = player.fabricPlayer.blockPosition();
+            switch (velocityDirection) {
+                case ALL: {
+                }
+                case HORIZON: {
+                    for (Direction direction : HORIZON_DIRECTION) {
+                        if (!level.getBlockState(feetBlock.relative(direction)).isAir())
                             return false;
-                        }
-                        break;
                     }
+                    if (velocityDirection == VelocityDirection.HORIZON) break;
+                }
+                case VERTICAL: {
+                    if (!level.getBlockState(feetBlock.above()).isAir()
+                            || !level.getBlockState(feetBlock).isAir()
+                            || !level.getBlockState(feetBlock.above()).isAir()) {
+                        return false;
+                    }
+                    break;
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         // as default

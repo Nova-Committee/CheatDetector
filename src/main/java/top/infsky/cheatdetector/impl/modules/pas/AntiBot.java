@@ -32,7 +32,7 @@ public class AntiBot extends Module {
 
     public AntiBot(@NotNull TRSelf player) {
         super("AntiBot", player);
-        botList = new LinkedList<>();
+        botList.clear();
         instance = this;
     }
 
