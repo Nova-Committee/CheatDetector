@@ -82,7 +82,7 @@ public class FlyA extends Check {
     public void _onJump() {
         List<Double> motions = MotionA.getPossibleMotions(player);
 
-        jumpTick = motions != null ? (short) motions.size() : Short.MAX_VALUE;
+        jumpTick = motions != null ? (short) (motions.size() + 1) : Short.MAX_VALUE;
     }
 
     @Override

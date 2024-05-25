@@ -16,7 +16,7 @@ public class TRSelf extends TRPlayer {
     public Vec2 rotation;
     public boolean lastLeftPressed = false;
     public boolean currentLeftPressed = false;
-    public @NotNull ScheduledExecutorService timeTask = Executors.newScheduledThreadPool(4);
+    public @NotNull ScheduledExecutorService timeTask = Executors.newScheduledThreadPool(8);
 
     public TRSelf(@NotNull LocalPlayer player) {
         super(player, true);

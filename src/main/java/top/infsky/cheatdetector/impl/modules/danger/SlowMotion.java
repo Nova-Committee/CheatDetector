@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.utils.TRPlayer;
+import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public class SlowMotion extends Module {
@@ -44,7 +44,7 @@ public class SlowMotion extends Module {
         }
 
         if (Advanced3Config.slowMotionFastStop) {
-            if (!isMove()) {
+            if (!PlayerMove.isMove()) {
                 futureMotion = new Vec3(0, futureMotion.y(), 0);
             }
         }
@@ -52,13 +52,6 @@ public class SlowMotion extends Module {
         player.fabricPlayer.setDeltaMovement(futureMotion);
 
         lastEnabled = true;
-    }
-
-    private boolean isMove() {
-        return TRPlayer.CLIENT.options.keyUp.isDown()
-                || TRPlayer.CLIENT.options.keyLeft.isDown()
-                || TRPlayer.CLIENT.options.keyRight.isDown()
-                || TRPlayer.CLIENT.options.keyDown.isDown();
     }
 
     private double addToZero(double num, double offset) {

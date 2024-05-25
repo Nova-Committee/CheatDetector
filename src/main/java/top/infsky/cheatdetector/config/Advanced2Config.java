@@ -30,9 +30,9 @@ public class Advanced2Config {
     @Numeric(minValue = -1, maxValue = 600)
     @Config(category = ConfigCategory.ADVANCED2)
     public static int serverFreezePostDelay = -1;
-    @Numeric(minValue = 0, maxValue = Integer.MAX_VALUE)
+    @Numeric(minValue = 0, maxValue = 30000)
     @Config(category = ConfigCategory.ADVANCED2)
-    public static int serverFreezeMaxTicks = 20;
+    public static int serverFreezeMaxMs = 800;
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean serverFreezeAutoDisableCheck = true;
     @Config(category = ConfigCategory.ADVANCED2)

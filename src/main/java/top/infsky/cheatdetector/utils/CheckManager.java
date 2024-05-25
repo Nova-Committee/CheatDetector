@@ -64,6 +64,7 @@ public class CheckManager {
         normal.put(VelocityA.class, new VelocityA(player));
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
+        normal.put(ReachA.class, new ReachA(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -87,6 +88,7 @@ public class CheckManager {
         normal.put(VelocityA.class, new VelocityA(player));
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
+        normal.put(ReachA.class, new ReachA(player));
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
         pre.put(FastPlace.class, new FastPlace(player));
@@ -114,7 +116,7 @@ public class CheckManager {
         post.put(AirStuck.class, new AirStuck(player));
         pre.put(ClientSpoof.class, new ClientSpoof(player));
         post.put(Fly.class, new Fly(player));
-        post.put(NoJumpDelay.class, new NoJumpDelay(player));
+        pre.put(NoJumpDelay.class, new NoJumpDelay(player));
         post.put(Writer.class, new Writer(player));
         post.put(AntiBot.class, new AntiBot(player));
         post.put(Rotation.class, new Rotation(player));

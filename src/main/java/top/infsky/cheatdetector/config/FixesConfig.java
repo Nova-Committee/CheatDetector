@@ -6,7 +6,6 @@ import top.infsky.cheatdetector.config.utils.ConfigCategory;
 import top.infsky.cheatdetector.config.utils.Fixes;
 
 public class FixesConfig {
-    @Hotkey
     @Config(category = ConfigCategory.FIXES)
     public static boolean packetFixEnabled = false;
 

@@ -17,7 +17,7 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public class ServerFreeze extends Fix {
-    private long lastReceiveTime = -1;
+    private long lastReceiveTime = Long.MAX_VALUE;
     private int pingRequest = 0;
 
     public ServerFreeze(@NotNull TRSelf player) {
@@ -30,7 +30,8 @@ public class ServerFreeze extends Fix {
             return;
         }
 
-        if (player.upTime - lastReceiveTime > Advanced2Config.serverFreezeMaxTicks) {
+        long current = System.currentTimeMillis();
+        if (current - lastReceiveTime > Advanced2Config.serverFreezeMaxMs) {
             if (Advanced2Config.serverFreezeAutoDisableCheck)
                 CheatDetector.manager.getDataMap().forEach((uuid, player1) -> player1.manager.disableTick = 10);
             if (Advanced2Config.serverFreezeAlert) {
@@ -38,7 +39,7 @@ public class ServerFreeze extends Fix {
                         Component.literal(Component.translatable("cheatdetector.overlay.alert.serverFreezeAlert")
                                 .withStyle(ChatFormatting.DARK_RED)
                                 .getString()
-                                .formatted((player.upTime - lastReceiveTime) * 50)),
+                                .formatted(current - lastReceiveTime)),
                         false);
             }
         }
@@ -51,12 +52,13 @@ public class ServerFreeze extends Fix {
 
     @Override
     public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) {
-        if (player.upTime - lastReceiveTime > Advanced2Config.serverFreezeMaxTicks) {
+        long current = System.currentTimeMillis();
+        if (current - lastReceiveTime > Advanced2Config.serverFreezeMaxMs) {
             customMsg(Component.translatable("cheatdetector.chat.alert.freezeDetected").getString()
-                    + ChatFormatting.DARK_GRAY + (player.upTime - lastReceiveTime) * 50 + "ms");
+                    + ChatFormatting.DARK_RED + (current - lastReceiveTime) + "ms");
         }
 
-        lastReceiveTime = player.upTime;
+        lastReceiveTime = current;
         return false;
     }
 

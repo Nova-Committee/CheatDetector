@@ -14,8 +14,8 @@
     "LookAtPacketAccessor",
     "MinecraftAccessor",
     "MixinConnection",
-    "MixinLocalPlayer",
-    "MixinMultiPlayerGameMode",
-    "MixinEntity"
+    "MixinEntity",
+    "MixinKeyMapping",
+    "MixinMultiPlayerGameMode"
   ]
 }

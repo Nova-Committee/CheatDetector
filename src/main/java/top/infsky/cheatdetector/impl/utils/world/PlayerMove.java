@@ -1,11 +1,14 @@
 package top.infsky.cheatdetector.impl.utils.world;
 
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRPlayer;
+import top.infsky.cheatdetector.utils.TRSelf;
 
 import java.util.Objects;
 
@@ -59,5 +62,74 @@ public class PlayerMove {
         }
 
         return predicted;
+    }
+
+    /**
+     * Used to get the players speed
+     */
+    public static double speed(@NotNull Player player) {
+        Vec3 motion = player.getDeltaMovement();
+        return Math.hypot(motion.x(), motion.z());
+    }
+
+    /**
+     * Used to get the players speed
+     */
+    public static double speed() {
+        return speed(TRSelf.getInstance().getFabricPlayer());
+    }
+
+    /**
+     * Makes the player strafe
+     */
+    public static void strafe() {
+        strafe(speed());
+    }
+
+    /**
+     * Makes the player strafe at the specified speed
+     */
+    public static void strafe(final double speed) {
+        if (!isMove()) {
+            return;
+        }
+
+        TRSelf trSelf = TRSelf.getInstance();
+        final double yaw = direction();
+
+        trSelf.fabricPlayer.setDeltaMovement(-Mth.sin((float) yaw) * speed, trSelf.fabricPlayer.getDeltaMovement().y(), Mth.cos((float) yaw) * speed);
+    }
+
+    /**
+     * Gets the players' movement yaw
+     */
+    public static double direction() {
+        TRSelf trSelf = TRSelf.getInstance();
+
+        float moveForward = trSelf.fabricPlayer.input.forwardImpulse;
+        float moveStrafing = trSelf.fabricPlayer.input.leftImpulse;
+        float rotationYaw = trSelf.fabricPlayer.yRotO + (trSelf.fabricPlayer.getYRot() - trSelf.fabricPlayer.yRotO) * TRPlayer.CLIENT.getFrameTime();
+
+        if (moveForward < 0) {
+            rotationYaw += 180;
+        }
+
+        float forward = 1;
+
+        if (moveForward < 0) {
+            forward = -0.5F;
+        } else if (moveForward > 0) {
+            forward = 0.5F;
+        }
+
+        if (moveStrafing > 0) {
+            rotationYaw -= 70 * forward;
+        }
+
+        if (moveStrafing < 0) {
+            rotationYaw += 70 * forward;
+        }
+
+        return Math.toRadians(rotationYaw);
     }
 }

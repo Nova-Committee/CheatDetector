@@ -19,6 +19,7 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 public class AutoCatch extends Module {
     @Getter
@@ -75,7 +76,12 @@ public class AutoCatch extends Module {
 
             player.fabricPlayer.setSilent(false);
             player.fabricPlayer.connection.send(ServerboundInteractPacket.createInteractionPacket(target, false, InteractionHand.MAIN_HAND, player.fabricPlayer.position()));
-            player.fabricPlayer.swing(InteractionHand.MAIN_HAND);
+
+            if (Advanced3Config.autoCatchExtraPost) {
+                for (int i = Advanced3Config.autoCatchExtraPostDelayMs; i < 49; i += Advanced3Config.autoCatchExtraPostDelayMs - 1) {
+                    player.timeTask.schedule(this::doCatch, i, TimeUnit.MILLISECONDS);
+                }
+            }
         } catch (NoSuchElementException | NullPointerException e) {
             target = null;
         }

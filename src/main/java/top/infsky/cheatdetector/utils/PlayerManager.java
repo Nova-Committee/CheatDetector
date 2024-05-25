@@ -27,11 +27,12 @@ public class PlayerManager {
         // 遍历活动玩家
         try {
             for (AbstractClientPlayer player : LevelUtils.getClientLevel().players()) {
-                if (AntiBot.getBotList().stream().anyMatch(player.getUUID()::equals)) {
+                final UUID uuid = player.getUUID();
+                if (AntiBot.getBotList().stream().anyMatch(uuid::equals)) {
+                    activeMap.remove(uuid);
                     continue;
                 }
 
-                final UUID uuid = player.getUUID();
                 if (!activeMap.containsKey(uuid)) {
                     final TRPlayer trPlayer;
                     if (client.player.equals(player)) {

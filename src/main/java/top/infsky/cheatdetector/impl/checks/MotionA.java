@@ -90,12 +90,11 @@ public class MotionA extends Check {
             disableTicks = (int) Math.ceil(player.latency / 50.0) + 3;
             return false;
         }
-        if (player.fabricPlayer.getActiveEffectsMap().keySet().stream().anyMatch(IGNORED_EFFECTS::contains)
+        if (IGNORED_EFFECTS.stream().anyMatch(effect -> player.fabricPlayer.hasEffect(effect))
                 || player.fabricPlayer.isInWall() || player.fabricPlayer.isInWater()
-                || player.fabricPlayer.isPassenger() || player.fabricPlayer.isVehicle()
-                || player.fabricPlayer.isAutoSpinAttack() || player.fabricPlayer.isSwimming()
-                || player.fabricPlayer.isSleeping() || player.fabricPlayer.onClimbable()
-                || player.fabricPlayer.hurtTime > 0
+                || player.fabricPlayer.isPassenger() || player.fabricPlayer.isAutoSpinAttack()
+                || player.fabricPlayer.isSwimming() || player.fabricPlayer.isSleeping()
+                || player.fabricPlayer.onClimbable() || player.fabricPlayer.hurtTime > 0
                 || !BlockUtils.isFullBlock(player.fabricPlayer.getBlockStateOn())
                 || IGNORED_BLOCKS.stream().anyMatch(block -> block.isInstance(player.fabricPlayer.getBlockStateOn().getBlock()))
         ) return false;

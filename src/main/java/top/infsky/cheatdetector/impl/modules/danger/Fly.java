@@ -125,6 +125,7 @@ public class Fly extends Module {
             if (state == State.AFTER_FLYING
                     && new Vec3(packet.getX(), packet.getY(), packet.getZ()).distanceTo(doneFlyingPos) < Advanced3Config.flyAcceptTeleportMaxDistance) {
                 TRPlayer.CLIENT.options.keyShift.setDown(false);
+                TRPlayer.CLIENT.options.keyUp.setDown(false);
                 state = State.NONE;
                 CheatDetector.CONFIG_HANDLER.configManager.setValue("flyEnabled", false);
                 return false;

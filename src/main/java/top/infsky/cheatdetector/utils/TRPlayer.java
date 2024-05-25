@@ -53,8 +53,9 @@ public class TRPlayer {
     public long upTime = 0;
     public int latency = 0;
     public float lastFallDistance = 0;
+    public short offGroundTicks = 0;
 
-    public @NotNull ScheduledExecutorService timeTask = Executors.newScheduledThreadPool(1);
+    public @NotNull ScheduledExecutorService timeTask = Executors.newScheduledThreadPool(4);
     @Contract("_ -> new")
     public static @NotNull TRPlayer create(@NotNull AbstractClientPlayer player) {
         return new TRPlayer(player, false);
@@ -84,6 +85,11 @@ public class TRPlayer {
         currentPos = fabricPlayer.position();
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = fabricPlayer.onGround();
+        if (currentOnGround) {
+            offGroundTicks = 0;
+        } else {
+            offGroundTicks++;
+        }
         speedMul = (fabricPlayer.getActiveEffectsMap().containsKey(MobEffects.MOVEMENT_SPEED)
                 ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
                 : 1)

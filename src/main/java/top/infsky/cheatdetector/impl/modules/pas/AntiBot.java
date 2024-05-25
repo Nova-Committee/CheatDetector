@@ -11,6 +11,7 @@ import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
@@ -29,6 +30,7 @@ public class AntiBot extends Module {
 
     @Getter
     private static List<UUID> botList = new LinkedList<>();
+    private boolean disableCheck = true;
 
     public AntiBot(@NotNull TRSelf player) {
         super("AntiBot", player);
@@ -40,6 +42,10 @@ public class AntiBot extends Module {
     public void _onTick() {
         if (isDisabled()) {
             botList.clear();
+        }
+
+        if (disableCheck) {
+            CheatDetector.manager.getDataMap().values().forEach(trPlayer -> trPlayer.manager.disableTick = 10);
         }
     }
 
@@ -75,6 +81,7 @@ public class AntiBot extends Module {
                     });
 
                     players.forEach(this::addBotVisual);
+                    disableCheck = false;
                 }
             }
         } catch (Exception ignored) {}  // 我不知道为什么，但是bug修复了！

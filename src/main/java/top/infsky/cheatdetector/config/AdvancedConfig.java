@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.config;
 
 import top.hendrixshen.magiclib.malilib.api.annotation.*;
 import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 
 public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
@@ -128,9 +129,20 @@ public class AdvancedConfig {
     public static int motionAAlertBuffer = 10;
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyCCheck = false;
+    public static boolean flyCCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flyCAlertBuffer = 10;
+
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean reachACheck = true;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int reachAAlertBuffer = 2;
+    @Numeric(minValue = 0, maxValue = 6)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static double reachADefaultReach = 3.5;
+    @Numeric(minValue = 0, maxValue = 4)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int reachACheckDelay = 2;
 
     public static short getFlyAOnGroundJumpTick() {
         return (short) flyAOnGroundJumpTick;

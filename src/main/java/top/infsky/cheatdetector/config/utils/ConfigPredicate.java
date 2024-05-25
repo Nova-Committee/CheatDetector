@@ -6,6 +6,7 @@ import top.hendrixshen.magiclib.dependency.api.ConfigDependencyPredicate;
 import top.hendrixshen.magiclib.malilib.impl.ConfigManager;
 import top.hendrixshen.magiclib.malilib.impl.ConfigOption;
 import top.infsky.cheatdetector.config.Advanced3Config;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.config.DangerConfig;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
@@ -16,6 +17,13 @@ public class ConfigPredicate {
         configManager.setValue("aaaPASModeEnabled", PASMode.getIpAddresses().contains(ip));
     }
 
+    public static class ExperimentalMode implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption option) {
+            return AntiCheatConfig.experimentalCheck;
+        }
+
+    }
 
     public static class PASMode implements ConfigDependencyPredicate {
         public static @NotNull @Unmodifiable List<String> getIpAddresses() {

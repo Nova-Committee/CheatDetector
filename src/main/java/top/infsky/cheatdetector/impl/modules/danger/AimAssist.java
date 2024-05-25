@@ -34,8 +34,8 @@ public class AimAssist extends Module {
         if (isDisabled()) return;
 
         double distance = Advanced3Config.aimAssistRange;
-        Entity target = null;
-        for (Entity entity : LevelUtils.getClientLevel().entitiesForRendering()) {
+        LivingEntity target = null;
+        for (LivingEntity entity : LevelUtils.getEntities()) {
             if (checkTarget(entity) && distance > entity.distanceTo(player.fabricPlayer)) {
                 target = entity;
                 distance = entity.distanceTo(player.fabricPlayer);
