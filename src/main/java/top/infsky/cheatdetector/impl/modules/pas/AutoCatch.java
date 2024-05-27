@@ -41,6 +41,11 @@ public class AutoCatch extends Module {
         if (!Advanced3Config.autoCatchAlways && player.fabricPlayer.isPassenger()) return;
 
         doCatch();
+        if (Advanced3Config.autoCatchExtraPost) {
+            for (int i = Advanced3Config.autoCatchExtraPostDelayMs; i < 49; i += Advanced3Config.autoCatchExtraPostDelayMs - 1) {
+                player.timeTask.schedule(this::doCatch, i, TimeUnit.MILLISECONDS);
+            }
+        }
     }
 
     private void doCatch() {
@@ -77,11 +82,6 @@ public class AutoCatch extends Module {
             player.fabricPlayer.setSilent(false);
             player.fabricPlayer.connection.send(ServerboundInteractPacket.createInteractionPacket(target, false, InteractionHand.MAIN_HAND, player.fabricPlayer.position()));
 
-            if (Advanced3Config.autoCatchExtraPost) {
-                for (int i = Advanced3Config.autoCatchExtraPostDelayMs; i < 49; i += Advanced3Config.autoCatchExtraPostDelayMs - 1) {
-                    player.timeTask.schedule(this::doCatch, i, TimeUnit.MILLISECONDS);
-                }
-            }
         } catch (NoSuchElementException | NullPointerException e) {
             target = null;
         }

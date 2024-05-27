@@ -18,11 +18,15 @@ public class LevelUtils {
         }
     }
 
-    public static @NotNull List<LivingEntity> getEntities() {
+    public static @NotNull List<LivingEntity> getEntities(@NotNull ClientLevel level) {
         List<LivingEntity> result = new ArrayList<>();
-        getClientLevel().entitiesForRendering().forEach(entity -> {
+        level.entitiesForRendering().forEach(entity -> {
             if (entity instanceof LivingEntity livingEntity) result.add(livingEntity);
         });
         return result;
+    }
+
+    public static @NotNull List<LivingEntity> getEntities() {
+        return getEntities(getClientLevel());
     }
 }

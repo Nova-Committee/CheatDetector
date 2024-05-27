@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.infsky.cheatdetector.impl.modules.pas.AutoCatch;
 
 @Mixin(Entity.class)
-public class MixinEntity {
+public abstract class MixinEntity {
     @Inject(method = "stopRiding", at = @At("TAIL"))
     public void stopRiding(CallbackInfo ci) {
         AutoCatch autoCatch = (AutoCatch) AutoCatch.getInstance();

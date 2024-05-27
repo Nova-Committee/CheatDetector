@@ -12,7 +12,6 @@ import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -24,9 +23,7 @@ public class MotionA extends Check {
     public static final List<Double> JUMP_MOTIONS_1 = List.of(0.5095999912261959, -0.08702399309539816, -0.08528351489334113, -0.08357784622212827, -0.0819062908918066, -0.08026816663620898, -0.07866280483447859, -0.07708955023816295, -0.07554776070376615, -0.07403680693065001, -0.07255607220417704, -0.07110495214399076, -0.0696828544573303);
     public static final List<Double> JUMP_MOTIONS_2 = List.of(0.6076000164985658, -0.0889839917316434, -0.08720431359424546, -0.08546022898565087, -0.08375102603596235, -0.08207600711266715, -0.0804344885358894, -0.07882580029933772, -0.07724928579683382, -0.07570430155431032, -0.0741902169671691, -0.0727064140428918, -0.07125228714879878, -0.06982724276485225, -0.06843069924140427);
 
-    private final List<Double> motionY = new ArrayList<>();
     private boolean readyToJump = false;
-    private Double jumpFromY = null;
     private int disableTicks = 0;
 
     public MotionA(@NotNull TRPlayer player) {
@@ -37,50 +34,31 @@ public class MotionA extends Check {
     public void _onTick() {
         if (disableTicks > 0) {
             disableTicks--;
-            jumpFromY = null;
             readyToJump = false;
-            motionY.clear();
             return;
         }
 
         if (!check()) {
-            jumpFromY = null;
             readyToJump = false;
             return;
         }
 
         if (player.currentOnGround && !readyToJump) {
             readyToJump = true;
-            motionY.clear();
         }
 
-        if (player.jumping) {
-            if (!readyToJump) return;
-            if (jumpFromY == null) jumpFromY = player.lastPos.y();  // jumping = true时，玩家已经离地了
-            motionY.add(player.fabricPlayer.getDeltaMovement().y());
-        } else if (jumpFromY != null) {
-            if (jumpFromY == player.currentPos.y()) {  // 满足判断条件
-                try {
-                    List<Double> possibleMotion = Objects.requireNonNull(getPossibleMotions(player));
+        if (!readyToJump) return;
 
-                    check:
-                    try {
-                        for (int i = 0; i < possibleMotion.size(); i++) {
-                            if (Math.abs(motionY.get(i) - possibleMotion.get(i)) > AntiCheatConfig.threshold) {
-                                flag("Invalid jump motion at tick %s.".formatted(i));
-                                break check;
-                            }
-                        }
-                        if (possibleMotion.size() != motionY.size()) {
-                            flag("Invalid jump time: %s ticks. (should be %s)".formatted(motionY.size(), possibleMotion.size()));
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        flag("Invalid jump time: %s ticks. (should be %s)".formatted(motionY.size(), possibleMotion.size()));
-                    }
-                } catch (NullPointerException ignored) {
+        try {
+            int tick = player.offGroundTicks - 1;
+            if (tick >= 0) {
+                List<Double> possibleMotion = Objects.requireNonNull(getPossibleMotions(player));
+
+                if (Math.abs(player.currentMotion.y() - possibleMotion.get(tick)) > AntiCheatConfig.threshold) {
+                    flag("Invalid jump motion at tick %s.".formatted(tick));
                 }
             }
-            jumpFromY = null;
+        } catch (IndexOutOfBoundsException ignored) {
             readyToJump = false;
         }
     }

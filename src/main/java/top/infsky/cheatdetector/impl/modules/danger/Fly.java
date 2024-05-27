@@ -108,6 +108,11 @@ public class Fly extends Module {
                 level.setBlock(fakeBlockPos, Blocks.AIR.defaultBlockState(), 3);
             fakeBlockPos = null;
         }
+
+        if (player.fabricPlayer.isShiftKeyDown()) {
+            return true;
+        }
+
         if (level.getBlockState(current).isAir()) {
             level.setBlock(current, Blocks.BARRIER.defaultBlockState(), 3);
             fakeBlockPos = current;

@@ -18,7 +18,7 @@ import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -33,10 +33,13 @@ public class TRPlayer {
     public CheckManager manager;
     public static Minecraft CLIENT = CheatDetector.CLIENT;
     public Vec3 currentPos = Vec3.ZERO;
+    public Vec3 currentMotion = Vec3.ZERO;
     public Vec3 lastPos = Vec3.ZERO;
+    public Vec3 lastMotion = Vec3.ZERO;
     public Vec2 currentRot = Vec2.ZERO;
     public Vec2 lastRot = Vec2.ZERO;
     @Range(from = 0, to = 19) public List<Vec3> posHistory;
+    @Range(from = 0, to = 19) public List<Vec3> motionHistory;
     public Vec3 lastOnGroundPos = Vec3.ZERO;
     public Vec3 lastOnGroundPos2 = Vec3.ZERO;
     public Vec3 lastInLiquidPos = Vec3.ZERO;
@@ -66,15 +69,20 @@ public class TRPlayer {
         this.manager = self ? CheckManager.createSelf((TRSelf) this) : CheckManager.create(this);
 
         currentPos = fabricPlayer.position();
+        currentMotion = fabricPlayer.getDeltaMovement();
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = lastOnGround = lastOnGround2 = fabricPlayer.onGround();
         currentGameType = lastGameType =
                 fabricPlayer.isCreative() ? GameType.CREATIVE :
                         fabricPlayer.isSpectator() ? GameType.SPECTATOR :
                                 GameType.SURVIVAL;
-        posHistory = new LinkedList<>();
+        posHistory = new ArrayList<>(20);
+        motionHistory = new ArrayList<>(20);
         for (int i = 0; i < 20; i++) {
             posHistory.add(currentPos);
+        }
+        for (int i = 0; i < 20; i++) {
+            motionHistory.add(currentMotion);
         }
     }
 
@@ -83,6 +91,7 @@ public class TRPlayer {
         if (fabricPlayer == null) return;
 
         currentPos = fabricPlayer.position();
+        currentMotion = fabricPlayer.getDeltaMovement();
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = fabricPlayer.onGround();
         if (currentOnGround) {
@@ -94,7 +103,7 @@ public class TRPlayer {
                 ? fabricPlayer.getActiveEffectsMap().get(MobEffects.MOVEMENT_SPEED).getAmplifier() * 0.2 + 1
                 : 1)
                 * fabricPlayer.getSpeed() * 10;  // IDK why, but it just works!
-        updatePoses();
+        updateHistory();
         try {
             final PlayerInfo playerInfo = Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(CheatDetector.CLIENT).getConnection()).getPlayerInfo(fabricPlayer.getUUID()));
             currentGameType = playerInfo.getGameMode();
@@ -115,6 +124,7 @@ public class TRPlayer {
         manager.update();
 
         lastPos = currentPos;
+        lastMotion = currentMotion;
         lastRot = currentRot;
         lastOnGround2 = lastOnGround;
         lastOnGround = currentOnGround;
@@ -125,11 +135,16 @@ public class TRPlayer {
         tryToClearVL();
     }
 
-    private void updatePoses() {
+    private void updateHistory() {
         if (posHistory.size() >= 20) {
             posHistory.remove(posHistory.size() - 1);
         }
         posHistory.add(0, currentPos);
+
+        if (motionHistory.size() >= 20) {
+            motionHistory.remove(motionHistory.size() - 1);
+        }
+        motionHistory.add(0, currentMotion);
     }
 
     public void tryToClearVL() {

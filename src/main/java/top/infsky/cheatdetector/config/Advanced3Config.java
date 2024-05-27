@@ -322,6 +322,23 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int speedBoost = 2;
 
+    @Numeric(minValue = 1.0, maxValue = 4.0)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double velocityHorizon = 2.0;
+    @Numeric(minValue = 1.0, maxValue = 3.0)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double velocityVertical = 1.0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean velocityReserve = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean velocityStrafe = false;
+    @Numeric(minValue = 1, maxValue = 10)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static int velocityStrafeMinHurtTime = 7;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean noStopBreakSilent = false;
+
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {
             return NotebotUtils.NotebotMode.AnyInstrument;

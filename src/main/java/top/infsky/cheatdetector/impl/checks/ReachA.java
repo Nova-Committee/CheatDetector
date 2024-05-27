@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class ReachA extends Check {
     private boolean lastSwing = false;
     public ReachA(@NotNull TRPlayer player) {
-        super("ReachA", player);
+        super("*ReachA*", player);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ReachA extends Check {
                         .orElseThrow();
                 double distance = possibleTarget.distanceTo(player.fabricPlayer);
                 if (distance < 6 && distance > AdvancedConfig.reachADefaultReach) {  // 满足标记条件
-                    flag("distance: %.2f".formatted(distance));
+                    flag("target: %s  distance: %.2f".formatted(possibleTarget.getName().getString(), distance));
                 }
             } catch (NoSuchElementException ignored) {}
         }, AdvancedConfig.reachACheckDelay * 50L, TimeUnit.MILLISECONDS);

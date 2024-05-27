@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.impl.fixes.vulcan;
 
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.infsky.cheatdetector.config.utils.Fixes;
 import top.infsky.cheatdetector.impl.Fix;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.config.Advanced2Config;
@@ -43,7 +44,7 @@ public class BadPacket2 extends Fix {
 
     @Override
     public boolean isDisabled() {
-        return !Advanced2Config.badPacket2Enabled || !FixesConfig.packetFixEnabled;
+        return !Advanced2Config.badPacket2Enabled || !FixesConfig.packetFixEnabled || FixesConfig.getPacketFixMode() != Fixes.STRICT;
     }
 
     @Override

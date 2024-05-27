@@ -103,4 +103,12 @@ public class ModuleConfig {
     @Hotkey
     @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
     public static boolean speedEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    public static boolean velocityEnabled = false;
+
+    @Hotkey
+    @Config(category = ConfigCategory.MODULES)
+    public static boolean noStopBreakEnabled = false;
 }

@@ -53,7 +53,6 @@ public class CheckManager {
         pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
         normal.put(FlyB.class, new FlyB(player));
-        normal.put(FlyC.class, new FlyC(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
@@ -65,6 +64,7 @@ public class CheckManager {
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
         normal.put(ReachA.class, new ReachA(player));
+        normal.put(HitBoxA.class, new HitBoxA(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -77,7 +77,6 @@ public class CheckManager {
         pre.put(GroundSpoofB.class, new GroundSpoofB(player));
         normal.put(FlyA.class, new FlyA(player));
         normal.put(FlyB.class, new FlyB(player));
-        normal.put(FlyC.class, new FlyC(player));
         normal.put(BlinkA.class, new BlinkA(player));
         normal.put(SpeedA.class, new SpeedA(player));
         normal.put(SpeedB.class, new SpeedB(player));
@@ -89,11 +88,15 @@ public class CheckManager {
         normal.put(AutoBlockA.class, new AutoBlockA(player));
         normal.put(MotionA.class, new MotionA(player));
         normal.put(ReachA.class, new ReachA(player));
+        normal.put(HitBoxA.class, new HitBoxA(player));
+        normal.put(AutoClickerA.class, new AutoClickerA(player));
+
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
         pre.put(FastPlace.class, new FastPlace(player));
         pre.put(ServerFreeze.class, new ServerFreeze(player));
         pre.put(InvalidYaw.class, new InvalidYaw(player));
+
         post.put(Spin.class, new Spin(player));
         post.put(FlagDetector.class, new FlagDetector(player));
         pre.put(NoRotateSet.class, new NoRotateSet(player));
@@ -124,6 +127,8 @@ public class CheckManager {
         post.put(SlowMotion.class, new SlowMotion(player));
         post.put(AutoCatch.class, new AutoCatch(player));
         post.put(Speed.class, new Speed(player));
+        post.put(Velocity.class, new Velocity(player));
+        post.put(NoStopBreak.class, new NoStopBreak(player));
 
         return new CheckManager(pre, normal, post, player);
     }

@@ -10,9 +10,10 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.modules.danger.AirStuck;
 import top.infsky.cheatdetector.impl.modules.danger.Fly;
 import top.infsky.cheatdetector.impl.modules.pas.Speed;
+import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 
 @Mixin(KeyMapping.class)
-public class MixinKeyMapping {
+public abstract class MixinKeyMapping {
     @Inject(method = "isDown", at = @At("HEAD"), cancellable = true)
     public void isDown(@NotNull CallbackInfoReturnable<Boolean> ci) {
         if (ci.isCancelled()) return;
@@ -38,7 +39,7 @@ public class MixinKeyMapping {
 
                 Fly fly = (Fly) (Fly.getInstance());
                 if (fly != null) {
-                    if (fly.isNoJump()) {
+                    if (fly.isNoJump() && PlayerMove.isMove()) {
                         ci.cancel();
                     }
                 }

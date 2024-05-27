@@ -40,7 +40,6 @@ public abstract class MixinMultiPlayerGameMode {
     @Inject(method = "stopDestroyBlock", at = @At(value = "HEAD"), cancellable = true)
     public void stopDestroyBlock(CallbackInfo ci) {
         if (TRSelf.getInstance() == null) return;
-        if (FixesConfig.getPacketFixMode() != Fixes.STRICT) return;
 
         TRSelf.getInstance().manager.onCustomAction((check) -> check._handleStopDestroyBlock(ci));
     }

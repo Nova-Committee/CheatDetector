@@ -12,28 +12,6 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static double blinkMaxDistance = 8;
 
-
-    @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyACheck = true;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAlertBuffer = 20;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAOnGroundJumpTick = 1;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAInLiquidLiquidTick = 8;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAInHurtJumpTick = 6;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double flyAFromWaterYDistance = 0.5;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAOnTeleportDisableTick = 2;
-
-    @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyBCheck = true;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyBAlertBuffer = 1;
-
-
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean gameModeACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
@@ -129,14 +107,14 @@ public class AdvancedConfig {
     public static int motionAAlertBuffer = 10;
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyCCheck = true;
+    public static boolean flyBCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flyCAlertBuffer = 10;
+    public static int flyBAlertBuffer = 10;
 
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static boolean reachACheck = true;
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
-    public static int reachAAlertBuffer = 2;
+    public static int reachAAlertBuffer = 4;
     @Numeric(minValue = 0, maxValue = 6)
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double reachADefaultReach = 3.5;
@@ -144,21 +122,25 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static int reachACheckDelay = 2;
 
-    public static short getFlyAOnGroundJumpTick() {
-        return (short) flyAOnGroundJumpTick;
-    }
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean hitBoxACheck = true;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int hitBoxAAlertBuffer = 4;
+    @Numeric(minValue = 0, maxValue = 4)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int hitBoxACheckDelay = 2;
 
-    public static short getFlyAInLiquidLiquidTick() {
-        return (short) flyAInLiquidLiquidTick;
-    }
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean flyACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flyAAlertBuffer = 10;
 
-    public static short getFlyAInHurtJumpTick() {
-        return (short) flyAInHurtJumpTick;
-    }
-
-    public static short getFlyAOnTeleportDisableTick() {
-        return (short) flyAOnTeleportDisableTick;
-    }
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean autoClickerACheck = true;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int autoClickerAAlertBuffer = 10;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int autoClickerAMinDiffMs = 5;
 
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;
