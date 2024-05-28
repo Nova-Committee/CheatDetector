@@ -85,7 +85,7 @@ public class ModuleConfig {
     public static boolean writerEnabled = false;
 
     @Hotkey
-    @Config(category = ConfigCategory.MODULES, predicate = ConfigPredicate.PASMode.class)
+    @Config(category = ConfigCategory.MODULES)
     public static boolean antiBotEnabled = false;
 
     @Hotkey
