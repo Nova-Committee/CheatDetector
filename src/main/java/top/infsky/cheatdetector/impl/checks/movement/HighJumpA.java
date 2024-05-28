@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.movement;
 
 import lombok.val;
 import net.minecraft.world.phys.Vec3;

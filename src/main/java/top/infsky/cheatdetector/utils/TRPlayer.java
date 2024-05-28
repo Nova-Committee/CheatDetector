@@ -34,12 +34,15 @@ public class TRPlayer {
     public static Minecraft CLIENT = CheatDetector.CLIENT;
     public Vec3 currentPos = Vec3.ZERO;
     public Vec3 currentMotion = Vec3.ZERO;
+    public Vec3 currentVehicleMotion = Vec3.ZERO;
     public Vec3 lastPos = Vec3.ZERO;
     public Vec3 lastMotion = Vec3.ZERO;
+    public Vec3 lastVehicleMotion = Vec3.ZERO;
     public Vec2 currentRot = Vec2.ZERO;
     public Vec2 lastRot = Vec2.ZERO;
-    @Range(from = 0, to = 19) public List<Vec3> posHistory;
-    @Range(from = 0, to = 19) public List<Vec3> motionHistory;
+    @Range(from = 0, to = 19) public List<Vec3> posHistory = new ArrayList<>(20);
+    @Range(from = 0, to = 19) public List<Vec3> motionHistory = new ArrayList<>(20);
+    @Range(from = 0, to = 19) public List<Vec3> vehicleMotionHistory = new ArrayList<>(20);
     public Vec3 lastOnGroundPos = Vec3.ZERO;
     public Vec3 lastOnGroundPos2 = Vec3.ZERO;
     public Vec3 lastInLiquidPos = Vec3.ZERO;
@@ -70,19 +73,21 @@ public class TRPlayer {
 
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
+        currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = lastOnGround = lastOnGround2 = fabricPlayer.onGround();
         currentGameType = lastGameType =
                 fabricPlayer.isCreative() ? GameType.CREATIVE :
                         fabricPlayer.isSpectator() ? GameType.SPECTATOR :
                                 GameType.SURVIVAL;
-        posHistory = new ArrayList<>(20);
-        motionHistory = new ArrayList<>(20);
         for (int i = 0; i < 20; i++) {
             posHistory.add(currentPos);
         }
         for (int i = 0; i < 20; i++) {
             motionHistory.add(currentMotion);
+        }
+        for (int i = 0; i < 20; i++) {
+            vehicleMotionHistory.add(currentVehicleMotion);
         }
     }
 
@@ -92,6 +97,7 @@ public class TRPlayer {
 
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
+        currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = fabricPlayer.onGround();
         if (currentOnGround) {
@@ -125,6 +131,7 @@ public class TRPlayer {
 
         lastPos = currentPos;
         lastMotion = currentMotion;
+        lastVehicleMotion = currentVehicleMotion;
         lastRot = currentRot;
         lastOnGround2 = lastOnGround;
         lastOnGround = currentOnGround;
@@ -145,6 +152,11 @@ public class TRPlayer {
             motionHistory.remove(motionHistory.size() - 1);
         }
         motionHistory.add(0, currentMotion);
+
+        if (vehicleMotionHistory.size() >= 20) {
+            vehicleMotionHistory.remove(vehicleMotionHistory.size() - 1);
+        }
+        vehicleMotionHistory.add(0, currentVehicleMotion);
     }
 
     public void tryToClearVL() {

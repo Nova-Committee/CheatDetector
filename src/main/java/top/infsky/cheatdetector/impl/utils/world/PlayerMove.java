@@ -48,6 +48,10 @@ public class PlayerMove {
                 || TRPlayer.CLIENT.options.keyRight.isDown();
     }
 
+    public static boolean isMove(@NotNull Vec3 motion) {
+        return motion.x() != 0 || motion.z() != 0;
+    }
+
     /**
      * Gets the players predicted jump motion the specified amount of ticks ahead
      *

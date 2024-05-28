@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.combat;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;

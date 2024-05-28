@@ -133,7 +133,7 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean flyACheck = true;
     @Config(category = ConfigCategory.ADVANCED)
-    public static int flyAAlertBuffer = 10;
+    public static int flyAAlertBuffer = 30;
 
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static boolean autoClickerACheck = true;
@@ -141,6 +141,20 @@ public class AdvancedConfig {
     public static int autoClickerAAlertBuffer = 10;
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static int autoClickerAMinDiffMs = 5;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean flyCCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flyCAlertBuffer = 30;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double flyCMinDiffYMotion = 0.1;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int flyCMinRepeatTicks = 5;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean boatFlyACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int boatFlyAAlertBuffer = 20;
 
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;

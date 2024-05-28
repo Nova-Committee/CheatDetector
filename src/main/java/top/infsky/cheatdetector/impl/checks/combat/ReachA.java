@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.combat;
 
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;

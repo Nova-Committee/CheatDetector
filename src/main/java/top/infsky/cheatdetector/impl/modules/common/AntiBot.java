@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.modules.pas;
+package top.infsky.cheatdetector.impl.modules.common;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
+import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 import java.util.*;
@@ -44,9 +45,28 @@ public class AntiBot extends Module {
             botList.clear();
         }
 
+        if (!Advanced3Config.antiBotLatency)
+            disableCheck = false;
+
         if (disableCheck) {
             CheatDetector.manager.getDataMap().values().forEach(trPlayer -> trPlayer.manager.disableTick = 10);
         }
+
+        try {
+            if (Advanced3Config.antiBotInTabList) {
+                List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
+                LevelUtils.getClientLevel().players().forEach(p -> {
+                    try {
+                        PlayerInfo playerInfo = Objects.requireNonNull(player.fabricPlayer.connection.getPlayerInfo(p.getUUID()));
+                        players.remove(playerInfo);
+                        removeBotVisual(playerInfo);
+                    } catch (NullPointerException ignored) {
+                    }
+                });
+
+                players.forEach(this::addBotVisual);
+            }
+        } catch (Exception ignored) {}
     }
 
     @Override

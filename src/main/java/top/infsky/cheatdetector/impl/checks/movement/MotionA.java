@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.movement;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

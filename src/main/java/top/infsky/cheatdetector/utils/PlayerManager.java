@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.jetbrains.annotations.NotNull;
-import top.infsky.cheatdetector.impl.modules.pas.AntiBot;
+import top.infsky.cheatdetector.impl.modules.common.AntiBot;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 
 import java.util.*;

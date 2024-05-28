@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.movement;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

@@ -1,4 +1,4 @@
-package top.infsky.cheatdetector.impl.checks;
+package top.infsky.cheatdetector.impl.checks.movement;
 
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.AdvancedConfig;

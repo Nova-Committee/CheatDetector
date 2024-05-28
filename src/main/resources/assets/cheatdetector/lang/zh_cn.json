@@ -40,7 +40,7 @@
   "cheatdetector.config.anticheat.falseFlagFix.comment": "*实验性* 我们应该尝试主动减少误判吗？",
   "cheatdetector.config.anticheat.falseFlagFix.name": "启用 误判修复",
   "cheatdetector.config.anticheat.falseFlagFix.pretty_name": "误判修复",
-  "cheatdetector.config.anticheat.threshold.comment": "在标记之前，我们应额外为玩家提供多少距离？",
+  "cheatdetector.config.anticheat.threshold.comment": "在标记该玩家之前，我们应额外提供多少距离？（用于解决包含延迟时，硬移动检测可能的误判问题）",
   "cheatdetector.config.anticheat.threshold.name": "最大偏移量",
   "cheatdetector.config.danger.aaaDangerModeEnabled.comment": "如果启用，我们会显示一些你不应该使用的模块。\n§o仅在你清楚并理解这些模块时使用。",
   "cheatdetector.config.danger.aaaDangerModeEnabled.name": "危险模式",

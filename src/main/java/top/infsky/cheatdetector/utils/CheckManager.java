@@ -6,7 +6,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Check;
-import top.infsky.cheatdetector.impl.checks.*;
+import top.infsky.cheatdetector.impl.checks.combat.*;
+import top.infsky.cheatdetector.impl.checks.exploits.GameModeA;
+import top.infsky.cheatdetector.impl.checks.movement.*;
 import top.infsky.cheatdetector.impl.fixes.ServerFreeze;
 import top.infsky.cheatdetector.impl.fixes.grimac.InvalidYaw;
 import top.infsky.cheatdetector.impl.modules.*;
@@ -65,6 +67,9 @@ public class CheckManager {
         normal.put(MotionA.class, new MotionA(player));
         normal.put(ReachA.class, new ReachA(player));
         normal.put(HitBoxA.class, new HitBoxA(player));
+        normal.put(AutoClickerA.class, new AutoClickerA(player));
+        normal.put(FlyC.class, new FlyC(player));
+        normal.put(BoatFlyA.class, new BoatFlyA(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -90,6 +95,8 @@ public class CheckManager {
         normal.put(ReachA.class, new ReachA(player));
         normal.put(HitBoxA.class, new HitBoxA(player));
         normal.put(AutoClickerA.class, new AutoClickerA(player));
+        normal.put(FlyC.class, new FlyC(player));
+        normal.put(BoatFlyA.class, new BoatFlyA(player));
 
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));

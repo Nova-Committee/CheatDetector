@@ -256,9 +256,11 @@ public class Advanced3Config {
     public static boolean writerToBook = false;
 
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiBotMessage = true;
+    public static boolean antiBotMessage = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiBotLatency = true;
+    public static boolean antiBotLatency = false;
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static boolean antiBotInTabList = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotDebug = false;
     @Config(category = ConfigCategory.ADVANCED3)
