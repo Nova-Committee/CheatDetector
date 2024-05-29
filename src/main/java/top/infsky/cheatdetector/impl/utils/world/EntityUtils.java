@@ -44,7 +44,7 @@ public class EntityUtils {
 
         // Status effects
         for (var statusEffect : entity.getActiveEffectsMap().values()) {
-            statusEffect.getEffect().addAttributeModifiers(entity, attributes, statusEffect.getAmplifier());
+            statusEffect.getEffect().addAttributeModifiers(attributes, statusEffect.getAmplifier());
         }
 
         return attributes;

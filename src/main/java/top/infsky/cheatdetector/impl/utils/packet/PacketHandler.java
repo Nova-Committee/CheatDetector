@@ -29,7 +29,7 @@ public class PacketHandler {
             if (player.getUpTime() < packet.sentTime() + Math.round(delay / 50.0)) {
                 break;
             }
-            ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener());
+            ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener(), true);
             outgoingPackets.remove(packet);
         }
         while (!incomingPackets.isEmpty()) {
@@ -50,7 +50,7 @@ public class PacketHandler {
         if (!cancel) {
             while (!outgoingPackets.isEmpty()) {
                 final OutgoingPacket packet = outgoingPackets.poll();
-                ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener());
+                ((ConnectionAccessor) packet.connection()).sendPacket(packet.packet(), packet.listener(), true);
             }
             while (!incomingPackets.isEmpty()) {
                 final IncomingPacket packet = incomingPackets.poll();

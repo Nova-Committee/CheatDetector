@@ -124,7 +124,6 @@ public class CheckManager {
         post.put(Debug.class, new Debug(player));
         post.put(Nuker.class, new Nuker(player));
         post.put(AirStuck.class, new AirStuck(player));
-        pre.put(ClientSpoof.class, new ClientSpoof(player));
         post.put(Fly.class, new Fly(player));
         pre.put(NoJumpDelay.class, new NoJumpDelay(player));
         post.put(Writer.class, new Writer(player));

@@ -241,9 +241,6 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static boolean airStuckAntiKick = false;
 
-    @Config(category = ConfigCategory.ADVANCED3)
-    public static String clientSpoofBrand = "vanilla";
-
     @Numeric(minValue = 0, maxValue = 5)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.DangerMode.class)
     public static double flyAcceptTeleportMaxDistance = 1;

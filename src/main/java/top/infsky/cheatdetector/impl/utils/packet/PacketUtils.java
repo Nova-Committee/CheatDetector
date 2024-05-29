@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.impl.utils.packet;
 
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
+import net.minecraft.network.protocol.common.*;
 
 import java.util.List;
 

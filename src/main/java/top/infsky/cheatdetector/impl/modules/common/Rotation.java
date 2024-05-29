@@ -2,7 +2,6 @@ package top.infsky.cheatdetector.impl.modules.common;
 
 import lombok.Getter;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
@@ -54,7 +53,7 @@ public class Rotation extends Module {
         }
     }
 
-    public void onFinallyPacketSend(ConnectionAccessor connection, Packet<?> basePacket, @Nullable PacketSendListener packetSendListener, ConnectionProtocol connectionProtocol, ConnectionProtocol connectionProtocol2, CallbackInfo ci) {
+    public void onFinallyPacketSend(ConnectionAccessor connection, Packet<?> basePacket, @Nullable PacketSendListener packetSendListener, CallbackInfo ci) {
         if (isDisabled()) return;
         if (FabricLoader.getInstance().isModLoaded("replaymod")) {
             if (ReplaymodHelper.isFromReplayMod(packetSendListener)) return;
@@ -81,13 +80,13 @@ public class Rotation extends Module {
             }
 
             if (basePacket instanceof Pos) {
-                send(connection, new Pos(packet.getX(player.fabricPlayer.getX()), packet.getY(player.fabricPlayer.getY()), packet.getZ(player.fabricPlayer.getZ()), packet.isOnGround()), packetSendListener, connectionProtocol, connectionProtocol2);
+                send(connection, new Pos(packet.getX(player.fabricPlayer.getX()), packet.getY(player.fabricPlayer.getY()), packet.getZ(player.fabricPlayer.getZ()), packet.isOnGround()), packetSendListener);
             } else if (basePacket instanceof Rot) {
-                send(connection, new Rot(getYaw(packet), getPitch(packet), packet.isOnGround()), packetSendListener, connectionProtocol, connectionProtocol2);
+                send(connection, new Rot(getYaw(packet), getPitch(packet), packet.isOnGround()), packetSendListener);
             } else if (basePacket instanceof PosRot) {
-                send(connection, new PosRot(packet.getX(player.fabricPlayer.getX()), packet.getY(player.fabricPlayer.getY()), packet.getZ(player.fabricPlayer.getZ()), getYaw(packet), getPitch(packet), packet.isOnGround()), packetSendListener, connectionProtocol, connectionProtocol2);
+                send(connection, new PosRot(packet.getX(player.fabricPlayer.getX()), packet.getY(player.fabricPlayer.getY()), packet.getZ(player.fabricPlayer.getZ()), getYaw(packet), getPitch(packet), packet.isOnGround()), packetSendListener);
             } else if (basePacket instanceof StatusOnly) {
-                send(connection, new StatusOnly(packet.isOnGround()), packetSendListener, connectionProtocol, connectionProtocol2);
+                send(connection, new StatusOnly(packet.isOnGround()), packetSendListener);
             }
         }
         if (basePacket instanceof ServerboundPlayerCommandPacket packet) {
@@ -111,9 +110,9 @@ public class Rotation extends Module {
         return result;
     }
 
-    private void send(@NotNull ConnectionAccessor connection, Packet<?> packet, @Nullable PacketSendListener packetSendListener, ConnectionProtocol connectionProtocol, ConnectionProtocol connectionProtocol2) {
+    private void send(@NotNull ConnectionAccessor connection, Packet<?> packet, @Nullable PacketSendListener packetSendListener) {
         sending = packet;
-        connection.doSendPacket(packet, packetSendListener, connectionProtocol, connectionProtocol2);
+        connection.doSendPacket(packet, packetSendListener, true);
     }
 
     @Override

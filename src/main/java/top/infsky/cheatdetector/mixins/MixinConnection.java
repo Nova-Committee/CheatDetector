@@ -3,7 +3,6 @@ package top.infsky.cheatdetector.mixins;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
-import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -11,7 +10,6 @@ import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.phys.Vec2;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -40,11 +38,11 @@ public abstract class MixinConnection {
     }
 
     @Inject(method = "doSendPacket", at = @At(value = "HEAD"), cancellable = true)
-    public void doSendPacket(Packet<?> packet, @Nullable PacketSendListener packetSendListener, ConnectionProtocol connectionProtocol, ConnectionProtocol connectionProtocol2, CallbackInfo ci) {
+    public void doSendPacket(Packet<?> packet, PacketSendListener packetSendListener, boolean bl, CallbackInfo ci) {
         Rotation rotation = (Rotation) Rotation.getInstance();
 
         if (rotation != null) {
-            rotation.onFinallyPacketSend((ConnectionAccessor) this, packet, packetSendListener, connectionProtocol, connectionProtocol2, ci);
+            rotation.onFinallyPacketSend((ConnectionAccessor) this, packet, packetSendListener, ci);
         }
     }
 
