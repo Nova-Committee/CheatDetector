@@ -33,6 +33,7 @@
 - **GameMode** 游戏模式检查
 - **Velocity** 反击退检查
 - **GroundSpoof** 假地面检查
+- **AutoClicker** 连点器检查
 - **Reach** 距离检查
 - **HitBox** 命中框检查
 
