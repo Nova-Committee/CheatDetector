@@ -2,6 +2,7 @@ package top.infsky.cheatdetector.impl.checks.movement;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.impl.Check;
@@ -22,8 +23,8 @@ public class FlyC extends Check {
                 || IGNORED_BLOCKS.stream().anyMatch(block -> player.fabricPlayer.getFeetBlockState().is(block))) return;
 
         int repeatFromTick = 0;
-        for (int i = 0; i < player.motionHistory.size(); i++) {
-            if (Math.abs(player.motionHistory.get(i).y() - player.currentMotion.y()) >= AdvancedConfig.flyCMinDiffYMotion) {
+        for (Vec3 motion : player.motionHistory) {
+            if (motion.y() != player.currentMotion.y()) {
                 return;
             }
 
@@ -31,7 +32,7 @@ public class FlyC extends Check {
         }
 
         if (repeatFromTick >= AdvancedConfig.flyCMinRepeatTicks) {
-            flag("Repeat Y-motion from %s ticks.".formatted(repeatFromTick));
+            flag("Repeat Y-motion from %s ticks: %.2f".formatted(repeatFromTick, player.currentMotion.y()));
         }
     }
 

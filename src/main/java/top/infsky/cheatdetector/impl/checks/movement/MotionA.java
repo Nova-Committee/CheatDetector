@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.config.AdvancedConfig;
-import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
@@ -54,8 +53,10 @@ public class MotionA extends Check {
             if (tick >= 0) {
                 List<Double> possibleMotion = Objects.requireNonNull(getPossibleMotions(player));
 
-                if (Math.abs(player.currentMotion.y() - possibleMotion.get(tick)) > AntiCheatConfig.threshold) {
-                    flag("Invalid jump motion at tick %s.".formatted(tick));
+                double should = possibleMotion.get(tick);
+                double current = player.currentMotion.y();
+                if (Math.abs(current - should) > 0.01) {
+                    flag("Invalid jump motion at tick %s. should: %.2f  current: %.2f".formatted(tick, should, current));
                 }
             }
         } catch (IndexOutOfBoundsException ignored) {

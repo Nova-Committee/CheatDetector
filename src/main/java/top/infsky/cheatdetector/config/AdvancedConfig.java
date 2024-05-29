@@ -143,13 +143,11 @@ public class AdvancedConfig {
     public static int autoClickerAMinDiffMs = 5;
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyCCheck = true;
+    public static boolean flyCCheck = false;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flyCAlertBuffer = 30;
     @Config(category = ConfigCategory.ADVANCED)
-    public static double flyCMinDiffYMotion = 0.1;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static int flyCMinRepeatTicks = 5;
+    public static int flyCMinRepeatTicks = 10;
 
     @Config(category = ConfigCategory.ADVANCED)
     public static boolean boatFlyACheck = true;
