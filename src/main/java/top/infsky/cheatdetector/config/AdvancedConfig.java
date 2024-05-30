@@ -154,6 +154,13 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int boatFlyAAlertBuffer = 20;
 
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean strafeACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int strafeAAlertBuffer = 20;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double strafeAMaxDiffToFlag = 0.005;
+
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;
     }

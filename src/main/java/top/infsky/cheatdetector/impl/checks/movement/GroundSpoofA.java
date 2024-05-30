@@ -25,7 +25,7 @@ public class GroundSpoofA extends Check {
             final BlockPos groundPos = player.fabricPlayer.blockPosition().below();
 
             if (check(level, groundPos)) {
-                flag();
+                flag("spoof onGround=true");
                 setback();
             }
         }

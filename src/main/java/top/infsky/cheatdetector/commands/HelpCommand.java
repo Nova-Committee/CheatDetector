@@ -13,6 +13,7 @@ public class HelpCommand {
                 §r/ctr notebot <path> §f- §7修改音符机器人.nbs文件路径§r
                 §r/ctr clientspoof <brand> §f- §7设置客户端伪装名§r
                 §r/ctr writer <part> §f- §7写一本书。§r
+                §r/ctr catch <name> §f- §7设置自动骑上一名玩家。§r
                 """;
 
     public static int execute(@NotNull CommandContext<FabricClientCommandSource> context) {

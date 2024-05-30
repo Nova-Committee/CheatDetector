@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
+import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class MotionA extends Check {
     }
 
     private boolean check() {
+        if (PlayerMove.isInvalidMotion(player.currentMotion)) return false;
+
         if (player.fabricPlayer.isFallFlying()) {
             disableTicks = (int) Math.ceil(player.latency / 50.0) + 3;
             return false;

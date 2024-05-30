@@ -43,7 +43,7 @@ public class CheckManager {
         this.checks.putAll(this.preChecks);
         this.checks.putAll(this.normalChecks);
         this.checks.putAll(this.postChecks);
-        this.disableTick = 10;
+        this.disableTick = 30;
     }
 
     @Contract("_ -> new")
@@ -70,6 +70,7 @@ public class CheckManager {
         normal.put(AutoClickerA.class, new AutoClickerA(player));
         normal.put(FlyC.class, new FlyC(player));
         normal.put(BoatFlyA.class, new BoatFlyA(player));
+        normal.put(StrafeA.class, new StrafeA(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -97,6 +98,7 @@ public class CheckManager {
         normal.put(AutoClickerA.class, new AutoClickerA(player));
         normal.put(FlyC.class, new FlyC(player));
         normal.put(BoatFlyA.class, new BoatFlyA(player));
+        normal.put(StrafeA.class, new StrafeA(player));
 
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));

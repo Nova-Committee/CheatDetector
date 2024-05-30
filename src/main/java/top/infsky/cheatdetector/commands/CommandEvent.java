@@ -43,6 +43,10 @@ public class CommandEvent {
                         .then(argument("name", StringArgumentType.string())
                                 .executes(CatchCommand::execute))
                 )
+                .then(literal("debug")
+                        .then(argument("name", StringArgumentType.string())
+                                .executes(DebugCommand::execute))
+                )
         );
     }
 }

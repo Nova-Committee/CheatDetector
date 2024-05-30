@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class PlayerMove {
@@ -24,11 +26,6 @@ public class PlayerMove {
     @Contract("_ -> new")
     public static @NotNull Vec3 getXZOnlyPos(@NotNull Vec3 position) {
         return new Vec3(position.x(), 0, position.z());
-    }
-
-    @Contract("_ -> new")
-    public static @NotNull Vec3 getYOnlyPos(@NotNull Vec3 position) {
-        return new Vec3(0, position.y(), 0);
     }
 
     public static double getJumpDistance(@NotNull AbstractClientPlayer player) {
@@ -48,8 +45,8 @@ public class PlayerMove {
                 || TRPlayer.CLIENT.options.keyRight.isDown();
     }
 
-    public static boolean isMove(@NotNull Vec3 motion) {
-        return motion.x() != 0 || motion.z() != 0;
+    public static boolean isNoMove(@NotNull Vec3 motion) {
+        return motion.x() == 0 && motion.z() == 0;
     }
 
     /**
@@ -99,21 +96,24 @@ public class PlayerMove {
         }
 
         TRSelf trSelf = TRSelf.getInstance();
-        final double yaw = direction();
+        final double yaw = direction(
+                trSelf.fabricPlayer.input.forwardImpulse,
+                trSelf.fabricPlayer.input.leftImpulse,
+                trSelf.fabricPlayer.yRotO + (trSelf.fabricPlayer.getYRot() - trSelf.fabricPlayer.yRotO) * TRPlayer.CLIENT.getFrameTime()
+        );
 
-        trSelf.fabricPlayer.setDeltaMovement(-Mth.sin((float) yaw) * speed, trSelf.fabricPlayer.getDeltaMovement().y(), Mth.cos((float) yaw) * speed);
+        trSelf.fabricPlayer.setDeltaMovement(getStrafeMotion(speed, yaw, trSelf.fabricPlayer.getDeltaMovement().y()));
+    }
+
+    @Contract("_, _, _ -> new")
+    public static @NotNull Vec3 getStrafeMotion(final double speed, final double yaw, final double motionY) {
+        return new Vec3(-Mth.sin((float) yaw) * speed, motionY, Mth.cos((float) yaw) * speed);
     }
 
     /**
      * Gets the players' movement yaw
      */
-    public static double direction() {
-        TRSelf trSelf = TRSelf.getInstance();
-
-        float moveForward = trSelf.fabricPlayer.input.forwardImpulse;
-        float moveStrafing = trSelf.fabricPlayer.input.leftImpulse;
-        float rotationYaw = trSelf.fabricPlayer.yRotO + (trSelf.fabricPlayer.getYRot() - trSelf.fabricPlayer.yRotO) * TRPlayer.CLIENT.getFrameTime();
-
+    public static double direction(float moveForward, float moveStrafing, float rotationYaw) {
         if (moveForward < 0) {
             rotationYaw += 180;
         }
@@ -135,5 +135,25 @@ public class PlayerMove {
         }
 
         return Math.toRadians(rotationYaw);
+    }
+
+    public static boolean isInvalidMotion(@NotNull Vec3 motion) {
+        return Math.abs(motion.x()) >= 3.9
+                || Math.abs(motion.y()) >= 3.9
+                || Math.abs(motion.z()) >= 3.9;
+    }
+
+    public static double getMaxXZDiff(@NotNull Vec3 motion1, @NotNull Vec3 motion2) {
+        return Math.max(Math.abs(motion1.x() - motion2.x()), Math.abs(motion1.z() - motion2.z()));
+    }
+
+    public static @NotNull List<Vec3> getPosHistoryDiff(final @NotNull List<Vec3> posHistory) {
+        List<Vec3> result = new ArrayList<>(posHistory.size() - 1);
+
+        for (int i = 0; i < posHistory.size() - 1; i++) {
+            result.add(posHistory.get(i + 1).subtract(posHistory.get(i)));
+        }
+
+        return result;
     }
 }

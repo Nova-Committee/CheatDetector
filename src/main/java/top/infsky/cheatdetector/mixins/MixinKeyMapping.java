@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.infsky.cheatdetector.CheatDetector;
-import top.infsky.cheatdetector.impl.modules.danger.AirStuck;
 import top.infsky.cheatdetector.impl.modules.danger.Fly;
 import top.infsky.cheatdetector.impl.modules.pas.Speed;
 import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
@@ -24,15 +23,6 @@ public abstract class MixinKeyMapping {
                 Speed speed = (Speed) Speed.getInstance();
                 if (speed != null) {
                     if (speed.isNoJump()) ci.setReturnValue(false);
-                }
-
-                if (ci.isCancelled()) return;
-
-                AirStuck airStuck = (AirStuck) (AirStuck.getInstance());
-                if (airStuck != null) {
-                    if (airStuck.isShouldStuck()) {
-                        ci.cancel();
-                    }
                 }
 
                 if (ci.isCancelled()) return;
