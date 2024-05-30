@@ -6,6 +6,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.AdvancedConfig;
 import top.infsky.cheatdetector.impl.Check;
+import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.List;
@@ -20,19 +21,22 @@ public class FlyC extends Check {
     public void _onTick() {
         if (player.fabricPlayer.isPassenger()
                 || player.currentOnGround || player.fabricPlayer.isFallFlying()
+//                || player.fabricPlayer.hurtTime > 0
                 || IGNORED_BLOCKS.stream().anyMatch(block -> player.fabricPlayer.getFeetBlockState().is(block))) return;
 
-        int repeatFromTick = 0;
-        for (Vec3 motion : player.motionHistory) {
-            if (motion.y() != player.currentMotion.y()) {
-                return;
-            }
+        if (PlayerMove.isInvalidMotion(player.currentMotion)) return;
 
-            repeatFromTick++;
+
+        List<Vec3> posDiff = PlayerMove.getPosHistoryDiff(player.posHistory);
+        int repeatFromTick = 0;
+        for (Vec3 diff : posDiff) {
+            if (diff.y() == posDiff.get(0).y()) {
+                repeatFromTick++;
+            }
         }
 
         if (repeatFromTick >= AdvancedConfig.flyCMinRepeatTicks) {
-            flag("Repeat Y-motion from %s ticks: %.2f".formatted(repeatFromTick, player.currentMotion.y()));
+            flag("Repeat Y-diff from %s ticks: %.2f".formatted(repeatFromTick, posDiff.get(0).y()));
         }
     }
 

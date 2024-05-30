@@ -22,10 +22,8 @@ public class GroundSpoofB extends Check {
         if (level == null) return;
 
         if (!player.currentOnGround && Math.floor(player.currentPos.y()) == player.currentPos.y()) {  // check if it's *OnGround*
-            final BlockPos groundPos = player.fabricPlayer.blockPosition().below();
-
-            if (check(level, groundPos)) {
-                flag();
+            if (check(level, player.fabricPlayer.getOnPos())) {
+                flag("spoof onGround=false");
                 setback();
             }
         }
@@ -36,7 +34,7 @@ public class GroundSpoofB extends Check {
     }
 
     public static boolean check(@NotNull Level level, @NotNull BlockPos groundPos) {
-        if (!BlockUtils.isFullBlock(level.getBlockState(groundPos)) || !BlockUtils.isFullBlock(level.getBlockState(groundPos.above())))
+        if (!BlockUtils.isFullBlock(level.getBlockState(groundPos)))
             return false;
 
         short count = 0;

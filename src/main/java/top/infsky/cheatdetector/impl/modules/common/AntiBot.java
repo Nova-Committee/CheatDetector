@@ -43,6 +43,7 @@ public class AntiBot extends Module {
     public void _onTick() {
         if (isDisabled()) {
             botList.clear();
+            disableCheck = false;
         }
 
         if (!Advanced3Config.antiBotLatency)

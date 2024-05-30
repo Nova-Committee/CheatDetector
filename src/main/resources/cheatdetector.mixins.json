@@ -16,6 +16,7 @@
     "MixinConnection",
     "MixinEntity",
     "MixinKeyMapping",
+    "MixinLocalPlayer",
     "MixinMultiPlayerGameMode"
   ]
 }

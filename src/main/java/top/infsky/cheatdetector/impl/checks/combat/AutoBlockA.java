@@ -25,9 +25,9 @@ public class AutoBlockA extends Check {
             if (packet.getId() != player.fabricPlayer.getId()) return false;
             if (packet.getAction() != ClientboundAnimatePacket.SWING_MAIN_HAND) return false;
 
-            if (player.fabricPlayer.pick(4.5, 0, false).getType() != HitResult.Type.MISS) return false;  // 1.7/Visual 1.7允许玩家对着方块一边挥手一边使用
+            if (player.fabricPlayer.pick(3, 0, false).getType() != HitResult.Type.MISS) return false;  // 1.7/Visual 1.7允许玩家对着方块一边挥手一边使用
 
-            if (player.fabricPlayer.getMainHandItem().getItem() instanceof SwordItem && player.fabricPlayer.getOffhandItem().is(Items.SHIELD))  // viaVersion一般会把其他玩家显示为持有盾牌，而不是格挡
+            if (player.fabricPlayer.getMainHandItem().getItem() instanceof SwordItem && (player.fabricPlayer.isUsingItem() || player.fabricPlayer.getOffhandItem().is(Items.SHIELD)))  // viaVersion一般会把其他玩家显示为持有盾牌，而不是格挡
                 flag("impossible hit.");
         }
         return false;
