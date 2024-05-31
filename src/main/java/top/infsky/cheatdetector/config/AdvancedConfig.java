@@ -161,6 +161,39 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static double strafeAMaxDiffToFlag = 0.005;
 
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean timerACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int timerAAlertBuffer = 20;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int timerADefaultBalance = -300;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int timerAFlagBalance = 100;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean invalidPitchCheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int invalidPitchAlertBuffer = 1;
+
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean aimACheck = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static int aimAAlertBuffer = 30;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean aimAOnlyOnSwing = true;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static boolean aimAOnlyPlayer = false;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double aimAMinDiffYaw = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double aimAMinDeltaYaw = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double aimAMinDiffPitch = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double aimAMinDeltaPitch = 2;
+    @Config(category = ConfigCategory.ADVANCED)
+    public static double aimAMaxDistance = 6;
+
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;
     }

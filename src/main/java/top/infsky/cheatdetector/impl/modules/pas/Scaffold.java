@@ -1,12 +1,11 @@
 package top.infsky.cheatdetector.impl.modules.pas;
 
 import lombok.Getter;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.impl.utils.world.ContainerUtils;
+import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
@@ -21,7 +21,6 @@ import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Scaffold extends Module {
@@ -50,6 +49,7 @@ public class Scaffold extends Module {
 
         lastGround = ground;
 
+        ClientLevel level = LevelUtils.getClientLevel();
         List<BlockPos> needToPlace = new java.util.ArrayList<>();
 
         needToPlace.add(ground);
@@ -58,17 +58,10 @@ public class Scaffold extends Module {
         }
 
         for (BlockPos blockPos : needToPlace) {
-            try (Level level = TRPlayer.CLIENT.level) {
-                if (level == null) return;
-                BlockState blockState = level.getBlockState(blockPos);
-                if (!blockState.isAir() && !blockState.canBeReplaced()) continue;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            BlockState blockState = level.getBlockState(blockPos);
+            if (!blockState.isAir() && !blockState.canBeReplaced()) continue;
 
             if (player.upTime - lastPlaceTime < Advanced3Config.scaffoldPlaceMinDelay) return;
-
-            BlockHitResult hitResult = new BlockHitResult(player.currentPos, BlockUtils.getPlaceSide(blockPos), blockPos, false);
 
             InteractionHand hand = null;
             if (player.fabricPlayer.getMainHandItem().getItem() instanceof BlockItem)
@@ -77,9 +70,8 @@ public class Scaffold extends Module {
                 hand = InteractionHand.OFF_HAND;
             else {
                 if (Advanced3Config.scaffoldAutoSwitch) {
-                    Inventory inventory = player.fabricPlayer.getInventory();
                     try {
-                        inventory.selected = ContainerUtils.findItem(inventory, BlockItem.class, ContainerUtils.SlotType.HOTBAR);
+                        ContainerUtils.selectHotBar(ContainerUtils.findItem(player.fabricPlayer.getInventory(), BlockItem.class, ContainerUtils.SlotType.HOTBAR));
                         hand = InteractionHand.MAIN_HAND;
                     } catch (ContainerUtils.ItemNotFoundException e) {
                         return;
@@ -97,6 +89,7 @@ public class Scaffold extends Module {
                 else
                     PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
             }
+            BlockHitResult hitResult = new BlockHitResult(player.currentPos, BlockUtils.getPlaceSide(blockPos), blockPos, false);
             InteractionResult interactionResult = TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, hitResult);
             if (interactionResult.shouldSwing() && !Advanced3Config.scaffoldNoSwing) player.fabricPlayer.swing(hand);
             lastPlaceTime = player.upTime;

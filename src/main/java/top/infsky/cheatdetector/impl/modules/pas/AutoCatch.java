@@ -14,7 +14,7 @@ import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.impl.utils.world.ContainerUtils;
-import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
+import top.infsky.cheatdetector.impl.utils.world.EntityUtils;
 import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRSelf;
 
@@ -50,10 +50,7 @@ public class AutoCatch extends Module {
 
     private void doCatch() {
         try {
-            target = LevelUtils.getClientLevel().players().stream()
-                    .filter(p -> p.getName().getString().endsWith(Advanced3Config.autoCatchName))
-                    .min((p1, p2) -> (int) (p1.distanceTo(player.fabricPlayer) - p2.distanceTo(player.fabricPlayer)))
-                    .orElseThrow();
+            target = EntityUtils.getClosestPlayer(Advanced3Config.autoCatchName, player.fabricPlayer).orElseThrow();
 
             double distance = target.distanceTo(player.fabricPlayer);
             if (distance > Advanced3Config.autoCatchDistance && !Advanced3Config.autoCatchAsPossible) return;

@@ -49,7 +49,7 @@ public class AntiVanish extends Module {
                     .forEach(this::onPlayerJoin);
         }
         if (basePacket instanceof ClientboundPlayerInfoRemovePacket packet) {
-            packet.profileIds().forEach(uuid -> EntityUtils.getName(uuid).ifPresentOrElse(
+            packet.profileIds().forEach(uuid -> EntityUtils.getNonBotPlayerName(uuid).ifPresentOrElse(
                     this::onPlayerLeave,
                     Advanced3Config.antiBotApi ?
                             () -> player.timeTask.execute(() -> onPlayerLeave(NetUtils.get("https://api.mojang.com/user/profile/%s".formatted(uuid), "name"))) :

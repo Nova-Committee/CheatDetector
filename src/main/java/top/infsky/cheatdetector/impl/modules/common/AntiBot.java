@@ -67,6 +67,15 @@ public class AntiBot extends Module {
 
                 players.forEach(this::addBotVisual);
             }
+            if (Advanced3Config.antiBotLatency) {
+                List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
+                players.forEach(p -> {
+                    if (p.getLatency() <= 0)
+                        addBotVisual(p);
+                    else
+                        removeBotVisual(p);
+                });
+            }
         } catch (Exception ignored) {}
     }
 
@@ -111,12 +120,13 @@ public class AntiBot extends Module {
 
     private void addBotVisual(PlayerInfo playerInfo) {
         if (playerInfo == null) return;
+        if (playerInfo.getProfile().equals(player.fabricPlayer.getGameProfile())) return;
         if (botList.contains(playerInfo.getProfile().getId())) return;
         player.timeTask.schedule(() -> {
             if (getBotList().contains(playerInfo.getProfile().getId())) return;
             getBotList().add(playerInfo.getProfile().getId());
             if (Advanced3Config.antiBotDebug) {
-                customMsg("remove bot :)");
+                customMsg("remove bot: %s".formatted(playerInfo.getProfile().getName()));
             }
         }, player.getLatency() + 150, TimeUnit.MILLISECONDS);
     }

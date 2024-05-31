@@ -35,14 +35,19 @@ public class TRPlayer {
     public Vec3 currentPos = Vec3.ZERO;
     public Vec3 currentMotion = Vec3.ZERO;
     public Vec3 currentVehicleMotion = Vec3.ZERO;
+    public boolean currentSprint = false;
+    public boolean currentSwing = false;
     public Vec3 lastPos = Vec3.ZERO;
     public Vec3 lastMotion = Vec3.ZERO;
     public Vec3 lastVehicleMotion = Vec3.ZERO;
+    public boolean lastSprint = false;
+    public boolean lastSwing = false;
     public Vec2 currentRot = Vec2.ZERO;
     public Vec2 lastRot = Vec2.ZERO;
     @Range(from = 0, to = 19) public List<Vec3> posHistory = new ArrayList<>(20);
     @Range(from = 0, to = 19) public List<Vec3> motionHistory = new ArrayList<>(20);
     @Range(from = 0, to = 19) public List<Vec3> vehicleMotionHistory = new ArrayList<>(20);
+    @Range(from = 0, to = 19) public List<Boolean> sprintHistory = new ArrayList<>(20);
     public Vec3 lastOnGroundPos = Vec3.ZERO;
     public Vec3 lastOnGroundPos2 = Vec3.ZERO;
     public Vec3 lastInLiquidPos = Vec3.ZERO;
@@ -74,6 +79,8 @@ public class TRPlayer {
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
         currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
+        currentSprint = fabricPlayer.isSprinting();
+        currentSwing = fabricPlayer.swinging;
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = lastOnGround = lastOnGround2 = fabricPlayer.onGround();
         currentGameType = lastGameType =
@@ -89,6 +96,9 @@ public class TRPlayer {
         for (int i = 0; i < 20; i++) {
             vehicleMotionHistory.add(currentVehicleMotion);
         }
+        for (int i = 0; i < 20; i++) {
+            sprintHistory.add(currentSprint);
+        }
     }
 
     public void update(AbstractClientPlayer player) {
@@ -98,6 +108,8 @@ public class TRPlayer {
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
         currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
+        currentSprint = fabricPlayer.isSprinting();
+        currentSwing = fabricPlayer.swinging;
         currentRot = fabricPlayer.getRotationVector();
         currentOnGround = fabricPlayer.onGround();
         if (currentOnGround) {
@@ -132,6 +144,8 @@ public class TRPlayer {
         lastPos = currentPos;
         lastMotion = currentMotion;
         lastVehicleMotion = currentVehicleMotion;
+        lastSprint = currentSprint;
+        lastSwing = currentSwing;
         lastRot = currentRot;
         lastOnGround2 = lastOnGround;
         lastOnGround = currentOnGround;
@@ -157,6 +171,11 @@ public class TRPlayer {
             vehicleMotionHistory.remove(vehicleMotionHistory.size() - 1);
         }
         vehicleMotionHistory.add(0, currentVehicleMotion);
+
+        if (sprintHistory.size() >= 20) {
+            sprintHistory.remove(sprintHistory.size() - 1);
+        }
+        sprintHistory.add(0, currentSprint);
     }
 
     public void tryToClearVL() {
