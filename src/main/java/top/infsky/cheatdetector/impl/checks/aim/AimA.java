@@ -41,8 +41,8 @@ public class AimA extends Check {
         boolean flagPitch = false;
         LivingEntity flagTarget = null;
         for (LivingEntity entity : possibleTargets) {
-            diffYaw = Math.abs(PlayerRotation.getYaw(entity.getEyePosition()) - entity.getYRot());
-            diffPitch = Math.abs(PlayerRotation.getPitch(entity.getEyePosition()) - entity.getXRot());
+            diffYaw = Math.abs(PlayerRotation.getYaw(player.fabricPlayer, entity.getEyePosition()) - entity.getYRot());
+            diffPitch = Math.abs(PlayerRotation.getPitch(player.fabricPlayer, entity.getEyePosition()) - entity.getXRot());
 
             flagYaw = diffYaw < AdvancedConfig.aimAMinDiffYaw;
             flagPitch = diffPitch < AdvancedConfig.aimAMinDiffPitch;

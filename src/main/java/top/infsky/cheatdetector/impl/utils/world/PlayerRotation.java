@@ -1,5 +1,6 @@
 package top.infsky.cheatdetector.impl.utils.world;
 
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -12,24 +13,30 @@ public class PlayerRotation {
     public static float getYaw(@NotNull BlockPos pos) {
         return getYaw(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
     }
+    public static float getYaw(@NotNull AbstractClientPlayer from, @NotNull Vec3 pos) {
+        return from.getYRot() + Mth.wrapDegrees((float) Math.toDegrees(Math.atan2(pos.z() - from.getZ(), pos.x() - from.getX())) - 90f - from.getYRot());
+    }
+
     public static float getYaw(@NotNull Vec3 pos) {
-        LocalPlayer player = TRSelf.getInstance().fabricPlayer;
-        return player.getYRot() + Mth.wrapDegrees((float) Math.toDegrees(Math.atan2(pos.z() - player.getZ(), pos.x() - player.getX())) - 90f - player.getYRot());
+        return getYaw(TRSelf.getInstance().fabricPlayer, pos);
     }
 
     public static float getPitch(@NotNull BlockPos pos) {
         return getPitch(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
     }
-    public static float getPitch(@NotNull Vec3 pos) {
-        LocalPlayer player = TRSelf.getInstance().fabricPlayer;
 
-        double diffX = pos.x() - player.getX();
-        double diffY = pos.y() - (player.getY() + player.getEyeHeight(player.getPose()));
-        double diffZ = pos.z() - player.getZ();
+    public static float getPitch(@NotNull AbstractClientPlayer from, @NotNull Vec3 pos) {
+        double diffX = pos.x() - from.getX();
+        double diffY = pos.y() - (from.getY() + from.getEyeHeight(from.getPose()));
+        double diffZ = pos.z() - from.getZ();
 
         double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
 
-        return player.getXRot() + Mth.wrapDegrees((float) -Math.toDegrees(Math.atan2(diffY, diffXZ)) - player.getXRot());
+        return from.getXRot() + Mth.wrapDegrees((float) -Math.toDegrees(Math.atan2(diffY, diffXZ)) - from.getXRot());
+    }
+
+    public static float getPitch(@NotNull Vec3 pos) {
+        return getPitch(TRSelf.getInstance().fabricPlayer, pos);
     }
 
     public static void rotate(double yaw, double pitch) {

@@ -20,11 +20,11 @@ public class AimB extends Check {
         boolean flagYaw = false;
         float stepPitch = 0, stepYaw = 0;
         for (int step : STEP) {
-            if (Math.abs(player.lastRot.x - player.currentRot.x) - step < AdvancedConfig.aimBMinDiffPitch) {
+            if (Math.abs(Math.abs(player.lastRot.x - player.currentRot.x) - step) < AdvancedConfig.aimBMinDiffPitch) {
                 flagPitch = true;
                 stepPitch = player.lastRot.x - player.currentRot.x;
             }
-            if (Math.abs(player.lastRot.y - player.currentRot.y) - step < AdvancedConfig.aimBMinDiffYaw) {
+            if (Math.abs(Math.abs(player.lastRot.y - player.currentRot.y) - step) < AdvancedConfig.aimBMinDiffYaw) {
                 flagYaw = true;
                 stepYaw = player.lastRot.y - player.currentRot.y;
             }
