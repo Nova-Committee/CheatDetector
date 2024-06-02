@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -14,9 +15,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 import top.infsky.cheatdetector.CheatDetector;
-import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.config.AlertConfig;
 import top.infsky.cheatdetector.config.AntiCheatConfig;
+import top.infsky.cheatdetector.impl.Check;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * 管理玩家信息的类。每个玩家都应有一个TRPlayer实例。
+ * 管理玩家信息的类。每个有效玩家都应有一个TRPlayer实例。
  */
 @Getter
 public class TRPlayer {
@@ -35,11 +36,15 @@ public class TRPlayer {
     public Vec3 currentPos = Vec3.ZERO;
     public Vec3 currentMotion = Vec3.ZERO;
     public Vec3 currentVehicleMotion = Vec3.ZERO;
+    public ItemStack currentMainHead = ItemStack.EMPTY;
+    public ItemStack currentOffHead = ItemStack.EMPTY;
     public boolean currentSprint = false;
     public boolean currentSwing = false;
     public Vec3 lastPos = Vec3.ZERO;
     public Vec3 lastMotion = Vec3.ZERO;
     public Vec3 lastVehicleMotion = Vec3.ZERO;
+    public ItemStack lastMainHead = ItemStack.EMPTY;
+    public ItemStack lastOffHead = ItemStack.EMPTY;
     public boolean lastSprint = false;
     public boolean lastSwing = false;
     public Vec2 currentRot = Vec2.ZERO;
@@ -79,6 +84,8 @@ public class TRPlayer {
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
         currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
+        currentMainHead = fabricPlayer.getMainHandItem().copy();
+        currentOffHead = fabricPlayer.getOffhandItem().copy();
         currentSprint = fabricPlayer.isSprinting();
         currentSwing = fabricPlayer.swinging;
         currentRot = fabricPlayer.getRotationVector();
@@ -108,6 +115,8 @@ public class TRPlayer {
         currentPos = fabricPlayer.position();
         currentMotion = fabricPlayer.getDeltaMovement();
         currentVehicleMotion = fabricPlayer.getVehicle() != null ? fabricPlayer.getVehicle().getDeltaMovement() : Vec3.ZERO;
+        currentMainHead = fabricPlayer.getMainHandItem().copy();
+        currentOffHead = fabricPlayer.getOffhandItem().copy();
         currentSprint = fabricPlayer.isSprinting();
         currentSwing = fabricPlayer.swinging;
         currentRot = fabricPlayer.getRotationVector();
@@ -144,6 +153,8 @@ public class TRPlayer {
         lastPos = currentPos;
         lastMotion = currentMotion;
         lastVehicleMotion = currentVehicleMotion;
+        lastMainHead = currentMainHead.copy();
+        lastOffHead = currentOffHead.copy();
         lastSprint = currentSprint;
         lastSwing = currentSwing;
         lastRot = currentRot;

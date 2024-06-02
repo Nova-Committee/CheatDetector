@@ -20,7 +20,8 @@ public class StrafeA extends Check {
 
     @Override
     public void _onTick() {
-        if (player.currentOnGround || PlayerMove.isNoMove(player.currentMotion) || Math.abs(player.lastRot.y - player.currentRot.y) < 5 || player.fabricPlayer.isFallFlying()) {
+        if (player.currentOnGround || PlayerMove.isNoMove(player.currentMotion) || Math.abs(player.lastRot.y - player.currentRot.y) < 5
+                || player.fabricPlayer.isFallFlying() || player.fabricPlayer.isPassenger()) {
             futureMotion = null;
             return;
         }

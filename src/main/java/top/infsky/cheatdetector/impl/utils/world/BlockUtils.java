@@ -12,7 +12,10 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRSelf;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BlockUtils {
     public static Direction getPlaceSide(@NotNull BlockPos blockPos) {

@@ -3,10 +3,8 @@ package top.infsky.cheatdetector.impl.modules.common;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.infsky.cheatdetector.config.Advanced3Config;
 import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
-import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.utils.TRSelf;
 
 public class Debug extends Module {
@@ -23,7 +21,6 @@ public class Debug extends Module {
     public void _onTick() {
         if (isDisabled()) return;
 
-        PlayerMove.strafe(Advanced3Config.debugDouble);
     }
 
     @Override

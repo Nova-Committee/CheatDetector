@@ -30,7 +30,7 @@ public class AntiBot extends Module {
     private static final String botLeftMsg = " left the game";
 
     @Getter
-    private static List<UUID> botList = new LinkedList<>();
+    private static Set<UUID> botList = new HashSet<>();
     private boolean disableCheck = true;
 
     public AntiBot(@NotNull TRSelf player) {

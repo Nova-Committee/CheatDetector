@@ -13,14 +13,14 @@ import java.util.List;
 
 public class NoSlowA extends Check {
     public static final List<Double> SLOW_SPEED = List.of(
-            AdvancedConfig.noSlowASpeedTick1,
-            AdvancedConfig.noSlowASpeedTick2,
-            AdvancedConfig.noSlowASpeedTick3,
-            AdvancedConfig.noSlowASpeedTick4,
-            AdvancedConfig.noSlowASpeedTick5,
-            AdvancedConfig.noSlowASpeedTick6,
-            AdvancedConfig.noSlowASpeedTick7,
-            AdvancedConfig.noSlowASpeedTick8
+            2.56,
+            1.92,
+            1.6,
+            1.4,
+            1.36,
+            1.26,
+            1.18,
+            1.16
     );
     public short itemUseTick = 0;
     public short disableTick = 0;  // 跳跃弱检测

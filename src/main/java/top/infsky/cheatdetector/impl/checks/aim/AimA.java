@@ -4,10 +4,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.config.AdvancedConfig;
+import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
+import top.infsky.cheatdetector.impl.utils.world.PlayerMove;
 import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRPlayer;
+
+import java.util.List;
 
 public class AimA extends Check {
     public AimA(@NotNull TRPlayer player) {
@@ -24,15 +28,19 @@ public class AimA extends Check {
 
         if (deltaYaw < AdvancedConfig.aimAMinDeltaYaw || deltaPitch < AdvancedConfig.aimAMinDeltaPitch) return;
 
+        List<LivingEntity> possibleTargets = LevelUtils.getEntities().stream()
+                .filter(entity -> !AdvancedConfig.aimAOnlyPlayer || entity instanceof Player)
+                .filter(entity -> !entity.is(player.fabricPlayer))
+                .filter(entity -> !AdvancedConfig.aimAOnlyIfTargetIsMoving || !PlayerMove.isNoMove(entity.getDeltaMovement()))
+                .filter(entity -> entity.distanceTo(player.fabricPlayer) <= AdvancedConfig.aimAMaxDistance)
+                .toList();
+
         double diffYaw = 0;
         double diffPitch = 0;
         boolean flagYaw = false;
         boolean flagPitch = false;
         LivingEntity flagTarget = null;
-        for (LivingEntity entity : LevelUtils.getEntities().stream().filter(entity -> entity.distanceTo(player.fabricPlayer) <= AdvancedConfig.aimAMaxDistance).toList()) {
-            if (AdvancedConfig.aimAOnlyPlayer && entity instanceof Player) continue;
-            if (entity.equals(player.fabricPlayer)) continue;
-
+        for (LivingEntity entity : possibleTargets) {
             diffYaw = Math.abs(PlayerRotation.getYaw(entity.getEyePosition()) - entity.getYRot());
             diffPitch = Math.abs(PlayerRotation.getPitch(entity.getEyePosition()) - entity.getXRot());
 
@@ -67,6 +75,6 @@ public class AimA extends Check {
 
     @Override
     public boolean isDisabled() {
-        return !AdvancedConfig.aimACheck;
+        return !AdvancedConfig.aimACheck || !AntiCheatConfig.experimentalCheck;
     }
 }

@@ -31,22 +31,6 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int noSlowAAlertBuffer = 20;
     @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick1 = 2.56;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick2 = 1.92;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick3 = 1.6;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick4 = 1.4;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick5 = 1.36;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick6 = 1.26;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick7 = 1.18;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static double noSlowASpeedTick8 = 1.16;
-    @Config(category = ConfigCategory.ADVANCED)
     public static int noSlowAInJumpDisableTick = 4;
 
 
@@ -143,7 +127,7 @@ public class AdvancedConfig {
     public static int autoClickerAMinDiffMs = 5;
 
     @Config(category = ConfigCategory.ADVANCED)
-    public static boolean flyCCheck = false;
+    public static boolean flyCCheck = true;
     @Config(category = ConfigCategory.ADVANCED)
     public static int flyCAlertBuffer = 30;
     @Config(category = ConfigCategory.ADVANCED)
@@ -175,24 +159,40 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED)
     public static int invalidPitchAlertBuffer = 1;
 
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static boolean aimACheck = true;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static int aimAAlertBuffer = 30;
-    @Config(category = ConfigCategory.ADVANCED)
-    public static boolean aimAOnlyOnSwing = true;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean aimAOnlyOnSwing = false;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean aimAOnlyIfTargetIsMoving = true;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static boolean aimAOnlyPlayer = false;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimAMinDiffYaw = 2;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimAMinDeltaYaw = 2;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimAMinDiffPitch = 2;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimAMinDeltaPitch = 2;
-    @Config(category = ConfigCategory.ADVANCED)
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimAMaxDistance = 6;
+
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean scaffoldACheck = false;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int scaffoldAAlertBuffer = 30;
+
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean aimBCheck = true;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int aimBAlertBuffer = 10;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static double aimBMinDiffYaw = 2;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static double aimBMinDiffPitch = 2;
 
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;

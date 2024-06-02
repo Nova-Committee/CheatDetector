@@ -3,11 +3,13 @@ package top.infsky.cheatdetector.impl;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -70,6 +72,6 @@ public abstract class Check {
     public boolean _handleStopDestroyBlock(CallbackInfo ci) { return false; }
     public boolean _onPacketSend(@NotNull Packet<ServerGamePacketListener> basePacket, Connection connection, PacketSendListener listener, CallbackInfo ci) { return false; }
     public boolean _onPacketReceive(@NotNull Packet<ClientGamePacketListener> basePacket, Connection connection, ChannelHandlerContext channelHandlerContext, CallbackInfo ci) { return false; }
-    public void _handleAttack(Entity entity) {
-    }
+    public void _handleAttack(Entity entity) {}
+    public void _onPlaceBlock(InteractionHand hand, BlockPos blockPos) {}
 }

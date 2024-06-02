@@ -359,6 +359,8 @@ public class Advanced3Config {
     @Numeric(minValue = 0, maxValue = 20)
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static int surroundPlaceDelay = 0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundSmartPlaceDelay = true;
 
     @Config(category = ConfigCategory.ADVANCED3)
     public static double debugDouble = 0.0;

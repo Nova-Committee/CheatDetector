@@ -13,7 +13,7 @@ public class InvalidPitch extends Check {
     @Override
     public void _onTick() {
         if (player.currentRot.x > 90 || player.currentRot.x < -90) {
-            flag();
+            flag("pitch: %.2f".formatted(player.currentRot.x));
         }
     }
 

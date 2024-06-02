@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class ListUtils {
+public class CollectionUtils {
     public static <T> @NotNull Collection<T> getDifference(@NotNull Collection<T> list1, @NotNull Collection<T> list2) {
         List<T> difference = new ArrayList<>();
         Map<T, Integer> map = new HashMap<>();
@@ -24,7 +24,7 @@ public class ListUtils {
 
         StringBuilder sb = new StringBuilder();
         for (Object item : list) {
-            sb.append(item);
+            sb.append(item.toString());
             sb.append(", ");
         }
         sb.delete(sb.length() - 2, sb.length());

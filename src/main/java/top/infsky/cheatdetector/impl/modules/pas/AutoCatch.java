@@ -65,6 +65,7 @@ public class AutoCatch extends Module {
                 player.fabricPlayer.setDeltaMovement(0, 0, 0);
             }
 
+            int lastSelected = player.fabricPlayer.getInventory().selected;
             player.fabricPlayer.getInventory().selected = ContainerUtils.findItem(player.fabricPlayer.getInventory(), AirItem.class, ContainerUtils.SlotType.HOTBAR);
             if (Advanced3Config.autoCatchRotate) {
                 float yaw = PlayerRotation.getYaw(target.getEyePosition());
@@ -78,6 +79,7 @@ public class AutoCatch extends Module {
 
             player.fabricPlayer.setSilent(false);
             player.fabricPlayer.connection.send(ServerboundInteractPacket.createInteractionPacket(target, false, InteractionHand.MAIN_HAND, player.fabricPlayer.position()));
+            player.fabricPlayer.getInventory().selected = lastSelected;
 
         } catch (NoSuchElementException | NullPointerException e) {
             target = null;

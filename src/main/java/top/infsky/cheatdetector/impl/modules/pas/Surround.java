@@ -56,6 +56,7 @@ public class Surround extends Module {
             BlockState blockState = level.getBlockState(blockPos);
             if (!blockState.isAir() && !blockState.canBeReplaced()) continue;
 
+
             int selectFrom = player.fabricPlayer.getInventory().selected;
             InteractionHand hand = null;
             if (player.fabricPlayer.getMainHandItem().getItem() instanceof BlockItem)
@@ -86,6 +87,7 @@ public class Surround extends Module {
                 player.fabricPlayer.getInventory().selected = selectFrom;
             }
 
+            if (Advanced3Config.surroundSmartPlaceDelay && surroundBlocks.size() <= 10) continue;
             if (Advanced3Config.surroundPlaceDelay > 0) return;
         }
     }
