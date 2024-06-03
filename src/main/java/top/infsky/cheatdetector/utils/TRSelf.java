@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class TRSelf extends TRPlayer {
     @Getter
     private static TRSelf instance = null;
+    @Getter
     public LocalPlayer fabricPlayer;
     public Vec2 rotation;
     public boolean lastLeftPressed = false;

@@ -28,7 +28,7 @@ public class PlayerManager {
         try {
             for (AbstractClientPlayer player : LevelUtils.getClientLevel().players()) {
                 final UUID uuid = player.getUUID();
-                if (AntiBot.getBotList().stream().anyMatch(uuid::equals)) {
+                if (AntiBot.getBotList().contains(uuid)) {
                     activeMap.remove(uuid);
                     continue;
                 }

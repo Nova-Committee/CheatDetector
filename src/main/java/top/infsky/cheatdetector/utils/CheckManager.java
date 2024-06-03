@@ -6,9 +6,14 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.CheatDetector;
 import top.infsky.cheatdetector.impl.Check;
+import top.infsky.cheatdetector.impl.checks.aim.AimA;
+import top.infsky.cheatdetector.impl.checks.aim.AimB;
+import top.infsky.cheatdetector.impl.checks.aim.InvalidPitch;
 import top.infsky.cheatdetector.impl.checks.combat.*;
 import top.infsky.cheatdetector.impl.checks.exploits.GameModeA;
+import top.infsky.cheatdetector.impl.checks.exploits.TimerA;
 import top.infsky.cheatdetector.impl.checks.movement.*;
+import top.infsky.cheatdetector.impl.checks.scaffolding.ScaffoldA;
 import top.infsky.cheatdetector.impl.fixes.ServerFreeze;
 import top.infsky.cheatdetector.impl.fixes.grimac.InvalidYaw;
 import top.infsky.cheatdetector.impl.modules.*;
@@ -19,6 +24,7 @@ import top.infsky.cheatdetector.impl.modules.danger.*;
 import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagDynamic;
 import top.infsky.cheatdetector.impl.modules.pas.fakelag.FakelagLatency;
 import top.infsky.cheatdetector.impl.modules.pas.*;
+import top.infsky.cheatdetector.impl.utils.world.EntityUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +77,12 @@ public class CheckManager {
         normal.put(FlyC.class, new FlyC(player));
         normal.put(BoatFlyA.class, new BoatFlyA(player));
         normal.put(StrafeA.class, new StrafeA(player));
+        normal.put(TimerA.class, new TimerA(player));
+        normal.put(InvalidPitch.class, new InvalidPitch(player));
+        normal.put(AimA.class, new AimA(player));
+        normal.put(ScaffoldA.class, new ScaffoldA(player));
+        normal.put(AimB.class, new AimB(player));
+        normal.put(MotionB.class, new MotionB(  player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -99,6 +111,12 @@ public class CheckManager {
         normal.put(FlyC.class, new FlyC(player));
         normal.put(BoatFlyA.class, new BoatFlyA(player));
         normal.put(StrafeA.class, new StrafeA(player));
+        normal.put(TimerA.class, new TimerA(player));
+        normal.put(InvalidPitch.class, new InvalidPitch(player));
+        normal.put(AimA.class, new AimA(player));
+        normal.put(ScaffoldA.class, new ScaffoldA(player));
+        normal.put(AimB.class, new AimB(player));
+        normal.put(MotionB.class, new MotionB(player));
 
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));
@@ -137,6 +155,7 @@ public class CheckManager {
         post.put(Speed.class, new Speed(player));
         post.put(Velocity.class, new Velocity(player));
         post.put(NoStopBreak.class, new NoStopBreak(player));
+        post.put(Surround.class, new Surround(player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -156,6 +175,8 @@ public class CheckManager {
         if (player instanceof TRSelf self)
             if (!self.lastLeftPressed && self.currentLeftPressed && TRPlayer.CLIENT.crosshairPickEntity != null)
                 onCustomAction(check -> check._handleAttack(TRPlayer.CLIENT.crosshairPickEntity));
+
+        EntityUtils.isOnPlaceBlock(player).ifPresent(result -> onCustomAction(check -> check._onPlaceBlock(result.getA(), result.getB())));
 
         for (Check check : preChecks.values()) check._onTick();
         for (Check check : normalChecks.values()) check._onTick();

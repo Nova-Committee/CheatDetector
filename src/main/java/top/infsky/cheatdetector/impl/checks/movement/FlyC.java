@@ -12,7 +12,7 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import java.util.List;
 
 public class FlyC extends Check {
-    public static final List<Block> IGNORED_BLOCKS = List.of(Blocks.COBWEB, Blocks.WATER, Blocks.LAVA, Blocks.POWDER_SNOW);
+    public static final List<Block> IGNORED_BLOCKS = List.of(Blocks.COBWEB, Blocks.WATER, Blocks.LAVA, Blocks.POWDER_SNOW, Blocks.SLIME_BLOCK, Blocks.SOUL_SAND, Blocks.SCAFFOLDING);
     public FlyC(@NotNull TRPlayer player) {
         super("FlyC", player);
     }

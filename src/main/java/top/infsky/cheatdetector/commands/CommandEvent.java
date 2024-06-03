@@ -47,6 +47,11 @@ public class CommandEvent {
                         .then(argument("name", StringArgumentType.string())
                                 .executes(DebugCommand::execute))
                 )
+                .then(literal("surround")
+                        .executes(SurroundCommand::execute)
+                        .then(argument("name", StringArgumentType.string())
+                                .executes(SurroundCommand::execute))
+                )
         );
     }
 }

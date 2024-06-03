@@ -1,5 +1,6 @@
 package top.infsky.cheatdetector.config.utils;
 
+import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import top.hendrixshen.magiclib.dependency.api.ConfigDependencyPredicate;
@@ -15,6 +16,14 @@ import java.util.List;
 public class ConfigPredicate {
     public static void onJoinWorld(String ip, @NotNull ConfigManager configManager) {
         configManager.setValue("aaaPASModeEnabled", PASMode.getIpAddresses().contains(ip));
+    }
+
+    public static class MiniHudLoaded implements ConfigDependencyPredicate {
+        @Override
+        public boolean isSatisfied(ConfigOption option) {
+            return FabricLoader.getInstance().isModLoaded("minihud");
+        }
+
     }
 
     public static class ExperimentalMode implements ConfigDependencyPredicate {

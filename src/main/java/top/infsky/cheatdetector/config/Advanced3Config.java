@@ -257,7 +257,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotLatency = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiBotInTabList = false;
+    public static boolean antiBotHypixel = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotDebug = false;
     @Config(category = ConfigCategory.ADVANCED3)
@@ -337,6 +337,30 @@ public class Advanced3Config {
 
     @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
     public static boolean noStopBreakSilent = false;
+
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static String surroundName = "";
+    @Numeric(minValue = 0, maxValue = 8)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static double surroundDistance = 8;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundAutoSwitch = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundAutoSwitchBack = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundDoRotation = false;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundSilentRotation = true;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundSwing = false;
+    @Numeric(minValue = 0, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static int surroundPlaceDelay = 0;
+    @Config(category = ConfigCategory.ADVANCED3, predicate = ConfigPredicate.PASMode.class)
+    public static boolean surroundSmartPlaceDelay = true;
+
+    @Config(category = ConfigCategory.ADVANCED3)
+    public static double debugDouble = 0.0;
 
     public static NotebotUtils.NotebotMode getNoteBotMode() {
         if (noteBotMode.equals("AnyInstrument")) {

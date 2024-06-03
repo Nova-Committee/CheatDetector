@@ -12,19 +12,15 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 public class ReachA extends Check {
-    private boolean lastSwing = false;
     public ReachA(@NotNull TRPlayer player) {
         super("*ReachA*", player);
     }
 
     @Override
     public void _onTick() {
-        boolean currentSwing = player.fabricPlayer.swinging;
-
-        if (currentSwing && !lastSwing) {  // 第1个挥手tick
+        if (player.currentSwing && !player.lastSwing) {  // 第1个挥手tick
             onSwing();
         }
-        lastSwing = currentSwing;
     }
 
     private void onSwing() {

@@ -30,7 +30,7 @@ public class AntiBot extends Module {
     private static final String botLeftMsg = " left the game";
 
     @Getter
-    private static List<UUID> botList = new LinkedList<>();
+    private static Set<UUID> botList = new HashSet<>();
     private boolean disableCheck = true;
 
     public AntiBot(@NotNull TRSelf player) {
@@ -54,10 +54,16 @@ public class AntiBot extends Module {
         }
 
         try {
-            if (Advanced3Config.antiBotInTabList) {
+            if (Advanced3Config.antiBotHypixel) {
                 List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
                 LevelUtils.getClientLevel().players().forEach(p -> {
                     try {
+                        if (p.isDeadOrDying()
+                                || p.getMaxHealth() == 0
+                                || p.getName().getString().isEmpty()
+                                || (p.getHealth() != 20 && p.getName().getString().startsWith("§c"))
+                        ) return;
+
                         PlayerInfo playerInfo = Objects.requireNonNull(player.fabricPlayer.connection.getPlayerInfo(p.getUUID()));
                         players.remove(playerInfo);
                         removeBotVisual(playerInfo);
@@ -66,6 +72,15 @@ public class AntiBot extends Module {
                 });
 
                 players.forEach(this::addBotVisual);
+            }
+            if (Advanced3Config.antiBotLatency) {
+                List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
+                players.forEach(p -> {
+                    if (p.getLatency() <= 0)
+                        addBotVisual(p);
+                    else
+                        removeBotVisual(p);
+                });
             }
         } catch (Exception ignored) {}
     }
@@ -111,12 +126,13 @@ public class AntiBot extends Module {
 
     private void addBotVisual(PlayerInfo playerInfo) {
         if (playerInfo == null) return;
+        if (playerInfo.getProfile().equals(player.fabricPlayer.getGameProfile())) return;
         if (botList.contains(playerInfo.getProfile().getId())) return;
         player.timeTask.schedule(() -> {
             if (getBotList().contains(playerInfo.getProfile().getId())) return;
             getBotList().add(playerInfo.getProfile().getId());
             if (Advanced3Config.antiBotDebug) {
-                customMsg("remove bot :)");
+                customMsg("remove bot: %s".formatted(playerInfo.getProfile().getName()));
             }
         }, player.getLatency() + 150, TimeUnit.MILLISECONDS);
     }

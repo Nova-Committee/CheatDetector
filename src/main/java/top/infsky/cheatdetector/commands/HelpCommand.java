@@ -14,6 +14,7 @@ public class HelpCommand {
                 §r/ctr clientspoof <brand> §f- §7设置客户端伪装名§r
                 §r/ctr writer <part> §f- §7写一本书。§r
                 §r/ctr catch <name> §f- §7设置自动骑上一名玩家。§r
+                §r/ctr surround <name> §f- §7设置自动用方块自动包围一名玩家。§r
                 """;
 
     public static int execute(@NotNull CommandContext<FabricClientCommandSource> context) {

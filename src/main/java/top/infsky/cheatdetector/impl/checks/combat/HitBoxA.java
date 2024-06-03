@@ -10,6 +10,7 @@ import top.infsky.cheatdetector.config.AntiCheatConfig;
 import top.infsky.cheatdetector.impl.Check;
 import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
+import top.infsky.cheatdetector.impl.utils.world.RayCastUtils;
 import top.infsky.cheatdetector.utils.TRPlayer;
 
 import java.util.NoSuchElementException;
@@ -45,12 +46,10 @@ public class HitBoxA extends Check {
                         .orElseThrow();
 
                 // 此时至少有任何一个可能的目标被命中，那么检查是否击中墙壁
-                HitResult hitResult = player.fabricPlayer.pick(player.fabricPlayer.distanceTo(target), 0, false);
+                BlockHitResult hitResult = RayCastUtils.blockRayCast(player.fabricPlayer, LevelUtils.getClientLevel(), player.fabricPlayer.distanceTo(target));
 
-                if (hitResult instanceof BlockHitResult blockHitResult) {
-                    if (blockHitResult.getType() != HitResult.Type.MISS && BlockUtils.isFullBlock(level.getBlockState(blockHitResult.getBlockPos()))) {
-                        flag("Impossible hit.");
-                    }
+                if (hitResult.getType() != HitResult.Type.MISS && BlockUtils.isFullBlock(LevelUtils.getClientLevel().getBlockState(hitResult.getBlockPos()))) {
+                    flag("Impossible hit.");
                 }
             } catch (NoSuchElementException ignored) {}
         }, AdvancedConfig.hitBoxACheckDelay * 50L, TimeUnit.MILLISECONDS);

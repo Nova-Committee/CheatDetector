@@ -32,7 +32,7 @@ public class BoatFlyA extends Check {
                     return;
             }
 
-            if (player.currentVehicleMotion.y() >= 0) {
+            if (player.currentVehicleMotion.y() >= 0.01) {
                 flag("Invalid boat Y-motion: %s  inWater=%s onGround=%s".formatted(player.currentVehicleMotion.y(), boat.isInWater(), boat.onGround()));
             }
         }

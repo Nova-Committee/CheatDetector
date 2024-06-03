@@ -4,6 +4,7 @@ package top.infsky.cheatdetector.config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Config;
 import top.hendrixshen.magiclib.malilib.api.annotation.Numeric;
 import top.infsky.cheatdetector.config.utils.ConfigCategory;
+import top.infsky.cheatdetector.config.utils.ConfigPredicate;
 
 public class Advanced2Config {
     @Config(category = ConfigCategory.ADVANCED2)
@@ -33,6 +34,11 @@ public class Advanced2Config {
     @Numeric(minValue = 0, maxValue = 30000)
     @Config(category = ConfigCategory.ADVANCED2)
     public static int serverFreezeMaxMs = 800;
+    @Numeric(minValue = 0, maxValue = 20)
+    @Config(category = ConfigCategory.ADVANCED2, predicate = ConfigPredicate.MiniHudLoaded.class)
+    public static double serverFreezeMinTPS = 18.0;
+    @Config(category = ConfigCategory.ADVANCED2, predicate = ConfigPredicate.MiniHudLoaded.class)
+    public static boolean serverFreezeAlertTPS = true;
     @Config(category = ConfigCategory.ADVANCED2)
     public static boolean serverFreezeAutoDisableCheck = true;
     @Config(category = ConfigCategory.ADVANCED2)
