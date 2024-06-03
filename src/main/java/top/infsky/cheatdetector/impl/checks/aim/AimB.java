@@ -9,7 +9,8 @@ import top.infsky.cheatdetector.utils.TRPlayer;
 import java.util.Set;
 
 public class AimB extends Check {
-    public static final Set<Integer> STEP = Set.of(25, 40, 45, 60, 90, 120, 135, 180);
+    public static final Set<Integer> YAW_STEP = Set.of(90, 135, 180);
+    public static final Set<Integer> PITCH_STEP = Set.of(90, 135);
     public AimB(@NotNull TRPlayer player) {
         super("AimB", player);
     }
@@ -19,16 +20,19 @@ public class AimB extends Check {
         boolean flagPitch = false;
         boolean flagYaw = false;
         float stepPitch = 0, stepYaw = 0;
-        for (int step : STEP) {
+        for (int step : PITCH_STEP) {
             if (Math.abs(Math.abs(player.lastRot.x - player.currentRot.x) - step) < AdvancedConfig.aimBMinDiffPitch) {
                 flagPitch = true;
                 stepPitch = player.lastRot.x - player.currentRot.x;
+                break;
             }
+        }
+        for (int step : YAW_STEP) {
             if (Math.abs(Math.abs(player.lastRot.y - player.currentRot.y) - step) < AdvancedConfig.aimBMinDiffYaw) {
                 flagYaw = true;
                 stepYaw = player.lastRot.y - player.currentRot.y;
+                break;
             }
-            if (flagPitch && flagYaw) break;
         }
 
         if (flagPitch && flagYaw) {
@@ -36,7 +40,7 @@ public class AimB extends Check {
         } else if (flagPitch) {
             flag("perfect pitch step aim. deltaPitch: %.1f".formatted(stepPitch));
         } else if (flagYaw) {
-            flag("perfect pitch step aim. deltaYaw: %.1f".formatted(stepYaw));
+            flag("perfect yaw step aim. deltaYaw: %.1f".formatted(stepYaw));
         }
     }
 

@@ -81,6 +81,8 @@ public class CheckManager {
         normal.put(InvalidPitch.class, new InvalidPitch(player));
         normal.put(AimA.class, new AimA(player));
         normal.put(ScaffoldA.class, new ScaffoldA(player));
+        normal.put(AimB.class, new AimB(player));
+        normal.put(MotionB.class, new MotionB(  player));
 
         return new CheckManager(pre, normal, post, player);
     }
@@ -114,6 +116,7 @@ public class CheckManager {
         normal.put(AimA.class, new AimA(player));
         normal.put(ScaffoldA.class, new ScaffoldA(player));
         normal.put(AimB.class, new AimB(player));
+        normal.put(MotionB.class, new MotionB(player));
 
         pre.put(BadPacket1.class, new BadPacket1(player));
         pre.put(BadPacket2.class, new BadPacket2(player));

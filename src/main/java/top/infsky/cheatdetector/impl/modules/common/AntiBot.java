@@ -54,10 +54,16 @@ public class AntiBot extends Module {
         }
 
         try {
-            if (Advanced3Config.antiBotInTabList) {
+            if (Advanced3Config.antiBotHypixel) {
                 List<PlayerInfo> players = new LinkedList<>(player.fabricPlayer.connection.getOnlinePlayers());
                 LevelUtils.getClientLevel().players().forEach(p -> {
                     try {
+                        if (p.isDeadOrDying()
+                                || p.getMaxHealth() == 0
+                                || p.getName().getString().isEmpty()
+                                || (p.getHealth() != 20 && p.getName().getString().startsWith("§c"))
+                        ) return;
+
                         PlayerInfo playerInfo = Objects.requireNonNull(player.fabricPlayer.connection.getPlayerInfo(p.getUUID()));
                         players.remove(playerInfo);
                         removeBotVisual(playerInfo);

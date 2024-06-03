@@ -260,7 +260,7 @@ public class Advanced3Config {
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotLatency = false;
     @Config(category = ConfigCategory.ADVANCED3)
-    public static boolean antiBotInTabList = false;
+    public static boolean antiBotHypixel = false;
     @Config(category = ConfigCategory.ADVANCED3)
     public static boolean antiBotDebug = false;
     @Config(category = ConfigCategory.ADVANCED3)

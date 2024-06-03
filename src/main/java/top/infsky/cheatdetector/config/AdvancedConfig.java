@@ -194,6 +194,11 @@ public class AdvancedConfig {
     @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
     public static double aimBMinDiffPitch = 2;
 
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static boolean motionBCheck = false;
+    @Config(category = ConfigCategory.ADVANCED, predicate = ConfigPredicate.ExperimentalMode.class)
+    public static int motionBAlertBuffer = 10;
+
     public static short getNoSlowAInJumpDisableTick() {
         return (short) noSlowAInJumpDisableTick;
     }
