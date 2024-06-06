@@ -46,7 +46,7 @@ public class Spin extends Module {
         updateRot();
 
         if (Advanced3Config.spinAutoPause &&
-                TRPlayer.CLIENT.screen != null && !ALLOW_SCREENS.contains(TRPlayer.CLIENT.screen.getClass())) {
+                TRPlayer.CLIENT.screen != null && ALLOW_SCREENS.stream().noneMatch(aClass -> aClass.isInstance(TRPlayer.CLIENT.screen))) {
             disableTicks = Advanced3Config.spinAutoPauseTime;
         }
 

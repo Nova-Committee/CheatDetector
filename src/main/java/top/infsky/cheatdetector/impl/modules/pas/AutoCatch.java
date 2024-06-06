@@ -66,7 +66,7 @@ public class AutoCatch extends Module {
             }
 
             int lastSelected = player.fabricPlayer.getInventory().selected;
-            player.fabricPlayer.getInventory().selected = ContainerUtils.findItem(player.fabricPlayer.getInventory(), AirItem.class, ContainerUtils.SlotType.HOTBAR);
+            ContainerUtils.selectHotBar(ContainerUtils.findItem(player.fabricPlayer.getInventory(), AirItem.class, ContainerUtils.SlotType.HOTBAR));
             if (Advanced3Config.autoCatchRotate) {
                 float yaw = PlayerRotation.getYaw(target.getEyePosition());
                 float pitch = PlayerRotation.getPitch(target.getEyePosition());

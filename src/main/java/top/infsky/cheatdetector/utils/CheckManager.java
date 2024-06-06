@@ -38,6 +38,7 @@ public class CheckManager {
     private final @NotNull Map<Class<? extends Check>, Check> normalChecks;
     private final @NotNull Map<Class<? extends Check>, Check> postChecks;
     public short disableTick;
+    public boolean bypassCheck = true;
     public CheckManager(@NotNull Map<Class<? extends Check>, Check> preChecks,
                         @NotNull Map<Class<? extends Check>, Check> normalChecks,
                         @NotNull Map<Class<? extends Check>, Check> postChecks, TRPlayer player) {
@@ -162,6 +163,14 @@ public class CheckManager {
     }
 
     public void update() {
+        if (bypassCheck) {
+            if (player.currentPos == player.lastPos && !player.currentOnGround) {
+                disableTick = 30;
+                return;
+            } else {
+                bypassCheck = false;
+            }
+        }
         if (disableTick > 0) {
             disableTick--;
         }

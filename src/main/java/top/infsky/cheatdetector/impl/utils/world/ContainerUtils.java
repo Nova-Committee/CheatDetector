@@ -1,7 +1,6 @@
 package top.infsky.cheatdetector.impl.utils.world;
 
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import top.infsky.cheatdetector.utils.TRSelf;
@@ -25,8 +24,7 @@ public class ContainerUtils {
     }
 
     public static void selectHotBar(int slot) {
-        Inventory inventory = TRSelf.getInstance().fabricPlayer.getInventory();
-        inventory.selected = slot;
+        TRSelf.getInstance().fabricPlayer.getInventory().selected = slot;
     }
 
     public record SlotType(int from, int to) {

@@ -7,19 +7,17 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import top.infsky.cheatdetector.config.Advanced3Config;
+import top.infsky.cheatdetector.config.ModuleConfig;
 import top.infsky.cheatdetector.impl.Module;
 import top.infsky.cheatdetector.impl.modules.common.Rotation;
 import top.infsky.cheatdetector.impl.utils.world.ContainerUtils;
 import top.infsky.cheatdetector.impl.utils.world.LevelUtils;
+import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
 import top.infsky.cheatdetector.utils.TRPlayer;
 import top.infsky.cheatdetector.utils.TRSelf;
-import top.infsky.cheatdetector.impl.utils.world.BlockUtils;
-import top.infsky.cheatdetector.impl.utils.world.PlayerRotation;
-import top.infsky.cheatdetector.config.Advanced3Config;
-import top.infsky.cheatdetector.config.ModuleConfig;
 
 import java.util.List;
 
@@ -89,8 +87,8 @@ public class Scaffold extends Module {
                 else
                     PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
             }
-            BlockHitResult hitResult = new BlockHitResult(player.currentPos, BlockUtils.getPlaceSide(blockPos), blockPos, false);
-            InteractionResult interactionResult = TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, hitResult);
+
+            InteractionResult interactionResult = LevelUtils.placeBlock(blockPos, hand);
             if (interactionResult.shouldSwing() && !Advanced3Config.scaffoldNoSwing) player.fabricPlayer.swing(hand);
             lastPlaceTime = player.upTime;
         }

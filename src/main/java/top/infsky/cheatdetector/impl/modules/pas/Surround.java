@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.infsky.cheatdetector.config.Advanced3Config;
@@ -58,6 +57,7 @@ public class Surround extends Module {
 
 
             int selectFrom = player.fabricPlayer.getInventory().selected;
+            int toSlot;
             InteractionHand hand = null;
             if (player.fabricPlayer.getMainHandItem().getItem() instanceof BlockItem)
                 hand = InteractionHand.MAIN_HAND;
@@ -65,7 +65,8 @@ public class Surround extends Module {
                 hand = InteractionHand.OFF_HAND;
             else {
                 if (Advanced3Config.surroundAutoSwitch) {
-                    ContainerUtils.selectHotBar(ContainerUtils.findItem(player.fabricPlayer.getInventory(), BlockItem.class, ContainerUtils.SlotType.HOTBAR));
+                    toSlot = ContainerUtils.findItem(player.fabricPlayer.getInventory(), BlockItem.class, ContainerUtils.SlotType.HOTBAR);
+                    ContainerUtils.selectHotBar(toSlot);
                     hand = InteractionHand.MAIN_HAND;
                 }
             }
@@ -78,8 +79,7 @@ public class Surround extends Module {
                     PlayerRotation.rotate(PlayerRotation.getYaw(blockPos), PlayerRotation.getPitch(blockPos));
             }
 
-            BlockHitResult hitResult = new BlockHitResult(player.currentPos, BlockUtils.getPlaceSide(blockPos), blockPos, false);
-            InteractionResult interactionResult = TRPlayer.CLIENT.gameMode.useItemOn(player.fabricPlayer, hand, hitResult);
+            InteractionResult interactionResult = LevelUtils.placeBlock(blockPos, hand);
             if (interactionResult.shouldSwing() && Advanced3Config.surroundSwing) player.fabricPlayer.swing(hand);
             lastPlaceTime = player.upTime;
 
